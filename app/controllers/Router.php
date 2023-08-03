@@ -1,5 +1,4 @@
 <?php
-namespace app\controllers;
 
 class Router
 {
@@ -11,7 +10,7 @@ class Router
         try {
             //Enregistre automatiquement une fonction d'autoload (les classes du dossier models)
             spl_autoload_register(function ($class){
-                require_once('models/'.$class.'.php');
+                require_once('../app/models/'.$class.'.php');
             });
 
             //Création de l'url
@@ -28,7 +27,7 @@ class Router
                 $ctrlClass = "Controller".$ctrl;
 
                 //On cible le fichier controller voulu
-                $ctrlFile = "controllers/".$ctrlClass.".php";
+                $ctrlFile = "../app/controllers/".$ctrlClass.".php";
 
                 if (file_exists($ctrlFile)) {
                     //On applique notre class avec les params voulu
@@ -40,12 +39,12 @@ class Router
                 }
             } else {
                 //Si aucune route ne match l'utilisateur sera redirigé vers l'accueil
-                require_once ('controllers/HomeController.php');
-                $this->controller = new HomeController($url);
+                require_once ('../app/controllers/ControllerHome.php');
+                $this->controller = new ControllerHome($url);
             }
         } catch (\Exception $e) {
             $php_errormsg = $e->getMessage();
-            require_once ('views/notfound.php');
+            require_once ('../app/views/notFound.php');
         }
     }
 }
