@@ -1,4 +1,5 @@
 <?php
+require_once '../app/views/View.php';
 
 class Router
 {
@@ -44,7 +45,8 @@ class Router
             }
         } catch (\Exception $e) {
             $php_errormsg = $e->getMessage();
-            require_once ('../app/views/notFound.php');
+            $this->_view = new View('NotFound');
+            $this->_view->generate(array('php_errormsg' => $php_errormsg));
         }
     }
 }

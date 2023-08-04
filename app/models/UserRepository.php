@@ -2,7 +2,7 @@
 
 class UserRepository extends Model
 {
-    //Fonction qui va récupérer les utilisateurs dans la table utilisateurs
+    //Function that will retrieve users from the users table
     public function getUsers()
     {
         return $this->getAll('users', 'User');

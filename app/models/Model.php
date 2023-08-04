@@ -10,7 +10,7 @@ abstract class Model
     {
         self::$_db = new PDO ('mysql:host=127.0.0.1;port=8889;dbname=u746425507_blogorama;charset=utf8', 'root', 'azerty');
 
-        //Gestion d'erreur PDO
+        //Error handling PDO
         self::$_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     }
 

@@ -1,10 +1,12 @@
 <?php
+require_once '../app/views/View.php';
 
 class ControllerHome
 {
     private $_userRepository;
     private $_view;
 
+    //test$url
     public function __construct($url)
     {
         if (isset($url) && count($url) > 1) {
@@ -18,6 +20,7 @@ class ControllerHome
     {
         $this->_userRepository = new UserRepository();
         $users = $this->_userRepository->getUsers();
-        require_once '../app/views/HomeView.php';
+        $this->_view = new View('Home');
+        $this->_view->generate(array('users' => $users));
     }
 }
