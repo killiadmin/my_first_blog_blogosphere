@@ -7,4 +7,9 @@ class UserRepository extends Model
     {
         return $this->getAll('users', 'User');
     }
+
+    public function getUser($id)
+    {
+        return $this->getOne('users', 'User', $id);
+    }
 }

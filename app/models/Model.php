@@ -25,7 +25,7 @@ abstract class Model
 
     //Method to select all data in a table
 
-    public function getAll($table, $obj)
+    protected function getAll($table, $obj)
     {
         $this->getConnectionDataBase();
         $datas = [];
@@ -41,6 +41,22 @@ abstract class Model
         $query->closeCursor();
     }
 
+
+    protected function getOne($table, $obj, $id)
+    {
+        $this->getConnectionDataBase();
+        $datas = [];
+        $sql = "SELECT * FROM " . $table . " WHERE id=" . $id;
+        $query = self::$_db->prepare($sql);
+        $query->execute();
+
+        while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
+            $datas[] = new $obj($data);
+        }
+
+        return $datas;
+        $query->closeCursor();
+    }
 
 
 
