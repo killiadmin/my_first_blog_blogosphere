@@ -22,7 +22,7 @@ class Router
                 //Décomposition de l'url avec un filtre pour supprimer tous les caractères
                 $url = explode('/', filter_var($_GET['url'], FILTER_SANITIZE_URL));
 
-                //On récupère le premier param de l'url et lapplique en minuscule et la première lettre en majuscule
+                //On récupère le premier param de l'url et l'applique en minuscule et la première lettre en majuscule
                 $ctrl = ucfirst(strtolower($url[0]));
 
                 $ctrlClass = "Controller".$ctrl;

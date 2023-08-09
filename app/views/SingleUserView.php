@@ -1,3 +1,10 @@
+<?php
+echo '<pre>';
+var_dump($user);
+echo '</pre>';
+exit();
+?>
+
 <article class="d-flex flex-column align-items-center m-3">
     <header>
         <h2 class="text-center"> Mon Post</h2>

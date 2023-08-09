@@ -21,7 +21,7 @@ class ControllerUser
         if (isset($_GET['id'])) {
             $this->_userRepository = new UserRepository();
             $user = $this->_userRepository->getUser($_GET['id']);
-            $this->_view =new View('SingleUser');
+            $this->_view = new View('SingleUser');
             $this->_view->generate(array('user' => $user));
         }
     }

@@ -6,7 +6,6 @@ class ControllerHome
     private $_userRepository;
     private $_view;
 
-    //test$url
     public function __construct($url)
     {
         if (isset($url) && count($url) > 1) {

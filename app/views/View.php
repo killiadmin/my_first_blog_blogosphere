@@ -36,5 +36,4 @@ class View
         $view = $this->generateFile('../app/views/layouts/DefaultlayoutView.php', array('title' => $this->_title, 'pageContent' => $pageContent));
         echo $view;
     }
-
 }
