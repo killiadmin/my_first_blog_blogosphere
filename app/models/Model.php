@@ -29,7 +29,7 @@ abstract class Model
     {
         $this->getConnectionDataBase();
         $datas = [];
-        $sql = "SELECT * FROM " . $table;
+        $sql = "SELECT * FROM " . $table . " ORDER BY dateCreate DESC";
         $query = self::$_db->prepare($sql);
         $query->execute();
 
@@ -38,6 +38,8 @@ abstract class Model
         }
 
         return $datas;
+
+        // Close cursor after query execution
         $query->closeCursor();
     }
 
@@ -55,9 +57,33 @@ abstract class Model
         }
 
         return $datas;
+
+        // Close cursor after query execution
         $query->closeCursor();
     }
 
+    //Method to insert a new post in the database
+    protected function createOne($table)
+    {
+        $this->getConnectionDataBase();
+        $sql = "INSERT INTO " . $table . " (idUserAssociated, title, chapo, content, dateCreate, dateUpdate) VALUES (?, ?, ?, ?, ?, ?)";
+        $query = self::$_db->prepare($sql);
 
+        // Check if the values exist before using them
+        $title = isset($_POST['title']) ? $_POST['title'] : '';
+        $chapo = isset($_POST['chapo']) ? $_POST['chapo'] : '';
+        $content = isset($_POST['content']) ? $_POST['content'] : '';
 
+        // Use the date() function to get the current date in the correct format
+        $currentDate = date('d-m-Y');
+        $dateUpdate = $currentDate;
+
+        $idUserAssociated = ' 10';
+
+        // Bind the values and run the query
+        $query->execute([$idUserAssociated, $title, $chapo, $content, $currentDate, $dateUpdate]);
+
+        // Close cursor after query execution
+        $query->closeCursor();
+    }
 }

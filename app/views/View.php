@@ -16,7 +16,10 @@ class View
     private function generateFile($file, $data)
     {
         if (file_exists($file)) {
-            extract($data);
+
+            if ($data){
+                extract($data);
+            }
 
             ob_start();
             require $file;

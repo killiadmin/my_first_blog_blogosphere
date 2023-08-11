@@ -12,4 +12,9 @@ class PostRepository extends Model
     {
         return $this->getOne('posts', 'Post', $id);
     }
+
+    public function createPost()
+    {
+        return $this->createOne('posts', 'Post');
+    }
 }
