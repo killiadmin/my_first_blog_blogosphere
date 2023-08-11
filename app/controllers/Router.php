@@ -40,8 +40,8 @@ class Router
                 }
             } else {
                 //Si aucune route ne match l'utilisateur sera redirigé vers l'accueil
-                require_once ('../app/controllers/ControllerHome.php');
-                $this->controller = new ControllerHome($url);
+                require_once ('../app/controllers/ControllerHomeAdministrator.php');
+                $this->controller = new ControllerHomeAdministrator($url);
             }
         } catch (\Exception $e) {
             $php_errormsg = $e->getMessage();

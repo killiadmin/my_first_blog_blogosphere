@@ -6,16 +6,18 @@ class ControllerPost
     private $_postRepository;
     private $_view;
 
-    //test$url
     public function __construct($url)
     {
         if (isset($url) && count($url) > 1) {
             throw new \Exception('Notfound Page', 1);
+        } elseif ($_GET('create') !== null) {
+            $this->create();
         } else {
             $this->posts();
         }
     }
 
+    //Function which allows to display the posts of the db
     private function posts()
     {
         $this->_postRepository = new PostRepository();

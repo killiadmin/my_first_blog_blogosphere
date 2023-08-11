@@ -23,7 +23,7 @@
                         <a class="text-monospace nav-link text-light" href="/post">Blogo-space</a>
                     </li>
                     <li class="nav-item">
-                        <a class="text-monospace nav-link text-light" href="/writePost">Write an article</a>
+                        <a class="text-monospace nav-link text-light" href="/post&create">Write an article</a>
                     </li>
                     <li class="nav-item">
                         <a class="text-monospace nav-link text-light" href="/login">Sign out</a>

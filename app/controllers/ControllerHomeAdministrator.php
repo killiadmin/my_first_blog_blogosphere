@@ -1,7 +1,7 @@
 <?php
 require_once '../app/views/View.php';
 
-class ControllerHome
+class ControllerHomeAdministrator
 {
     private $_userRepository;
     private $_view;
@@ -19,7 +19,7 @@ class ControllerHome
     {
         $this->_userRepository = new UserRepository();
         $users = $this->_userRepository->getUsers();
-        $this->_view = new View('Home');
+        $this->_view = new View('HomeAdministrator');
         $this->_view->generate(array('users' => $users));
     }
 }

@@ -2,7 +2,7 @@
 
 require_once '../app/views/View.php';
 
-class ControllerUser
+class ControllerSingleUser
 {
     private $_userRepository;
     private $_view;

@@ -1,50 +1,65 @@
-<?php
-echo '<pre>';
-var_dump($user);
-echo '</pre>';
-exit();
-?>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 p-3 mt-3 d-flex flex-column align-items-center justify-content-center">
+            <img src="./assets/photo_default.jpeg" alt="Photo de profil" class="img-fluid rounded-circle" style="width: 290px;">
+            <form action="" method="post" enctype="multipart/form-data" class="p-3">
+                <input type="file" name="file" id="file" class="d-none">
+                <input type="submit" value="Change my image">
+            </form>
+        </div>
+        <div class="col-md-6 mt-3 d-flex flex-column justify-content-center">
+            <h2><?= $user[0]->name() ?> <?= $user[0]->username() ?></h2>
+            <p><?= $user[0]->quote() ?></p>
 
-<article class="d-flex flex-column align-items-center m-3">
-    <header>
-        <h2 class="text-center"> Mon Post</h2>
-        <p class="metadata">Publié le blabla par truc muche</p>
-    </header>
+            <hr>
 
-    <p class="m-3 p-3" style="max-width: 800px;"></p>
+            <h4>My CV : </h4>
+            <form action="" method="post" enctype="multipart/form-data" class="p-3">
+                <input type="file" name="file" id="file" class="d-none">
+                <input type="submit" value="Change my CV">
+            </form>
 
-    <footer class="d-flex justify-content-evenly" style="width: 100%;">
-        <p>Author's social network : <a href="#" class="badge bg-secondary">Github</a>, <a href="#"
-                                                                                           class="badge bg-secondary">Twitter</a>,
-            <a href="#" class="badge bg-secondary">Linkedin</a></p>
-        <a href="#" style="color: #3C4245;"><i
-                    class="fa-regular fa-pen-to-square xl"></i></a>
-    </footer>
-</article>
-<hr>
-<section id="comments">
-    <div class="d-flex flex-column align-items-center">
-        <h3>Comments</h3>
-        <div class="comment" style="width: 500px;">
-            <div class="comment-info d-flex gap-2">
-                <p class="comment-author"><strong>Author : </strong> name </p>
-                <p class="comment-date"><strong>Publié le : </strong>username</p>
-            </div>
-            <div class="comment-content d-flex flex-row-reverse">
-                <p>mon contenu </p>
+            <div class="p-3">
+                <a href="#" class="btn btn-secondary">See the CV</a>&nbsp;<i class="fa-regular fa-pen-to-square fa-xl"></i></li>
             </div>
             <hr>
         </div>
     </div>
-</section>
-<form class="p-3">
-    <h4>Express yourself</h4>
+    <div class="row mt-4">
+        <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
+            <!-- Lien réseaux sociaux -->
+            <h4>My Socials Networks</h4>
+            <ul class="list-unstyled fs-3" style="color: #3C4245;">
+                <li><a id="github" href="#" style="color: #3C4245;"><i class="fab fa-github"></i> Github&nbsp;</a><i class="fa-regular fa-pen-to-square fa-sm"></i></li>
+                <li><a id="twitter" href="#" style="color: #3C4245;"><i class="fab fa-twitter"></i> Twitter&nbsp;</a><i class="fa-regular fa-pen-to-square fa-sm"></i></li>
+                <li><a id="linkedin" href="#" style="color: #3C4245;"><i class="fab fa-linkedin"></i> Linkedin&nbsp;</a><i class="fa-regular fa-pen-to-square fa-sm"></i></li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <!-- Formulaire de contact -->
+            <h4>Send message</h4>
+            <form>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="<?= $user[0]->name() ?>">
+                </div>
+                <div class="form-group">
+                    <label for="prenom">Username</label>
+                    <input type="text" class="form-control" id="username" placeholder="<?= $user[0]->username() ?>">
+                </div>
+                <div class="form-group">
+                    <label for="email">Mail recipient</label>
+                    <input type="email" class="form-control" id="email" placeholder="Recipient's mail">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea class="form-control" id="message" rows="3" placeholder="Your message"></textarea>
+                </div>
+                <div class="d-flex flex-row-reverse p-2">
+                    <button type="submit" class="btn btn-secondary">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-    <div class="form-group">
-        <label for="message">Your comment :</label>
-        <textarea id="message" name="message" class="form-control"></textarea>
-    </div>
-    <div class="d-flex flex-row-reverse m-3">
-        <button type="submit" class="btn btn-secondary">Send my comment</button>
-    </div>
-</form>

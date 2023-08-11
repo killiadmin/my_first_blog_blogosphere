@@ -1,22 +1,5 @@
-
-<?php
-/*$title = 'Blogospace';
-$nameAuthor = '';
-$usernameAuthor = '';*/
-?>
-
 <?php foreach ($posts ?? [] as $post):
-    /*foreach ($usersRegistered ?? [] as $user):
-        $userId = $user['id'];
-        $userAssociated = $post['idUserAssociated'];
-
-        if ($userId === $userAssociated){
-            $nameAuthor = $user['name'];
-            $usernameAuthor = $user['username'];
-        }
-    endforeach;*/
     ?>
-
     <div class="card m-3 p-3">
         <div class="card-body">
             <div class="d-flex justify-content-between">
@@ -31,7 +14,7 @@ $usernameAuthor = '';*/
                 <p><strong>Author : </strong>&nbsp;</p>
             </div>
             <div class="d-flex flex-row-reverse">
-                <a href="#" class="btn btn-secondary">Go somewhere</a>
+                <a href="/singlepost&id=<?= $post->id()?>" class="btn btn-secondary">Go somewhere</a>
             </div>
         </div>
     </div>
