@@ -5,7 +5,7 @@ if ($post[0] ?? []) {
     <article class="d-flex flex-column align-items-center m-3">
         <header>
             <h2 class="text-center"><?= $post[0]->title() ?></h2>
-            <p class="metadata">Publié le <?= $post[0]->dateCreate() ?> par John Doe</p>
+            <p class="metadata">Publié le <?= $post[0]->dateCreate() ?> par <?= $post[0]->name() ?> <?= $post[0]->userName()?> </p>
         </header>
 
         <p class="m-3 p-3" style="max-width: 800px;"><?= $post[0]->content() ?></p>
@@ -45,31 +45,22 @@ if ($post[0] ?? []) {
     <div class="d-flex flex-column align-items-center">
         <h3>Comments</h3>
         <?php
-        /*foreach ($commentsCreate ?? [] as $comment):
-            foreach ($usersRegistered ?? [] as $user):
-                if ($comment['idPostAssociated'] === $post['id'] && $comment['idUserAssociated'] === $user['id']) {*/
+        foreach ($comment as $deployComment):
         ?>
         <div class="comment" style="width: 500px;">
             <div class="comment-info d-flex gap-2">
-                <p class="comment-author"><strong>Author : </strong>KILLIAN</p>
-                <p class="comment-date"><strong>Publié le : </strong>aaaa/mm/dd</p>
+                <p class="comment-author"><strong>Author : </strong><?= $deployComment->name() ?> <?= $deployComment->username() ?></p>
+                <p class="comment-date"><strong>Publié le : </strong> <?= $deployComment->dateCreate() ?></p>
             </div>
             <div class="comment-content d-flex flex-row-reverse">
-                <p>Mon contenu</p>
+                <p><?= $deployComment->content() ?></p>
             </div>
             <hr>
         </div>
-        <?php
-        /*}*/
-        ?>
-        <?php /*endforeach;
-                endforeach; */ ?>
+        <?php endforeach; ?>
     </div>
 </section>
-<?php
-/*}
-endforeach;*/
-?>
+
 <form class="p-3">
     <h4>Express yourself</h4>
 

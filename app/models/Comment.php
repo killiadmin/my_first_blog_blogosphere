@@ -1,16 +1,16 @@
 <?php
 
-class Post
+class Comment
 {
     private $_id;
     private $_idUserAssociated;
-    private $_title;
-    private $_chapo;
+    private $_idPostAssociated;
     private $_content;
     private $_dateCreate;
     private $_dateUpdate;
     private $_name;
     private $_userName;
+
 
     public function __construct(array $data)
     {
@@ -43,17 +43,10 @@ class Post
         }
     }
 
-    public function setTitle($title)
+    public function setIdPostAssociated($idPostAssociated)
     {
-        if (is_string($title)) {
-            $this->_title = $title;
-        }
-    }
-
-    public function setChapo($chapo)
-    {
-        if (is_string($chapo)) {
-            $this->_chapo = $chapo;
+        if ((int) ($idPostAssociated)) {
+            $this->_idPostAssociated = $idPostAssociated;
         }
     }
 
@@ -80,6 +73,7 @@ class Post
             $this->_name = $name;
         }
     }
+
     public function setUserName($userName)
     {
         if (is_string($userName)) {
@@ -99,14 +93,9 @@ class Post
         return $this->_idUserAssociated;
     }
 
-    public function title()
+    public function idPostAssociated()
     {
-        return $this->_title;
-    }
-
-    public function chapo()
-    {
-        return $this->_chapo;
+        return $this->_idPostAssociated;
     }
 
     public function content()
@@ -133,4 +122,5 @@ class Post
     {
         return$this->_userName;
     }
+
 }

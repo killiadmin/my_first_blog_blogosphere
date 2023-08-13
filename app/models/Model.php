@@ -44,11 +44,47 @@ abstract class Model
     }
 
 
-    protected function getOne($table, $obj, $id)
+    protected function getOne($table, $tableJoin, $obj, $id)
     {
         $this->getConnectionDataBase();
         $datas = [];
-        $sql = "SELECT * FROM " . $table . " WHERE id=" . $id;
+
+        if ($table === 'comments') {
+            $idReference = 'idPostAssociated';
+        } elseif ($table === 'posts') {
+            $idReference = $table . '.id';
+        }
+
+        $sql = "SELECT * 
+            FROM " . $table . "
+            JOIN " . $tableJoin . "
+            ON " . $table . ".idUserAssociated=" . $tableJoin . ".id
+            WHERE " . $idReference . "=" . $id;
+
+        $query = self::$_db->prepare($sql);
+        $query->execute();
+
+        while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
+            $datas[] = new $obj($data);
+        }
+
+        // Close cursor before returning the data
+        $query->closeCursor();
+
+        return $datas;
+    }
+
+
+
+    protected function getOneUser($table, $obj, $id)
+    {
+        $this->getConnectionDataBase();
+        $datas = [];
+
+        $sql = "SELECT * 
+                FROM " . $table . "
+                WHERE id=" . $id;
+
         $query = self::$_db->prepare($sql);
         $query->execute();
 
