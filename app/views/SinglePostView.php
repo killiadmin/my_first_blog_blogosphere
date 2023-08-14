@@ -1,7 +1,7 @@
 <?php
 if ($post[0] ?? []) {
     ?>
-    <!--Begin Construct the bloc article-->
+    <!--Bloc post begin-->
     <article class="d-flex flex-column align-items-center m-3">
         <header>
             <h2 class="text-center"><?= $post[0]->title() ?></h2>
@@ -41,6 +41,11 @@ if ($post[0] ?? []) {
 }
 ?>
 <hr>
+
+<!-- Bloc post end -->
+
+<!-- Bloc comment begin -->
+
 <section id="comments">
     <div class="d-flex flex-column align-items-center">
         <h3>Comments</h3>
@@ -48,14 +53,16 @@ if ($post[0] ?? []) {
         foreach ($comment as $deployComment):
         ?>
         <div class="comment" style="width: 500px;">
-            <div class="comment-info d-flex gap-2">
-                <p class="comment-author"><strong>Author : </strong><?= $deployComment->name() ?> <?= $deployComment->username() ?></p>
-                <p class="comment-date"><strong>Publié le : </strong> <?= $deployComment->dateCreate() ?></p>
+            <div class="bg-light bg-gradient rounded p-3">
+                <div class="comment-info d-flex gap-2">
+                    <p class="comment-author"><strong>Author : </strong><?= $deployComment->name() ?> <?= $deployComment->username() ?></p>
+                    <p class="comment-date"><strong>Publié le : </strong> <?= $deployComment->dateCreate() ?></p>
+                </div>
+                <div class="comment-content d-flex align-center ">
+                    <p class="text-light mt-3 bg-success bg-gradient rounded p-3"><?= $deployComment->content() ?></p>
+                </div>
             </div>
-            <div class="comment-content d-flex flex-row-reverse">
-                <p><?= $deployComment->content() ?></p>
-            </div>
-            <hr>
+            <div class="m-3"></div>
         </div>
         <?php endforeach; ?>
     </div>
@@ -72,5 +79,8 @@ if ($post[0] ?? []) {
         <button type="submit" class="btn btn-secondary">Send my comment</button>
     </div>
 </form>
+
+<!-- Bloc comment end -->
+
 
 
