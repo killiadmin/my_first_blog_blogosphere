@@ -29,7 +29,17 @@ abstract class Model
     {
         $this->getConnectionDataBase();
         $datas = [];
-        $sql = "SELECT * FROM " . $table . " ORDER BY dateCreate DESC";
+        if($table === 'posts'){
+            $sql = "SELECT *
+                    FROM " . $table . "
+                    JOIN users
+                    ON users.idUser =" . $table . ".idUserAssociated
+                    ORDER BY " . $table . ".dateCreate DESC";
+        } else {
+            $sql = "SELECT * 
+                    FROM " . $table . " 
+                    ORDER BY dateCreate DESC";
+        }
         $query = self::$_db->prepare($sql);
         $query->execute();
 
@@ -52,13 +62,13 @@ abstract class Model
         if ($table === 'comments') {
             $idReference = 'idPostAssociated';
         } elseif ($table === 'posts') {
-            $idReference = $table . '.id';
+            $idReference = $table . '.idPost';
         }
 
         $sql = "SELECT * 
             FROM " . $table . "
             JOIN " . $tableJoin . "
-            ON " . $table . ".idUserAssociated=" . $tableJoin . ".id
+            ON " . $table . ".idUserAssociated=" . $tableJoin . ".idUser
             WHERE " . $idReference . "=" . $id;
 
         $query = self::$_db->prepare($sql);

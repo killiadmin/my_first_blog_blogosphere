@@ -9,14 +9,14 @@
                 </a>
             </div>
             <div class="d-flex justify-content-between">
-                <p class="card-text maxWidth"><?= $post->chapo() ?></p>
+                <p class="card-text maxWidth w-50"><?= $post->chapo() ?></p>
                 <div class="d-flex flex-column">
                     <p>&nbsp;<strong>Posted the : <?= $post->dateCreate() ?></strong></p>
-                    <p><strong>Author :</strong>&nbsp;</p>
+                    <p><strong>Author : <?= $post->name() ?> <?= $post->username() ?></strong>&nbsp;</p>
                 </div>
             </div>
             <div class="d-flex flex-row-reverse">
-                <a href="/singlepost&id=<?= $post->id()?>" class="btn btn-secondary">Go somewhere</a>
+                <a href="/singlepost&id=<?= $post->idPost()?>" class="btn btn-secondary">Go somewhere</a>
             </div>
         </div>
     </div>

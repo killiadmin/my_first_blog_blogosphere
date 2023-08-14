@@ -2,7 +2,7 @@
 
 class User
 {
-    private $_id;
+    private $_idUser;
     private $_name;
     private $_username;
     private $_picture;
@@ -29,11 +29,11 @@ class User
     }
 
     //setters
-    public function setId($id)
+    public function setIdUser($idUser)
     {
-        $id = (int) $id;
-        if ($id > 0) {
-            $this->_id = $id;
+        $idUser = (int) $idUser;
+        if ($idUser > 0) {
+            $this->_idUser = $idUser;
         }
     }
 
@@ -100,9 +100,9 @@ class User
 
     //getters
 
-    public function id()
+    public function idUser()
     {
-        return $this->_id;
+        return $this->_idUser;
     }
 
     public function name()

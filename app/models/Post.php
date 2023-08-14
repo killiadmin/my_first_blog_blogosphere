@@ -2,7 +2,7 @@
 
 class Post
 {
-    private $_id;
+    private $_idPost;
     private $_idUserAssociated;
     private $_title;
     private $_chapo;
@@ -28,11 +28,11 @@ class Post
     }
 
     //setters
-    public function setId($id)
+    public function setIdPost($idPost)
     {
-        $id = (int) $id;
-        if ($id > 0) {
-            $this->_id = $id;
+        $idPost = (int) $idPost;
+        if ($idPost > 0) {
+            $this->_idPost = $idPost;
         }
     }
 
@@ -89,9 +89,9 @@ class Post
 
     //getters
 
-    public function id()
+    public function idPost()
     {
-        return $this->_id;
+        return $this->_idPost;
     }
 
     public function idUserAssociated()

@@ -2,7 +2,7 @@
 
 class Comment
 {
-    private $_id;
+    private $_idComment;
     private $_idUserAssociated;
     private $_idPostAssociated;
     private $_content;
@@ -28,11 +28,11 @@ class Comment
     }
 
     //setters
-    public function setId($id)
+    public function setIdComment($idComment)
     {
-        $id = (int) $id;
-        if ($id > 0) {
-            $this->_id = $id;
+        $idComment = (int) $idComment;
+        if ($idComment > 0) {
+            $this->_idComment = $idComment;
         }
     }
 
@@ -83,9 +83,9 @@ class Comment
 
     //getters
 
-    public function id()
+    public function idComment()
     {
-        return $this->_id;
+        return $this->_idComment;
     }
 
     public function idUserAssociated()

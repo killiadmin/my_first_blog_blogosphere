@@ -8,7 +8,7 @@ if ($post[0] ?? []) {
             <p class="metadata">Publié le <?= $post[0]->dateCreate() ?> par <?= $post[0]->name() ?> <?= $post[0]->userName()?> </p>
         </header>
 
-        <p class="m-3 p-3" style="max-width: 800px;"><?= $post[0]->content() ?></p>
+        <p class="m-3 p-3 bg-light rounded" style="max-width: 800px;"><?= $post[0]->content() ?></p>
 
         <footer class="d-flex justify-content-evenly" style="width: 100%;">
             <p>Author's social network :
