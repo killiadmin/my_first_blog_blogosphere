@@ -17,4 +17,9 @@ class PostRepository extends Model
     {
         return $this->createOne('posts', 'Post');
     }
+
+    public function deletePost($id)
+    {
+        return $this->deleteOne('posts', $id);
+    }
 }

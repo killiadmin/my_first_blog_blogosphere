@@ -12,9 +12,10 @@ class ControllerPost
             throw new \Exception('Notfound Page', 1);
         } elseif (isset($_GET['create'])) {
             $this->create();
-        }
-        elseif (isset($_GET['status']) && isset($_GET['status']) == 'new') {
+        } elseif (isset($_GET['status']) && $_GET['status'] === 'new') {
             $this->store();
+        } elseif (isset($_GET['status']) && $_GET['status'] === 'delete'){
+            $this->delete();
         } else {
             $this->posts();
         }
@@ -43,5 +44,15 @@ class ControllerPost
         $post = $this->_postRepository->createPost();
         $posts = $this->_postRepository->getPosts();
         $this->_view = new View('Post');
-        $this->_view->generate(array('posts' => $posts));    }
+        $this->_view->generate(array('posts' => $posts));
+    }
+
+    private function delete()
+    {
+        $this->_postRepository = new PostRepository();
+        $deletePost = $this->_postRepository->deletePost($_GET['postToDelete']);
+        $posts = $this->_postRepository->getPosts();
+        $this->_view = new View('Post');
+        $this->_view->generate(array('posts' => $posts));
+    }
 }

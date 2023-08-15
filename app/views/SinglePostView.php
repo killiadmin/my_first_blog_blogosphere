@@ -12,13 +12,16 @@ if ($post[0] ?? []) {
 
         <footer class="d-flex justify-content-evenly" style="width: 100%;">
             <p>Author's social network :
-                <a href="#" class="badge bg-secondary">Github</a>,
-                <a href="#" class="badge bg-secondary">Twitter</a>,
+                <a href="#" class="badge bg-secondary">Github</a>
+                <a href="#" class="badge bg-secondary">Twitter</a>
                 <a href="#" class="badge bg-secondary">Linkedin</a>
             </p>
-            <a href="" style="color: #3C4245;">
-                <i class="fa-regular fa-pen-to-square xl"></i>
-            </a>
+            <form action="post&status=delete&postToDelete=<?=$post[0]->idPost()?>" method="post">
+                <div class="form-group">
+                    <label for="delete" id="delete"></label>
+                    <input class="btn btn-danger" type="submit" name="delete" value="Delete">
+                </div>
+            </form>
         </footer>
     </article>
     <?php

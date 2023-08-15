@@ -4,9 +4,6 @@
         <div class="card-body">
             <div class="d-flex justify-content-between">
                 <h3 class="card-title"><?= $post->title() ?></h3>
-                <a href="#">
-                    <i class="fa-solid fa-trash fa-lg" style="color: #3C4245"></i>
-                </a>
             </div>
             <div class="d-flex justify-content-between">
                 <p class="card-text maxWidth w-50"><?= $post->chapo() ?></p>

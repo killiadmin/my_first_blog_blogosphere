@@ -93,7 +93,7 @@ abstract class Model
 
         $sql = "SELECT * 
                 FROM " . $table . "
-                WHERE id=" . $id;
+                WHERE idUser=" . $id;
 
         $query = self::$_db->prepare($sql);
         $query->execute();
@@ -121,7 +121,7 @@ abstract class Model
         $content = isset($_POST['content']) ? $_POST['content'] : '';
 
         // Use the date() function to get the current date in the correct format
-        $currentDate = date('d-m-Y');
+        $currentDate = date('Y-m-d');
         $dateUpdate = $currentDate;
 
         $idUserAssociated = ' 10';
@@ -131,5 +131,19 @@ abstract class Model
 
         // Close cursor after query execution
         $query->closeCursor();
+    }
+
+    protected function deleteOne ($table, $id)
+    {
+        $this->getConnectionDataBase();
+        $sql = "DELETE 
+                FROM " . $table . "
+                WHERE idPost=" . $id;
+        $query = self::$_db->prepare($sql);
+        $query->execute();
+
+        // Close cursor after query execution
+        $query->closeCursor();
+
     }
 }
