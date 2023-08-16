@@ -14,7 +14,7 @@ class ControllerPost
             $this->create();
         } elseif (isset($_GET['status']) && $_GET['status'] === 'new') {
             $this->store();
-        } elseif (isset($_GET['status']) && $_GET['status'] === 'delete'){
+        } elseif (isset($_GET['status']) && $_GET['status'] === 'delete') {
             $this->delete();
         } else {
             $this->posts();

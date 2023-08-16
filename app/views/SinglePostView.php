@@ -71,12 +71,11 @@ if ($post[0] ?? []) {
     </div>
 </section>
 
-<form class="p-3">
+<form class="p-3" action="singlepost&id=<?= $post[0]->idPost()?>&status=comment" method="post">
     <h4>Express yourself</h4>
-
     <div class="form-group">
-        <label for="message">Your comment :</label>
-        <textarea id="message" name="message" class="form-control"></textarea>
+        <label for="contentComment">Your comment :</label>
+        <textarea id="contentComment" name="contentComment" class="form-control"></textarea>
     </div>
     <div class="d-flex flex-row-reverse m-3">
         <button type="submit" class="btn btn-secondary">Send my comment</button>

@@ -133,6 +133,37 @@ abstract class Model
         $query->closeCursor();
     }
 
+    protected function createOneComment($table, $tableCheck, $id)
+    {
+        $this->getConnectionDataBase();
+        $sqlCheckPost = "SELECT * 
+                         FROM " . $tableCheck . "
+                         WHERE idPost=" . $id;
+        $checkPostExist = self::$_db->prepare($sqlCheckPost);
+        $checkPostExist->execute();
+
+        if ($checkPostExist->rowCount() > 0) {
+            $sqlInsertComment = "INSERT INTO " . $table . " (idUserAssociated, idPostAssociated, content, dateCreate, dateUpdate) VALUES (?, ?, ?, ?, ?)";
+            $sqlPrepareComment = self::$_db->prepare($sqlInsertComment);
+
+            // Check if the values exist before using them
+            $contentComment = isset($_POST['contentComment']) ? $_POST['contentComment'] : '';
+
+            $idUserAssociated = '1';
+            $idPostAssociated = $id;
+
+            // Use the date() function to get the current date in the correct format
+            $currentDate = date('Y-m-d');
+            $dateUpdate = $currentDate;
+
+            // Bind the values and run the query
+            $sqlPrepareComment->execute([$idUserAssociated, $idPostAssociated ,$contentComment , $currentDate, $dateUpdate]);
+
+            // Close cursor after query execution
+            $sqlPrepareComment->closeCursor();
+        }
+    }
+
     protected function deleteOne ($table, $tableCheck, $id)
     {
         $this->getConnectionDataBase();
