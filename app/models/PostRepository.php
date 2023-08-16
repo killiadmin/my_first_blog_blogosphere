@@ -20,6 +20,6 @@ class PostRepository extends Model
 
     public function deletePost($id)
     {
-        return $this->deleteOne('posts', $id);
+        return $this->deleteOne('posts','comments', $id);
     }
 }

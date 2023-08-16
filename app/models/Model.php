@@ -133,9 +133,23 @@ abstract class Model
         $query->closeCursor();
     }
 
-    protected function deleteOne ($table, $id)
+    protected function deleteOne ($table, $tableCheck, $id)
     {
         $this->getConnectionDataBase();
+        $sqlComment = "SELECT * 
+                       FROM " . $tableCheck . "
+                       WHERE idPostAssociated=" . $id;
+        $checkCommentsExists = self::$_db->prepare($sqlComment);
+        $checkCommentsExists->execute();
+
+        if ($checkCommentsExists->rowCount() > 0) {
+            $sqlDeleteComment = "DELETE 
+                                 FROM " . $tableCheck . "
+                                 WHERE idPostAssociated=" . $id;
+            $sqlDeleteComment = self::$_db->prepare($sqlDeleteComment);
+            $sqlDeleteComment->execute();
+        }
+
         $sql = "DELETE 
                 FROM " . $table . "
                 WHERE idPost=" . $id;
@@ -144,6 +158,5 @@ abstract class Model
 
         // Close cursor after query execution
         $query->closeCursor();
-
     }
 }
