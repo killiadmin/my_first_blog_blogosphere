@@ -118,8 +118,9 @@ abstract class Model
 
         // Check if the values exist before using them
         $title = isset($_POST['title']) ? $_POST['title'] : '';
-        $chapo = isset($_POST['chapo']) ? $_POST['chapo'] : '';
-        $content = isset($_POST['content']) ? $_POST['content'] : '';
+        $chapo = isset($_POST['chapo']) ? nl2br($_POST['chapo']) : '';
+        $content = isset($_POST['content']) ? nl2br($_POST['content']) : '';
+
 
         // Use the date() function to get the current date in the correct format
         $currentDate = date('Y-m-d');
