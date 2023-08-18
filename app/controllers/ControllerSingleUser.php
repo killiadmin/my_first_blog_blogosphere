@@ -1,7 +1,6 @@
 <?php
 
 require_once '../app/views/View.php';
-
 class ControllerSingleUser
 {
     private $_userRepository;

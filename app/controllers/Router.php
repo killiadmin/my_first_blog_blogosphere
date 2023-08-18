@@ -40,8 +40,10 @@ class Router
                 }
             } else {
                 //Si aucune route ne match l'utilisateur sera redirigé vers l'accueil
-                require_once ('../app/controllers/ControllerHomeAdministrator.php');
-                $this->controller = new ControllerHomeAdministrator($url);
+                /*require_once ('../app/controllers/ControllerHomeAdministrator.php');
+                $this->controller = new ControllerHomeAdministrator($url);*/
+                $this->_view = new View('NotFound');
+                $this->_view->generate(array('php_errormsg' => $php_errormsg));
             }
         } catch (\Exception $e) {
             $php_errormsg = $e->getMessage();

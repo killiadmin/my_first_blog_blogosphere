@@ -1,2 +1,4 @@
 .DS_STORE
 .idea/
+composer.json
+composer.lock

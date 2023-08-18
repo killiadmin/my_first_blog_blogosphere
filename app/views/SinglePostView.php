@@ -5,17 +5,14 @@ if ($post[0] ?? []) {
     <article class="d-flex flex-column align-items-center m-3">
         <header>
             <h2 class="text-center"><?= $post[0]->title() ?></h2>
-            <p class="metadata">Publié le <?= $post[0]->dateCreate() ?> par <?= $post[0]->name() ?> <?= $post[0]->userName()?> </p>
+            <p class="metadata">Publié le <?= $post[0]->dateUpdate() ?> par <?= $post[0]->name() ?> <?= $post[0]->userName()?> </p>
         </header>
+
+        <p class="m-3 p-3 bg-light rounded" style="max-width: 800px;"><?= $post[0]->chapo() ?></p>
 
         <p class="m-3 p-3 bg-light rounded" style="max-width: 800px;"><?= $post[0]->content() ?></p>
 
         <footer class="d-flex justify-content-evenly" style="width: 100%;">
-            <p>Author's social network :
-                <a href="#" class="badge bg-secondary">Github</a>
-                <a href="#" class="badge bg-secondary">Twitter</a>
-                <a href="#" class="badge bg-secondary">Linkedin</a>
-            </p>
             <form action="post&status=delete&postToDelete=<?=$post[0]->idPost()?>" method="post">
                 <div class="form-group">
                     <label for="delete" id="delete"></label>
@@ -59,7 +56,7 @@ if ($post[0] ?? []) {
             <div class="bg-light bg-gradient rounded p-3">
                 <div class="comment-info d-flex gap-2">
                     <p class="comment-author"><strong>Author : </strong><?= $deployComment->name() ?> <?= $deployComment->username() ?></p>
-                    <p class="comment-date"><strong>Publié le : </strong> <?= $deployComment->dateCreate() ?></p>
+                    <p class="comment-date"><strong>Publié le : </strong> <?= $deployComment->dateUpdate() ?></p>
                 </div>
                 <div class="comment-content d-flex align-center ">
                     <p class="text-light mt-3 bg-success bg-gradient rounded p-3"><?= $deployComment->content() ?></p>

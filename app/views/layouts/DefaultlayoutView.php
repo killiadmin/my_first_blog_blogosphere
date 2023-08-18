@@ -17,7 +17,7 @@
             <div class="collapse navbar-collapse justify-content-center fs-2 ">
                 <ul class="navbar-nav gap-4 testBorder">
                     <li class="nav-item">
-                        <a class="nav-link active text-light" href="/home">My home</a>
+                        <a class="nav-link active text-light" href="/singleuser&id=1">My home</a>
                     </li>
                     <li class="nav-item">
                         <a class="text-monospace nav-link text-light" href="/post">Blogo-space</a>
@@ -53,7 +53,7 @@
             Blogorama | © 2023 Copyright:
             <a class="text-light text-decoration-none fw-bold" href="https://killianfilatre.fr">Killian Filâtre </a>
                 | You are
-                <a class="text-light text-decoration-none fw-bold" href="#">Administrator </a>
+                <a class="text-light text-decoration-none fw-bold" href="/homeadministrator">Administrator </a>
         </div>
         <!-- Copyright -->
     </footer>

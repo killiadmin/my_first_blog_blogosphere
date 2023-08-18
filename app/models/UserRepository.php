@@ -10,6 +10,6 @@ class UserRepository extends Model
 
     public function getUser($id)
     {
-        return $this->getOneUser('users', 'User', $id);
+        return $this->getOneUser('users', 'User', 1);
     }
 }

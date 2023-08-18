@@ -91,6 +91,7 @@ abstract class Model
         $this->getConnectionDataBase();
         $datas = [];
 
+
         $sql = "SELECT * 
                 FROM " . $table . "
                 WHERE idUser=" . $id;
