@@ -113,27 +113,42 @@ abstract class Model
     protected function createOne($table)
     {
         $this->getConnectionDataBase();
-        $sql = "INSERT INTO " . $table . " (idUserAssociated, title, chapo, content, dateCreate, dateUpdate) VALUES (?, ?, ?, ?, ?, ?)";
+
+        // Prepare the SQL query
+        $sql = "INSERT INTO $table (idUserAssociated, title, chapo, content, dateCreate, dateUpdate) VALUES (?, ?, ?, ?, ?, ?)";
         $query = self::$_db->prepare($sql);
 
-        // Check if the values exist before using them
-        $title = isset($_POST['title']) ? $_POST['title'] : '';
-        $chapo = isset($_POST['chapo']) ? nl2br($_POST['chapo']) : '';
-        $content = isset($_POST['content']) ? nl2br($_POST['content']) : '';
+        // Validate and sanitize user input
+        $title = isset($_POST['title']) ? trim($_POST['title']) : '';
+        $chapo = isset($_POST['chapo']) ? trim($_POST['chapo']) : '';
+        $content = isset($_POST['content']) ? trim($_POST['content']) : '';
 
+        // Check for empty fields
+        if (empty($title) || empty($chapo) || empty($content)) {
+            $error = "Tous les champs doivent être remplis.";
+            // You can redirect or handle the error as needed
+            return $error;
+        }
 
-        // Use the date() function to get the current date in the correct format
-        $currentDate = date('Y-m-d');
-        $dateUpdate = $currentDate;
+        $currentDate = date('Y-m-d H:i:s');
 
-        $idUserAssociated = ' 10';
+        $idUserAssociated = '1'; // Replace with the actual user ID
 
         // Bind the values and run the query
-        $query->execute([$idUserAssociated, $title, $chapo, $content, $currentDate, $dateUpdate]);
+        if ($query->execute([$idUserAssociated, $title, $chapo, $content, $currentDate, $currentDate])) {
+            $successMessage = "L'article a été ajouté avec succès.";
+            // You can redirect or handle the success as needed
+            return $successMessage;
+        } else {
+            $errorMessage = "Une erreur est survenue lors de l'ajout de l'article.";
+            // You can redirect or handle the error as needed
+            return $errorMessage;
+        }
 
         // Close cursor after query execution
         $query->closeCursor();
     }
+
 
     protected function createOneComment($table, $tableCheck, $id)
     {
@@ -155,7 +170,7 @@ abstract class Model
             $idPostAssociated = $id;
 
             // Use the date() function to get the current date in the correct format
-            $currentDate = date('Y-m-d');
+            $currentDate = date('Y-m-d H:i:s');
             $dateUpdate = $currentDate;
 
             // Bind the values and run the query
@@ -192,4 +207,54 @@ abstract class Model
         // Close cursor after query execution
         $query->closeCursor();
     }
+
+    protected function updateOne($table, $tableJoin, $frstItem, $scdItem, $thrdItem, $forItem, $fivItem, $id)
+    {
+        $this->getConnectionDataBase();
+
+        $sqlPost = "SELECT * 
+                    FROM " . $table . "
+                    WHERE idPost=?";
+        $checkPostExists = self::$_db->prepare($sqlPost);
+        $checkPostExists->execute([$id]);
+
+        if ($checkPostExists->rowCount() > 0) {
+            try {
+                // Récupérer les données POST et les valider
+                $title = isset($_POST['title']) ? trim($_POST['title']) : '';
+                $name = isset($_POST['name']) ? trim($_POST['name']) : '';
+                $username = isset($_POST['username']) ? trim($_POST['username']) : '';
+                $chapo = isset($_POST['chapo']) ? trim($_POST['chapo']) : '';
+                $content = isset($_POST['content']) ? trim($_POST['content']) : '';
+
+                $currentDate = date('Y-m-d H:i:s');
+
+                // Requête préparée pour la mise à jour
+                $sqlUpdatePost = "UPDATE " . $table . " 
+                              JOIN " . $tableJoin . "
+                              ON " . $table . ".idUserAssociated = " . $tableJoin . ".idUser
+                              SET 
+                              " . $frstItem . "=?,
+                              " . $scdItem . "=?,
+                              " . $thrdItem . "=?,
+                              " . $forItem . "=?,
+                              " . $fivItem . "=?,
+                              dateUpdate = ?
+                              WHERE idPost=?";
+
+                $sqlExecUpdatePost = self::$_db->prepare($sqlUpdatePost);
+
+                // Exécuter la mise à jour avec les valeurs liées
+                $sqlExecUpdatePost->execute([$title, $name, $username, $chapo, $content, $currentDate, $id]);
+            } catch (PDOException $e) {
+                // Gérer les erreurs
+                echo "Erreur : " . $e->getMessage();
+            } finally {
+                if ($sqlExecUpdatePost) {
+                    $sqlExecUpdatePost->closeCursor();
+                }
+            }
+        }
+    }
+
 }

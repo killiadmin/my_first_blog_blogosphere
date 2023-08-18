@@ -3,11 +3,16 @@ if ($post[0] ?? []) {
     ?>
     <div class="container mt-4">
         <h1>Update your post ...</h1>
-        <form action="post&status=update" method="post">
+        <form action="singlepost&id=<?= $post[0]->idPost() ?>&status=update" method="post">
             <div class="form-group">
-                <label for="title">Author :</label>
-                <input type="text" class="form-control" id="author" name="author" required
-                       value="<?= $post[0]->name() ?>&nbsp;<?= $post[0]->username() ?>">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required
+                       value="<?= $post[0]->username() ?>">
+            </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required
+                       value="<?= $post[0]->name() ?>">
             </div>
             <div class="form-group">
                 <label for="title">Title :</label>
@@ -17,14 +22,16 @@ if ($post[0] ?? []) {
 
             <div class="form-group">
                 <label for="chapo">Chapo :</label>
-                <textarea class="form-control" id="chapo" name="chapo" rows="4"
-                          required> <?= $post[0]->chapo() ?> </textarea>
+                <textarea class="form-control" id="chapo" name="chapo" rows="4" required>
+                    <?= $post[0]->chapo() ?>
+                </textarea>
             </div>
 
             <div class="form-group">
                 <label for="content">Content :</label>
-                <textarea class="form-control" id="content" name="content" rows="10"
-                          required> <?= $post[0]->content() ?> </textarea>
+                <textarea class="form-control" id="content" name="content" rows="10" required>
+                    <?= $post[0]->content() ?>
+                </textarea>
             </div>
             <div class="d-flex flex-row-reverse m-3">
                 <button type="submit" class="btn btn-warning">Update</button>

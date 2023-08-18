@@ -8,7 +8,7 @@
             <div class="d-flex justify-content-between">
                 <p class="card-text maxWidth w-50"><?= $post->chapo() ?></p>
                 <div class="d-flex flex-column">
-                    <p>&nbsp;<strong>Posted the : <?= $post->dateCreate() ?></strong></p>
+                    <p>&nbsp;<strong>Modified the : <?= $post->dateUpdate() ?></strong></p>
                     <p><strong>Author : <?= $post->name() ?> <?= $post->username() ?></strong>&nbsp;</p>
                 </div>
             </div>

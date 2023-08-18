@@ -12,6 +12,8 @@ class ControllerPost
             throw new \Exception('Notfound Page', 1);
         } elseif (isset($_GET['create'])) {
             $this->create();
+        } elseif (isset($_GET['modify'])) {
+            $this->modify();
         } elseif (isset($_GET['status']) && $_GET['status'] === 'new') {
             $this->store();
         } elseif (isset($_GET['status']) && $_GET['status'] === 'delete') {
@@ -35,6 +37,16 @@ class ControllerPost
         if (isset($_GET['create'])) {
             $this->_view = new View('WritePost');
             $this->_view->generate(null);
+        }
+    }
+
+    private function modify()
+    {
+        if (isset($_GET['modify'], $_GET['id'])) {
+            $this->_postRepository = new PostRepository();
+            $post = $this->_postRepository->getPost($_GET['id']);
+            $this->_view = new View('ModifyPost');
+            $this->_view->generate(array('post' => $post));
         }
     }
 

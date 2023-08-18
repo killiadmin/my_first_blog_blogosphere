@@ -13,6 +13,19 @@ class PostRepository extends Model
         return $this->getOne('posts', 'users', 'Post', $id);
     }
 
+    public function updatePost($id)
+    {
+        return $this->updateOne(
+            'posts' ,
+            'users',
+            'title',
+            'name',
+            'username',
+            'chapo',
+            'content',
+            $id);
+    }
+
     public function createPost()
     {
         return $this->createOne('posts', 'Post');

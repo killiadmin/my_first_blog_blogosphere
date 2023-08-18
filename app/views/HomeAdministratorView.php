@@ -81,7 +81,7 @@
                         <?php if ($user->activated() == 1): ?>
                             <button class="btn btn-success" style="width: 105px;">Activate</button>
                         <?php else: ?>
-                            <button class="btn btn-danger" style="width: 105px;">Deactivate</button>
+                            <button class="btn btn-danger" style="width: 105px;">Desactivate</button>
                         <?php endif; ?>
                     </td>
                 </tr>
@@ -111,7 +111,7 @@
                     <td><?= $post->title() ?></td>
                     <td><?= $post->dateUpdate() ?></td>
                     <td>
-                        <a href="/modifypost&id=<?= $post->idPost() ?>">
+                        <a href="post&modify&id=<?= $post->idPost() ?>">
                             <div class="form-group">
                                 <input type="submit" name="modify" class="btn btn-warning" style=" width: 105px;" value="Modify">
                             </div>
