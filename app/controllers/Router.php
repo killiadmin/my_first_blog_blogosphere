@@ -11,7 +11,9 @@ class Router
         try {
             //Enregistre automatiquement une fonction d'autoload (les classes du dossier models)
             spl_autoload_register(function ($class){
-                require_once('../app/models/'.$class.'.php');
+                if ($class !== 'Resources'){
+                    require_once('../app/models/'.$class.'.php');
+                }
             });
 
             //Création de l'url

@@ -1,46 +1,3 @@
-<?php
-/*define('API_USER', 'a847669765140ba252eb1743c9b29396');
-define('API_LOGIN', 'abf1c232ed1081bfb6def81e6a8850c1');
-
-$mj = new \Mailjet\Client(API_USER,API_LOGIN,true,['version' => 'v3.1']);
-
-if (isset($_POST['mailForm'])) {
-    $name = htmlspecialchars($_POST['name']);
-    $username = htmlspecialchars($_POST['username']);
-    $email = htmlspecialchars($_POST['email']);
-    $message = htmlspecialchars($_POST['message']);
-
-    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $body = [
-            'Messages' => [
-                [
-                    'From' => [
-                        'Email' => $email,
-                        'Name' => "Me"
-                    ],
-                    'To' => [
-                        [
-                            'Email' => "support@chaletsetcaviar.killianfilatre.fr",
-                            'Name' => "You"
-                        ]
-                    ],
-                    'Subject' => "My first Mailjet Email!",
-                    'TextPart' => "De $name $username, Contenu du mail : $message",
-                ]
-            ]
-        ];
-
-        $response = $mj->post(Resources::$Email, ['body' => $body]);
-        $response->success();
-
-        $msg = "Votre message a bien été envoyé !";
-
-    } else {
-        $msg = "L'email n'est pas valide.";
-    }
-}
-*/?>
-
 <div class="container">
     <div class="row">
         <div class="col-md-6 p-3 mt-3 d-flex flex-column align-items-center justify-content-center">
@@ -73,7 +30,7 @@ if (isset($_POST['mailForm'])) {
         <div class="col-md-6">
             <!-- Formulaire de contact -->
             <h4>Contact Me</h4>
-            <form method="POST" action="">
+            <form method="POST" action="singleuser&id=1&status=sendemail">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" class="form-control" id="name" name="name" required placeholder="Your name">
@@ -94,11 +51,6 @@ if (isset($_POST['mailForm'])) {
                     <input type="submit" class="btn btn-secondary" name="mailForm" value="Send" >
                 </div>
             </form>
-            <?php
-            if(isset($msg)) {
-                echo $msg;
-            }
-            ?>
         </div>
     </div>
 </div>
