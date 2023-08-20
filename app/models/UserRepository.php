@@ -12,4 +12,9 @@ class UserRepository extends Model
     {
         return $this->getOneUser('users', 'User', 1);
     }
+
+    public function connection($mail, $password)
+    {
+        return $this->connectionUser('users', 'User' ,$mail, $password);
+    }
 }

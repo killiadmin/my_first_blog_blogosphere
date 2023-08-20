@@ -24,12 +24,10 @@
         <input class="form-control" type="password" name="password" id="password" required>
     </div>
 
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between mt-5 mb-5">
         <a href="/login">
             <i class="fa-solid fa-arrow-left fa-2xl" title="Return to login menu" style="color: #3C4245"></i>
         </a>
         <button class="btn btn-secondary" type="submit" name="validateSignUp">Sign Up</button>
     </div>
 </form>
-
-<!--<script src="https://kit.fontawesome.com/18e2e0bb4c.js" crossorigin="anonymous"></script>-->

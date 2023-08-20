@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Blogosphere</title>
+    <title><?= $_title ?? "Blogosphere" ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet"  href="/css/style.css">
@@ -15,6 +15,7 @@
     <nav class="navbar navbar-expand-lg" style="background-color: #3C4245">
         <div class="container-fluid p-3">
             <div class="collapse navbar-collapse justify-content-center fs-2 ">
+                <?php if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) { ?>
                 <ul class="navbar-nav gap-4 testBorder">
                     <li class="nav-item">
                         <a class="nav-link active text-light" href="/singleuser&id=1">My home</a>
@@ -22,13 +23,25 @@
                     <li class="nav-item">
                         <a class="text-monospace nav-link text-light" href="/post">Blogo-space</a>
                     </li>
+                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin' ) { ?>
                     <li class="nav-item">
                         <a class="text-monospace nav-link text-light" href="/post&create">Write an article</a>
                     </li>
+                    <?php
+                        }
+                    ?>
                     <li class="nav-item">
                         <a class="text-monospace nav-link text-light" href="/login">Sign out</a>
                     </li>
                 </ul>
+                    <div class="bg-success rounded ms-5">
+                        <div class="text-light fs-4 ">
+                            Hello <?= $_SESSION['name'] ?>&nbsp;<?= $_SESSION['username'] ?>
+                        </div>
+                    </div>
+                <?php
+                    }
+                ?>
             </div>
         </div>
     </nav>
@@ -52,8 +65,12 @@
         <div class="text-center p-3 text-light" style="background-color: #3C4245;">
             Blogorama | © 2023 Copyright:
             <a class="text-light text-decoration-none fw-bold" href="https://killianfilatre.fr">Killian Filâtre </a>
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') { ?>
                 | You are
                 <a class="text-light text-decoration-none fw-bold" href="/homeadministrator">Administrator </a>
+            <?php
+                }
+            ?>
         </div>
         <!-- Copyright -->
     </footer>

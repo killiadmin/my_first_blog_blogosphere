@@ -41,11 +41,9 @@ class Router
                     throw new \Exception('La page n\'existe pas', 1);
                 }
             } else {
-                //Si aucune route ne match l'utilisateur sera redirigé vers l'accueil
-                /*require_once ('../app/controllers/ControllerHomeAdministrator.php');
-                $this->controller = new ControllerHomeAdministrator($url);*/
-                $this->_view = new View('NotFound');
-                $this->_view->generate(array('php_errormsg' => $php_errormsg));
+                //Si aucune route ne match l'utilisateur sera redirigé vers le menu connection
+                $this->_view = new View('Login');
+                $this->_view->generate(null);
             }
         } catch (\Exception $e) {
             $php_errormsg = $e->getMessage();

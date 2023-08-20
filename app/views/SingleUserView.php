@@ -40,8 +40,8 @@
                     <input type="text" class="form-control" id="username" name="username" required placeholder="Your username">
                 </div>
                 <div class="form-group">
-                    <label for="email">Mail recipient</label>
-                    <input type="email" class="form-control" id="email" name="email" required placeholder="Your mail">
+                    <label for="mail">Mail recipient</label>
+                    <input type="email" class="form-control" id="mail" name="mail" required placeholder="Your mail">
                 </div>
                 <div class="form-group">
                     <label for="message">Message</label>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../app/views/View.php';
 
 class ControllerPost
@@ -34,10 +35,16 @@ class ControllerPost
 
     private function create()
     {
-        if (isset($_GET['create'])) {
+        if (isset($_GET['create']) && isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
             $this->_view = new View('WritePost');
             $this->_view->generate(null);
+        } else {
+            $msg = 'Vous n\'êtes pas autorisé à écrire un article !';
+            $this->_view = new View('Login');
+            $this->_view->generate(array('msg' => $msg));
         }
+
+
     }
 
     private function modify()

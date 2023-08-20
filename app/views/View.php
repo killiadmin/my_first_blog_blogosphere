@@ -36,7 +36,10 @@ class View
         $pageContent = $this->generateFile($this->_file, $data);
 
         //Default Layout
-        $view = $this->generateFile('../app/views/layouts/DefaultlayoutView.php', array('title' => $this->_title, 'pageContent' => $pageContent));
+        $view = $this->generateFile('../app/views/layouts/DefaultlayoutView.php', array(
+            'title' => $this->_title,
+            'pageContent' => $pageContent
+        ));
         echo $view;
     }
 }
