@@ -13,9 +13,11 @@ class ControllerSingleUser
         if (isset($url) && count($url) < 1) {
             throw new \Exception('La page que vous souhaitez, n\'est pas disponible.');
         } elseif (isset($_GET['status']) && $_GET['status'] === 'sendemail'){
-            $this->sendemail();
+            $this->sendEmail();
         } elseif (isset($_GET['status']) && $_GET['status'] === 'login'){
-            $this->connection();
+            $this->connectionUser();
+        } elseif (isset($_GET['status']) && $_GET['status'] === 'signup'){
+            $this->signUpUser();
         } else {
             $this->user();
         }
@@ -40,7 +42,7 @@ class ControllerSingleUser
      * by the user and which feeds the user's session
      * @return void
      */
-    private function connection()
+    private function connectionUser()
     {
         if (isset($_GET['id'])) {
             if (!empty($_POST['mail']) && !empty($_POST['password'])) {
@@ -79,12 +81,59 @@ class ControllerSingleUser
         }
     }
 
+    private function signUpUser ()
+    {
+        if (isset($_GET['id'])) {
+            if (!empty($_POST['name']) && !empty($_POST['username']) && !empty($_POST['mail']) && !empty($_POST['password'])) {
+
+                if ($this->_userRepository->isEmailTaken($user_mail)) {
+                    echo 'Cette adresse e-mail est déjà associé à un compte';
+                    return;
+                }
+
+                $user_name = htmlspecialchars($_POST["name"]);
+                $user_username = htmlspecialchars($_POST["username"]);
+                $user_mail = filter_var($_POST["mail"], FILTER_VALIDATE_EMAIL);
+                $user_password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+
+                $this->_userRepository = new UserRepository();
+
+                $this->_userRepository->createUser($user_name, $user_username, $user_mail, $user_password);
+
+                $userInfos = $this->_userRepository->checkInfosRegister($user_name, $user_username, $user_mail);
+
+                if (!empty($userInfos)) {
+
+                    if (session_status() !== PHP_SESSION_ACTIVE) {
+                        session_start();
+                    }
+
+                    $_SESSION['auth'] = true;
+                    $_SESSION['role'] = $userInfos[0]->status();
+                    $_SESSION['id'] = $userInfos[0]->idUser();
+                    $_SESSION['username'] = $userInfos[0]->username();
+                    $_SESSION['name'] = $userInfos[0]->name();
+
+                    $user = $this->_userRepository->getUser($_GET['id']);
+
+                    $this->_view = new View('SingleUser');
+                    $this->_view->generate(array('user' => $user));
+                } else {
+                    $msg = 'Vos identifiants sont incorrects.';
+                    $this->_view = new View('Login');
+                    $this->_view->generate(array('msg' => $msg));
+                }
+            }
+
+        }
+    }
+
     /**
      * Method that uses the MailJet package to send an email with the contact form
      * that will generate the view of the homepage after sending it.
      * @return void
      */
-    private function sendemail()
+    private function sendEmail()
 {
         if (isset($_GET['id'])) {
 

@@ -106,29 +106,6 @@ abstract class Model
         $query->closeCursor();
     }
 
-/*    protected function connectionUser($table, $obj , $mail, $password)
-    {
-        $this->getConnectionDataBase();
-        $datas = [];
-
-        $sqlCheckUser = "SELECT *
-                         FROM " . $table . "
-                         WHERE mail =". $mail;
-
-            $checkIfUserExist = self::$_db->prepare($sqlCheckUser);
-            $checkIfUserExist->execute();
-
-        if ($checkIfUserExist->rowcount() > 0 && password_verify($password)) {
-                while ($data = $checkIfUserExist->fetch(PDO::FETCH_ASSOC)) {
-                    $datas[] = new $obj($data);
-                }
-        }
-
-        return $datas;
-        // Close cursor after query execution
-        $checkIfUserExist->closeCursor();
-    }*/
-
     protected function connectionUser($table, $obj, $mail, $password)
     {
         // Établissement de la connexion à la base de données
@@ -163,6 +140,82 @@ abstract class Model
         return $datas;
     }
 
+    protected function checkIfEmailTaken($table, $obj, $mail)
+    {
+        $this->getConnectionDataBase();
+        $datas = [];
+
+        $sqlCheckIsEmailTaken = "SELECT mail 
+                                 FROM " . $table . " 
+                                 WHERE mail = " . $mail;
+
+        $checkMail = self::$_db->prepare($sqlCheckIsEmailTaken);
+        $checkMail->execute();
+
+        if ($checkMail->rowCount() > 0) {
+             return 'Un utilisateur possède déjà cette adresse mail !';
+        } else {
+            while ($data = $checkMail->fetch(PDO::FETCH_ASSOC)) {
+                $datas[] = new $obj($data);
+            }
+
+            return $datas;
+        }
+
+        $query->closeCursor();
+    }
+
+    protected function methodForCreateUser ($table, $name, $username, $mail, $password)
+    {
+        $this->getConnectionDataBase();
+
+        $sqlCreateUser = "INSERT INTO " . $table . " (name, username, mail, password, status ,dateCreate) VALUES (?, ?, ?, ?, ?, ?)";
+        $execCreateUser = self::$_db->prepare($sqlCreateUser);
+
+        if (empty($name) || empty($username) || empty($mail) || empty($password)) {
+            $error = "Tous les champs doivent être remplis.";
+            return $error;
+        }
+
+        $date = date("Y-m-d H:i:s");
+        $status = 'reader';
+
+        if ($execCreateUser->execute([ $name, $username, $mail, $password, $status, $date])) {
+            $successMessage = "L'article a été ajouté avec succès.";
+            return $successMessage;
+        } else {
+            $errorMessage = "Une erreur est survenue lors de l'ajout de l'article.";
+            return $errorMessage;
+        }
+
+        $query->closeCursor();
+    }
+
+    protected function methodForGetInfosregister ($table, $obj, $name, $username, $mail)
+    {
+        $this->getConnectionDataBase();
+        $datas = [];
+
+        $sqlCheckInfosRegister = "SELECT name, username, mail 
+                                  FROM " . $table . " 
+                                  WHERE name = ? && username = ? && mail = ?";
+
+        $checkinfosRegister = self::$_db->prepare($sqlCheckInfosRegister);
+        $checkinfosRegister->execute([$name, $username, $mail]);
+
+        if ($checkinfosRegister->rowCount() > 0) {
+            while ($data = $checkinfosRegister->fetch(PDO::FETCH_ASSOC)) {
+                $datas[] = new $obj($data);
+            }
+
+            return $datas;
+        } else {
+            return 'Il y a eu problème lors de l\'inscription de l\'utilisateur';
+        }
+
+        $query->closeCursor();
+    }
+
     //Method to insert a new post in the database
     protected function createOne($table)
     {
@@ -186,7 +239,7 @@ abstract class Model
 
         $currentDate = date('Y-m-d H:i:s');
 
-        $idUserAssociated = '1'; // Replace with the actual user ID
+        $idUserAssociated = '1';
 
         // Bind the values and run the query
         if ($query->execute([$idUserAssociated, $title, $chapo, $content, $currentDate, $currentDate])) {

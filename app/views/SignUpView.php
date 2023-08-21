@@ -2,7 +2,7 @@
     <h1>Sign up to express yourself ...</h1>
 </div>
 
-<form class="container mb-5 mt-5" method="POST" action="" style="width: 600px;">
+<form class="container mb-5 mt-5" method="POST" action="singleuser&id=1&status=signup" style="width: 600px;">
 
     <div class="mb-3">
         <label class="form-label" for="name">Name :</label>

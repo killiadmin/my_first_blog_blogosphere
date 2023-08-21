@@ -17,4 +17,18 @@ class UserRepository extends Model
     {
         return $this->connectionUser('users', 'User' ,$mail, $password);
     }
+
+    public function isEmailTaken($mail){
+        return $this->checkIfEmailTaken('users', 'User', $mail);
+    }
+
+    public function createUser($name, $username, $mail, $password)
+    {
+        return $this->methodForCreateUser('users', $name, $username, $mail, $password);
+    }
+
+    public function checkInfosRegister($name, $username, $mail)
+    {
+        return $this->methodForGetInfosregister('users', 'User' , $name, $username, $mail);
+    }
 }
