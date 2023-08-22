@@ -86,10 +86,7 @@ class ControllerSingleUser
         if (isset($_GET['id'])) {
             if (!empty($_POST['name']) && !empty($_POST['username']) && !empty($_POST['mail']) && !empty($_POST['password'])) {
 
-                if ($this->_userRepository->isEmailTaken($user_mail)) {
-                    echo 'Cette adresse e-mail est déjà associé à un compte';
-                    return;
-                }
+
 
                 $user_name = htmlspecialchars($_POST["name"]);
                 $user_username = htmlspecialchars($_POST["username"]);
@@ -97,6 +94,14 @@ class ControllerSingleUser
                 $user_password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
                 $this->_userRepository = new UserRepository();
+
+                if ($this->_userRepository->isEmailTaken($user_mail)) {
+                    $msg =  'Cette adresse e-mail est déjà associé à un compte !';
+                    $this->_view = new View('SignUp');
+                    $this->_view->generate(array('msg' => $msg));
+
+                    return;
+                }
 
                 $this->_userRepository->createUser($user_name, $user_username, $user_mail, $user_password);
 
@@ -148,6 +153,7 @@ class ControllerSingleUser
                 $name = htmlspecialchars($_POST['name']);
                 $username = htmlspecialchars($_POST['username']);
                 $email = htmlspecialchars($_POST['mail']);
+                $subject = htmlspecialchars($_POST['subject']);
                 $message = htmlspecialchars($_POST['message']);
 
                 if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -164,7 +170,7 @@ class ControllerSingleUser
                                         'Name' => "You"
                                     ]
                                 ],
-                                'Subject' => "My first Mailjet Email!",
+                                'Subject' => $subject,
                                 'TextPart' => "De $name $username, Contenu du mail : $message",
                             ]
                         ]
@@ -175,10 +181,14 @@ class ControllerSingleUser
                 }
             }
 
+            $msg = 'Your email has been sent.';
             $this->_userRepository = new UserRepository();
             $user = $this->_userRepository->getUser($_GET['id']);
             $this->_view = new View('SingleUser');
-            $this->_view->generate(array('user' => $user));
+            $this->_view->generate(array(
+                'user' => $user,
+                'msg' => $msg
+            ));
         }
     }
 }

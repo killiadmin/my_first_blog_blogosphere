@@ -44,11 +44,26 @@
                     <input type="email" class="form-control" id="mail" name="mail" required placeholder="Your mail">
                 </div>
                 <div class="form-group">
+                    <label for="subject">Object</label>
+                    <input type="text" class="form-control" id="subject" name="subject" required placeholder="The subject of your mail">
+                </div>
+                <div class="form-group">
                     <label for="message">Message</label>
                     <textarea class="form-control" id="message" name="message" rows="3" required placeholder="Your message"></textarea>
                 </div>
                 <div class="d-flex flex-row-reverse p-2">
                     <input type="submit" class="btn btn-secondary" name="mailForm" value="Send" >
+
+                    <?php if (isset($msg)) {
+                        ?>
+                        <div class="container mt-1 mb-1 w-50">
+                            <span class="form-control bg-success rounded text-light">
+                                <?= $msg ?>
+                            </span>
+                        </div>
+                        <?php
+                        }
+                    ?>
                 </div>
             </form>
         </div>

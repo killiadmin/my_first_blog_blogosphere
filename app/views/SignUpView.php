@@ -2,6 +2,16 @@
     <h1>Sign up to express yourself ...</h1>
 </div>
 
+<?php if (isset($msg)) {
+    ?>
+    <div class=" container mt-1 mb-1 w-50">
+        <span class="form-control bg-danger rounded text-light">
+            <?= $msg ?>
+        </span>
+    </div>
+    <?php
+}  ?>
+
 <form class="container mb-5 mt-5" method="POST" action="singleuser&id=1&status=signup" style="width: 600px;">
 
     <div class="mb-3">

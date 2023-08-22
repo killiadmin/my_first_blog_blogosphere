@@ -140,27 +140,17 @@ abstract class Model
         return $datas;
     }
 
-    protected function checkIfEmailTaken($table, $obj, $mail)
+    protected function checkIfEmailTaken($table, $mail)
     {
         $this->getConnectionDataBase();
-        $datas = [];
 
         $sqlCheckIsEmailTaken = "SELECT mail 
-                                 FROM " . $table . " 
-                                 WHERE mail = " . $mail;
+                                 FROM " . $table . "
+                                 WHERE mail = ? ";
 
         $checkMail = self::$_db->prepare($sqlCheckIsEmailTaken);
-        $checkMail->execute();
-
-        if ($checkMail->rowCount() > 0) {
-             return 'Un utilisateur possède déjà cette adresse mail !';
-        } else {
-            while ($data = $checkMail->fetch(PDO::FETCH_ASSOC)) {
-                $datas[] = new $obj($data);
-            }
-
-            return $datas;
-        }
+        $checkMail->execute([$mail]);
+        return $checkMail->fetch();
 
         $query->closeCursor();
     }

@@ -19,7 +19,7 @@ class UserRepository extends Model
     }
 
     public function isEmailTaken($mail){
-        return $this->checkIfEmailTaken('users', 'User', $mail);
+        return $this->checkIfEmailTaken('users', $mail);
     }
 
     public function createUser($name, $username, $mail, $password)
