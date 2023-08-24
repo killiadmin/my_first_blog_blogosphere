@@ -43,8 +43,6 @@ class ControllerPost
             $this->_view = new View('Login');
             $this->_view->generate(array('msg' => $msg));
         }
-
-
     }
 
     private function modify()

@@ -86,8 +86,6 @@ class ControllerSingleUser
         if (isset($_GET['id'])) {
             if (!empty($_POST['name']) && !empty($_POST['username']) && !empty($_POST['mail']) && !empty($_POST['password'])) {
 
-
-
                 $user_name = htmlspecialchars($_POST["name"]);
                 $user_username = htmlspecialchars($_POST["username"]);
                 $user_mail = filter_var($_POST["mail"], FILTER_VALIDATE_EMAIL);

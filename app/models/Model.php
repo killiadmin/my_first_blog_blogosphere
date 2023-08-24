@@ -181,14 +181,16 @@ abstract class Model
         $query->closeCursor();
     }
 
-    protected function methodForGetInfosregister ($table, $obj, $name, $username, $mail)
+    /*protected function methodForGetInfosregister ($table, $obj, $name, $username, $mail)
     {
         $this->getConnectionDataBase();
         $datas = [];
 
-        $sqlCheckInfosRegister = "SELECT name, username, mail 
+        $sqlCheckInfosRegister = "SELECT name, username, mail
                                   FROM " . $table . " 
-                                  WHERE name = ? && username = ? && mail = ?";
+                                  WHERE name = ".$name."
+                                  AND username = ".$username."
+                                  AND mail = ".$mail;
 
         $checkinfosRegister = self::$_db->prepare($sqlCheckInfosRegister);
         $checkinfosRegister->execute([$name, $username, $mail]);
@@ -204,9 +206,43 @@ abstract class Model
         }
 
         $query->closeCursor();
+    }*/
+
+    protected function methodForGetInfosregister($table, $obj, $name, $username, $mail)
+    {
+        $this->getConnectionDataBase();
+        $datas = [];
+
+        $sqlCheckInfosRegister = "SELECT idUser, name, username, mail, status
+                              FROM " . $table . " 
+                              WHERE name = :name
+                              AND username = :username
+                              AND mail = :mail";
+
+        $checkinfosRegister = self::$_db->prepare($sqlCheckInfosRegister);
+        $checkinfosRegister->execute([
+            'name' => $name,
+            'username' => $username,
+            'mail' => $mail
+        ]);
+
+        if ($checkinfosRegister->rowCount() > 0) {
+            while ($data = $checkinfosRegister->fetch(PDO::FETCH_ASSOC)) {
+                $datas[] = new $obj($data);
+            }
+
+            return $datas;
+        } else {
+            return 'Il y a eu un problème lors de l\'inscription de l\'utilisateur';
+        }
     }
 
-    //Method to insert a new post in the database
+    /**
+     * Method to insert a new post in the database
+     * @param $table
+     * @return string
+     */
+
     protected function createOne($table)
     {
         $this->getConnectionDataBase();
@@ -247,7 +283,15 @@ abstract class Model
     }
 
 
-    protected function createOneComment($table, $tableCheck, $id)
+    /**
+     * Method to insert a comment in the table with user data
+     * @param $table
+     * @param $tableCheck
+     * @param $id
+     * @param $idUser
+     * @return void
+     */
+    protected function createOneComment($table, $tableCheck, $id, $idUser)
     {
         $this->getConnectionDataBase();
         $sqlCheckPost = "SELECT * 
@@ -263,10 +307,10 @@ abstract class Model
             // Check if the values exist before using them
             $contentComment = isset($_POST['contentComment']) ? $_POST['contentComment'] : '';
 
-            $idUserAssociated = '1';
+            $idUserAssociated = (int)$idUser;
             $idPostAssociated = $id;
 
-            // Use the date() function to get the current date in the correct format
+            // Use the date function to get the current date in the correct format
             $currentDate = date('Y-m-d H:i:s');
             $dateUpdate = $currentDate;
 

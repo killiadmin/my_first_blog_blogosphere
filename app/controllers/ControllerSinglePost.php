@@ -60,7 +60,7 @@ class ControllerSinglePost
         if (isset($_GET['id'])) {
             $this->_PostRepository = new PostRepository();
             $this->_CommentRepository = new CommentRepository();
-            $creatComment = $this->_CommentRepository->createComment($_GET['id']);
+            $this->_CommentRepository->createComment($_GET['id'], $_SESSION['id']);
             $comment = $this->_CommentRepository->getComment($_GET['id']);
             $post = $this->_PostRepository->getPost($_GET['id']);
             $this->_view = new View('SinglePost');

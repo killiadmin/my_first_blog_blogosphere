@@ -1,59 +1,43 @@
+<?php
+$usersDesactivated = 0;
+
+foreach ($users ?? [] as $user){
+    if ($user->activated() == 0) {
+    $usersDesactivated++;
+    }
+}
+?>
+
 <div class="container">
     <h1 class="my-4">Dashboard</h1>
-    <div class="row">
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Users registered</h5>
-                    <p class="card-text">Total :</p>
-                </div>
+</div>
+<div class="container d-flex gap-3 mb-5">
+        <div class="card w-50">
+            <div class="card-body">
+                <h5 class="card-title">Users registered</h5>
+                <p class="card-text">Total : <?= count($users ?? '') ?></p>
             </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Articles written</h5>
-                    <p class="card-text">Total : </p>
-                </div>
+        <div class="card w-50">
+            <div class="card-body">
+                <h5 class="card-title">Articles written</h5>
+                <p class="card-text">Total : <?= count($posts ?? '') ?></p>
             </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Top article</h5>
-                    <p class="card-text">Total : Premier article</p>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Users desactivate</h5>
-                    <p class="card-text">Total : </p>
-                </div>
+<div class="container d-flex gap-3 mt-5">
+        <div class="card w-50">
+            <div class="card-body">
+                <h5 class="card-title">Users desactivate</h5>
+                <p class="card-text">Total : <?= $usersDesactivated ?></p>
             </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Comments create</h5>
-                    <p class="card-text">Total : </p>
-                </div>
+        <div class="card w-50">
+            <div class="card-body">
+                <h5 class="card-title">Comments create</h5>
+                <p class="card-text">Total : <?= count($comments ?? '') ?> </p>
             </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Top user</h5>
-                    <p class="card-text">Total : killian filatre</p>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 

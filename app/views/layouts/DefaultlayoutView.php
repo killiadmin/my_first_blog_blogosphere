@@ -31,7 +31,7 @@
                         }
                     ?>
                     <li class="nav-item">
-                        <a class="text-monospace nav-link text-light" href="/login">Sign out</a>
+                        <a class="text-monospace nav-link text-light" href="/login">Logout</a>
                     </li>
                 </ul>
                     <div class="bg-success rounded ms-5">

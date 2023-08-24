@@ -5,13 +5,14 @@ require_once '../app/views/View.php';
 
 class ControllerHomeAdministrator
 {
+    private  $_commentRepository;
     private $_postRepository;
     private $_userRepository;
     private $_view;
 
     public function __construct($url)
     {
-        if (isset($url) && count($url) > 1) {
+        if (isset($url) && !isset($_SESSION['auth']) && count($url) > 1) {
             throw new \Exception('Notfound Page', 1);
         } else {
             $this->contentsAdmin();
@@ -27,10 +28,14 @@ class ControllerHomeAdministrator
             $this->_userRepository = new UserRepository();
             $users = $this->_userRepository->getUsers();
 
+            $this->_commentRepository = new CommentRepository();
+            $comments = $this->_commentRepository->getComments();
+
             $this->_view = new View('HomeAdministrator');
             $this->_view->generate(array(
                 'users' => $users,
-                'posts' => $posts
+                'posts' => $posts,
+                'comments' => $comments
             ));
         } else {
             $msg = 'Vous n\'êtes pas autorisé à accéder à cette page !';
