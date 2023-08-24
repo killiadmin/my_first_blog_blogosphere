@@ -9,18 +9,26 @@ class ControllerPost
 
     public function __construct($url)
     {
-        if (isset($url) && count($url) > 1) {
-            throw new \Exception('Notfound Page', 1);
-        } elseif (isset($_GET['create'])) {
-            $this->create();
-        } elseif (isset($_GET['modify'])) {
-            $this->modify();
-        } elseif (isset($_GET['status']) && $_GET['status'] === 'new') {
-            $this->store();
-        } elseif (isset($_GET['status']) && $_GET['status'] === 'delete') {
-            $this->delete();
+        if (isset($_SESSION['auth'])) {
+            if (isset($url) && count($url) > 1) {
+                throw new \Exception('Notfound Page', 1);
+            } elseif (isset($_GET['create'])) {
+                $this->create();
+            } elseif (isset($_GET['modify'])) {
+                $this->modify();
+            } elseif (isset($_GET['status']) && $_GET['status'] === 'new') {
+                $this->store();
+            } elseif (isset($_GET['status']) && $_GET['status'] === 'delete') {
+                $this->delete();
+            } else {
+                $this->posts();
+            }
         } else {
-            $this->posts();
+            $msg = 'You are not authorized to access this content';
+            $this->_view = new View('Login');
+            $this->_view->generate(array(
+                'msg' => $msg
+            ));
         }
     }
 
@@ -39,7 +47,7 @@ class ControllerPost
             $this->_view = new View('WritePost');
             $this->_view->generate(null);
         } else {
-            $msg = 'Vous n\'êtes pas autorisé à écrire un article !';
+            $msg = 'You are not allowed to write an article !';
             $this->_view = new View('Login');
             $this->_view->generate(array('msg' => $msg));
         }
@@ -67,7 +75,7 @@ class ControllerPost
     private function delete()
     {
         $this->_postRepository = new PostRepository();
-        $deletePost = $this->_postRepository->deletePost($_GET['postToDelete']);
+        $this->_postRepository->deletePost($_GET['postToDelete']);
         $posts = $this->_postRepository->getPosts();
         $this->_view = new View('Post');
         $this->_view->generate(array('posts' => $posts));

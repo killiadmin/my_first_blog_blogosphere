@@ -8,17 +8,19 @@ class ControllerSingleUser
     private $_userRepository;
     private $_view;
 
-    public function __construct()
+    public function __construct($url)
     {
         if (isset($url) && count($url) < 1) {
-            throw new \Exception('La page que vous souhaitez, n\'est pas disponible.');
-        } elseif (isset($_GET['status']) && $_GET['status'] === 'sendemail'){
-            $this->sendEmail();
-        } elseif (isset($_GET['status']) && $_GET['status'] === 'login'){
+            throw new \Exception('The page you want is not available.');
+        }
+
+        if (isset($_GET['status']) && $_GET['status'] === 'login') {
             $this->connectionUser();
-        } elseif (isset($_GET['status']) && $_GET['status'] === 'signup'){
+        } elseif (isset($_GET['status']) && $_GET['status'] === 'signup') {
             $this->signUpUser();
-        } else {
+        } elseif (isset($_GET['status'], $_SESSION['auth']) && $_GET['status'] === 'sendemail') {
+            $this->sendEmail();
+        } elseif (isset($_SESSION['auth'])) {
             $this->user();
         }
     }

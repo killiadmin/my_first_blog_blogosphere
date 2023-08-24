@@ -12,10 +12,18 @@ class ControllerHomeAdministrator
 
     public function __construct($url)
     {
-        if (isset($url) && !isset($_SESSION['auth']) && count($url) > 1) {
-            throw new \Exception('Notfound Page', 1);
+        if (isset($_SESSION['auth']) && $_SESSION['role'] === 'admin') {
+            if (isset($url) && count($url) > 1) {
+                throw new \Exception('Notfound Page', 1);
+            } else {
+                $this->contentsAdmin();
+            }
         } else {
-            $this->contentsAdmin();
+            $msg = 'You are not authorized to access this content';
+            $this->_view = new View('Login');
+            $this->_view->generate(array(
+                'msg' => $msg
+            ));
         }
     }
 

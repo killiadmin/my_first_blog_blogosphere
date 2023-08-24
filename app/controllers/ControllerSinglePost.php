@@ -12,7 +12,7 @@ class ControllerSinglePost
     public function __construct($url)
     {
         if (isset($url) && count($url) < 1) {
-            throw new \Exception('La page que vous souhaitez, n\'est pas disponible.');
+            throw new \Exception('The page you want is not available.');
         }
 
         if (isset($_GET['status']) && $_GET['status'] === 'comment') {

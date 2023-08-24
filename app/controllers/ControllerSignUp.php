@@ -8,7 +8,7 @@ class ControllerSignUp
     public function __construct()
     {
         if (isset($url) && count($url) < 1) {
-            throw new \Exception('La page que vous souhaitez, n\'est pas disponible.');
+            throw new \Exception('The page you want is not available.');
         } else {
             $this->signup();
         }
