@@ -60,15 +60,18 @@ abstract class Model
 
         if ($table === 'comments') {
             $idReference = 'idPostAssociated';
+            $orderByCustom = 'idComment';
         } elseif ($table === 'posts') {
             $idReference = $table . '.idPost';
+            $orderByCustom = 'idPost';
         }
 
         $sql = "SELECT * 
             FROM " . $table . "
             JOIN " . $tableJoin . "
             ON " . $table . ".idUserAssociated=" . $tableJoin . ".idUser
-            WHERE " . $idReference . "=" . $id;
+            WHERE " . $idReference . "=" . $id. "
+            ORDER BY " . $table . "." . $orderByCustom . " DESC";
 
         $query = self::$_db->prepare($sql);
         $query->execute();

@@ -81,12 +81,23 @@ class ControllerSinglePost
             $this->_CommentRepository = new CommentRepository();
             $this->_CommentRepository->createComment($_GET['id'], $_SESSION['id']);
             $comment = $this->_CommentRepository->getComment($_GET['id']);
+
             $post = $this->_PostRepository->getPost($_GET['id']);
             $this->_view = new View('SinglePost');
             $this->_view->generate(array(
                 'post' => $post,
                 'comment' => $comment
             ));
+            ?>
+            <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var commentsSection = document.getElementById("comments");
+                if (commentsSection) {
+                    commentsSection.scrollIntoView({ behavior: 'smooth' });
+            }
+            });
+            </script>
+            <?php
         }
     }
 }

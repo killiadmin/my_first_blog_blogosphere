@@ -53,7 +53,7 @@ if ($post[0] ?? []) {
     <div class="d-flex flex-column align-items-center mb-5 mt-5">
         <h3 class="mb-5">Comments</h3>
         <?php
-        foreach ($comment as $deployComment):
+        foreach ($comment ?? [] as $deployComment):
             $timeStampComment = strtotime($deployComment->dateUpdate());
 
             if ($timeStampComment !== false) {
@@ -77,7 +77,7 @@ if ($post[0] ?? []) {
 </section>
 
 
-<form class="p-3" action="singlepost&id=<?= $post[0]->idPost() ?>&status=comment" method="post">
+<form id="commentForm" class="p-3" action="singlepost&id=<?= $post[0]->idPost() ?>&status=comment" method="post" onsubmit="scrollToComments()">
     <h4>Express yourself</h4>
     <div class="form-group">
         <label for="contentComment">Your comment :</label>
@@ -89,6 +89,8 @@ if ($post[0] ?? []) {
 </form>
 
 <!-- Bloc comment end -->
+
+
 
 
 
