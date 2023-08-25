@@ -12,32 +12,32 @@ foreach ($users ?? [] as $user){
     <h1 class="my-4">Dashboard</h1>
 </div>
 <div class="container d-flex gap-3 mb-5">
-        <div class="card w-50">
-            <div class="card-body">
-                <h5 class="card-title">Users registered</h5>
-                <p class="card-text">Total : <?= count($users ?? '') ?></p>
-            </div>
+    <div class="card w-50">
+        <div class="card-body">
+            <h5 class="card-title">Users registered</h5>
+            <p class="card-text">Total : <?= htmlspecialchars(count($users ?? '')) ?></p>
         </div>
-        <div class="card w-50">
-            <div class="card-body">
-                <h5 class="card-title">Articles written</h5>
-                <p class="card-text">Total : <?= count($posts ?? '') ?></p>
-            </div>
+    </div>
+    <div class="card w-50">
+        <div class="card-body">
+            <h5 class="card-title">Articles written</h5>
+            <p class="card-text">Total : <?= htmlspecialchars(count($posts ?? '')) ?></p>
+        </div>
     </div>
 </div>
 <div class="container d-flex gap-3 mt-5">
-        <div class="card w-50">
-            <div class="card-body">
-                <h5 class="card-title">Users desactivate</h5>
-                <p class="card-text">Total : <?= $usersDesactivated ?></p>
-            </div>
+    <div class="card w-50">
+        <div class="card-body">
+            <h5 class="card-title">Users desactivate</h5>
+            <p class="card-text">Total : <?= htmlspecialchars($usersDesactivated) ?></p>
         </div>
-        <div class="card w-50">
-            <div class="card-body">
-                <h5 class="card-title">Comments create</h5>
-                <p class="card-text">Total : <?= count($comments ?? '') ?> </p>
-            </div>
+    </div>
+    <div class="card w-50">
+        <div class="card-body">
+            <h5 class="card-title">Comments create</h5>
+            <p class="card-text">Total : <?= htmlspecialchars(count($comments ?? '')) ?></p>
         </div>
+    </div>
 </div>
 
 
@@ -58,9 +58,9 @@ foreach ($users ?? [] as $user){
             <?php foreach ($users as $user): ?>
                 <tr>
                     <td><input type="checkbox"></td>
-                    <td><?= $user->name() ?></td>
-                    <td><?= $user->username() ?></td>
-                    <td><?= $user->mail() ?></td>
+                    <td><?= htmlspecialchars($user->name()) ?></td>
+                    <td><?= htmlspecialchars($user->username()) ?></td>
+                    <td><?= htmlspecialchars($user->mail()) ?></td>
                     <td class="d-flex justify-content-between">
                         <?php if ($user->activated() == 1): ?>
                             <button class="btn btn-success" style="width: 105px;">Activate</button>
@@ -70,6 +70,7 @@ foreach ($users ?? [] as $user){
                     </td>
                 </tr>
             <?php endforeach; ?>
+
             </tbody>
         </table>
 
@@ -88,21 +89,28 @@ foreach ($users ?? [] as $user){
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($posts as $post): ?>
+            <?php foreach ($posts as $post):
+                $dateFormat = "d/m/Y H:i:s";
+                $timeStamp = strtotime($post->dateUpdate());
+
+                if ($timeStamp !== false) {
+                    $formatDateFr = date($dateFormat, $timeStamp);
+                }
+                ?>
                 <tr>
                     <td><input type="checkbox"></td>
-                    <td><?= $post->chapo() ?></td>
-                    <td><?= $post->title() ?></td>
-                    <td><?= $post->dateUpdate() ?></td>
+                    <td><?= htmlspecialchars($post->chapo()) ?></td>
+                    <td><?= htmlspecialchars($post->title()) ?></td>
+                    <td><?= htmlspecialchars($formatDateFr) ?></td>
                     <td>
-                        <a href="post&modify&id=<?= $post->idPost() ?>">
+                        <a href="post&modify&id=<?= htmlspecialchars($post->idPost()) ?>">
                             <div class="form-group">
                                 <input type="submit" name="modify" class="btn btn-warning" style=" width: 105px;" value="Modify">
                             </div>
                         </a>
                     </td>
                     <td>
-                        <form action="post&status=delete&postToDelete=<?= $post->idPost() ?>" method="post">
+                        <form action="post&status=delete&postToDelete=<?= htmlspecialchars($post->idPost()) ?>" method="post">
                             <div class="form-group">
                                 <label for="delete" id="delete"></label>
                                 <input type="submit" name="delete" class="btn btn-danger" style=" width: 105px;" value="Delete">

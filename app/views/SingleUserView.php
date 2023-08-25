@@ -4,8 +4,8 @@
             <img src="./assets/photo_profil.png" alt="Photo de profil" class="img-fluid rounded-circle" style="width: 290px;">
         </div>
         <div class="col-md-6 mt-3 d-flex flex-column justify-content-center">
-            <h2><?= $user[0]->name() ?> <?= $user[0]->username() ?></h2>
-            <p><?= $user[0]->quote() ?></p>
+            <h2><?= htmlspecialchars($user[0]->name()) ?> <?= htmlspecialchars($user[0]->username()) ?></h2>
+            <p><?= htmlspecialchars($user[0]->quote()) ?></p>
 
             <hr>
 
