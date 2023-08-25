@@ -3,6 +3,16 @@ if ($post[0] ?? []) {
     ?>
     <div class="container mt-4">
         <h1>Update your post ...</h1>
+        <?php if (isset($msg)) {
+            ?>
+            <div class=" container mt-1 mb-1 w-50">
+        <span class="form-control bg-danger rounded text-light text-center">
+            <?= $msg ?>
+        </span>
+            </div>
+            <?php
+        }
+        ?>
         <form action="singlepost&id=<?= htmlspecialchars($post[0]->idPost()) ?>&status=update" method="post">
             <div class="form-group">
                 <label for="username">Username</label>

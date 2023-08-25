@@ -349,51 +349,74 @@ abstract class Model
         $query->closeCursor();
     }
 
-    protected function updateOne($table, $tableJoin, $frstItem, $scdItem, $thrdItem, $forItem, $fivItem, $id)
+    /**
+     * Method to update a post, on a new author is assigned his id will be assigned to the post
+     * @param $table
+     * @param $tableJoin
+     * @param $setTitle
+     * @param $setChapo
+     * @param $setContent
+     * @param $id
+     * @return false
+     */
+
+    protected function updateOne($table, $tableJoin, $setTitle, $setChapo, $setContent, $id)
     {
         $this->getConnectionDataBase();
 
         $sqlPost = "SELECT * 
-                    FROM " . $table . "
-                    WHERE idPost=?";
+                FROM " . $table . "
+                WHERE idPost=?";
         $checkPostExists = self::$_db->prepare($sqlPost);
         $checkPostExists->execute([$id]);
 
         if ($checkPostExists->rowCount() > 0) {
             try {
-                // Récupérer les données POST et les valider
+                // Retrieve POST data and validate it
                 $title = isset($_POST['title']) ? trim($_POST['title']) : '';
                 $name = isset($_POST['name']) ? trim($_POST['name']) : '';
                 $username = isset($_POST['username']) ? trim($_POST['username']) : '';
                 $chapo = isset($_POST['chapo']) ? trim($_POST['chapo']) : '';
                 $content = isset($_POST['content']) ? trim($_POST['content']) : '';
 
-                $currentDate = date('Y-m-d H:i:s');
+                // Check if user exists in database
+                $sqlCheckUser = "SELECT * FROM " . $tableJoin . " WHERE name=? AND username=?";
+                $checkUserExists = self::$_db->prepare($sqlCheckUser);
+                $checkUserExists->execute([$name, $username]);
 
-                // Requête préparée pour la mise à jour
-                $sqlUpdatePost = "UPDATE " . $table . " 
-                              JOIN " . $tableJoin . "
-                              ON " . $table . ".idUserAssociated = " . $tableJoin . ".idUser
-                              SET 
-                              " . $frstItem . "=?,
-                              " . $scdItem . "=?,
-                              " . $thrdItem . "=?,
-                              " . $forItem . "=?,
-                              " . $fivItem . "=?,
-                              dateUpdate = ?
-                              WHERE idPost=?";
+                if ($checkUserExists->rowCount() > 0) {
+                    $userData = $checkUserExists->fetch(PDO::FETCH_ASSOC);
+                    $userId = $userData['idUser'];
 
-                $sqlExecUpdatePost = self::$_db->prepare($sqlUpdatePost);
+                    $currentDate = date('Y-m-d H:i:s');
 
-                // Exécuter la mise à jour avec les valeurs liées
-                $sqlExecUpdatePost->execute([$title, $name, $username, $chapo, $content, $currentDate, $id]);
-            } catch (PDOException $e) {
-                // Gérer les erreurs
-                echo "Erreur : " . $e->getMessage();
-            } finally {
-                if ($sqlExecUpdatePost) {
-                    $sqlExecUpdatePost->closeCursor();
+                    $sqlUpdatePost = "UPDATE " . $table . " 
+                                  JOIN " . $tableJoin . "
+                                  ON " . $table . ".idUserAssociated = " . $tableJoin . ".idUser
+                                  SET 
+                                  " . $setTitle . "=?,
+                                  idUserAssociated=?,
+                                  " . $setChapo . "=?,
+                                  " . $setContent . "=?,
+                                  dateUpdate = ?
+                                  WHERE " . $table . ".idPost=?";
+
+                    $sqlExecUpdatePost = self::$_db->prepare($sqlUpdatePost);
+                    $sqlExecUpdatePost->execute([$title, $userId, $chapo, $content, $currentDate, $id]);
+                } else {
+                    $datas = [];
+                    while ($data = $checkUserExists->fetch(PDO::FETCH_ASSOC)) {
+                        $datas[] = $data;
+                    }
+
+                    if (empty($datas)) {
+                        $datas[] = 'erreurStatus';
+                    }
+
+                    return $datas;
                 }
+            } catch (PDOException $e) {
+                echo "Erreur : " . $e->getMessage();
             }
         }
     }

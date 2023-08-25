@@ -19,8 +19,6 @@ class PostRepository extends Model
             'posts' ,
             'users',
             'title',
-            'name',
-            'username',
             'chapo',
             'content',
             $id);

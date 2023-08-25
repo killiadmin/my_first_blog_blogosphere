@@ -54,6 +54,17 @@ class ControllerSinglePost
             $this->_CommentRepository = new CommentRepository();
             $postUpdate = $this->_PostRepository->updatePost($_GET['id']);
             $post = $this->_PostRepository->getPost($_GET['id']);
+
+            if(isset($postUpdate) && $postUpdate[0] == 'erreurStatus'){
+                $msg = 'The user does not exist !';
+                $this->_view = new View('ModifyPost');
+                $this->_view->generate(array(
+                    'post' => $post,
+                    'msg' => $msg
+                ));
+                return;
+            }
+
             $comment = $this->_CommentRepository->getComment($_GET['id']);
             $this->_view = new View('SinglePost');
             $this->_view->generate(array(
