@@ -3,41 +3,38 @@ if ($post[0] ?? []) {
     ?>
     <div class="container mt-4">
         <h1>Update your post ...</h1>
-        <form action="singlepost&id=<?= $post[0]->idPost() ?>&status=update" method="post">
+        <form action="singlepost&id=<?= htmlspecialchars($post[0]->idPost()) ?>&status=update" method="post">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" class="form-control" id="username" name="username" required
-                       value="<?= $post[0]->username() ?>">
+                       value="<?= htmlspecialchars($post[0]->username()) ?>">
             </div>
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" id="name" name="name" required
-                       value="<?= $post[0]->name() ?>">
+                       value="<?= htmlspecialchars($post[0]->name()) ?>">
             </div>
             <div class="form-group">
                 <label for="title">Title :</label>
                 <input type="text" class="form-control" id="title" name="title" required
-                       value="<?= $post[0]->title() ?>">
+                       value="<?= htmlspecialchars($post[0]->title()) ?>">
             </div>
 
             <div class="form-group">
                 <label for="chapo">Chapo :</label>
-                <textarea class="form-control" id="chapo" name="chapo" rows="4" required>
-                    <?= $post[0]->chapo() ?>
-                </textarea>
+                <textarea class="form-control" id="chapo" name="chapo" rows="4" required><?= htmlspecialchars($post[0]->chapo()) ?></textarea>
             </div>
 
             <div class="form-group">
                 <label for="content">Content :</label>
-                <textarea class="form-control" id="content" name="content" rows="10" required>
-                    <?= $post[0]->content() ?>
-                </textarea>
+                <textarea class="form-control" id="content" name="content" rows="10" required><?= htmlspecialchars($post[0]->content()) ?></textarea>
             </div>
             <div class="d-flex flex-row-reverse m-3">
                 <button type="submit" class="btn btn-warning">Update</button>
             </div>
         </form>
     </div>
+
     <?php
 } else {
     ?>
