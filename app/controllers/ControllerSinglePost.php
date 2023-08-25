@@ -11,16 +11,24 @@ class ControllerSinglePost
 
     public function __construct($url)
     {
-        if (isset($url) && count($url) < 1) {
-            throw new \Exception('The page you want is not available.');
-        }
+        if (isset($_SESSION['auth'])) {
+            if (isset($url) && count($url) < 1) {
+                throw new \Exception('The page you want is not available.');
+            }
 
-        if (isset($_GET['status']) && $_GET['status'] === 'comment') {
-            $this->comments();
-        } elseif (isset($_GET['status']) && $_GET['status'] === 'update') {
-            $this->updatePost();
+            if (isset($_GET['status']) && $_GET['status'] === 'comment') {
+                $this->comments();
+            } elseif (isset($_GET['status']) && $_GET['status'] === 'update') {
+                $this->updatePost();
+            } else {
+                $this->singlePost();
+            }
         } else {
-            $this->singlePost();
+            $msg = 'You are not authorized to access this content';
+            $this->_view = new View('Login');
+            $this->_view->generate(array(
+                'msg' => $msg
+            ));
         }
     }
 

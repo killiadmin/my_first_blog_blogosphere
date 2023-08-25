@@ -22,6 +22,12 @@ class ControllerSingleUser
             $this->sendEmail();
         } elseif (isset($_SESSION['auth'])) {
             $this->user();
+        } else {
+            $msg = 'You are not authorized to access this content';
+            $this->_view = new View('Login');
+            $this->_view->generate(array(
+                'msg' => $msg
+            ));
         }
     }
 
