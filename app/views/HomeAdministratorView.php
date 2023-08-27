@@ -111,6 +111,7 @@ foreach ($users ?? [] as $user){
                     </td>
                     <td>
                         <form action="post&status=delete&postToDelete=<?= htmlspecialchars($post->idPost()) ?>" method="post">
+                            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                             <div class="form-group">
                                 <label for="delete" id="delete"></label>
                                 <input type="submit" name="delete" class="btn btn-danger" style=" width: 105px;" value="Delete">

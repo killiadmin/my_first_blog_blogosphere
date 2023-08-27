@@ -31,6 +31,7 @@
             <!-- Formulaire de contact -->
             <h4>Contact Me</h4>
             <form method="POST" action="singleuser&id=1&status=sendemail">
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" class="form-control" id="name" name="name" required placeholder="Your name">

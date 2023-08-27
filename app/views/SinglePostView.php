@@ -77,7 +77,8 @@ if ($post[0] ?? []) {
 </section>
 
 
-<form id="commentForm" class="p-3" action="singlepost&id=<?= $post[0]->idPost() ?>&status=comment" method="post" onsubmit="scrollToComments()">
+<form id="commentForm" class="p-3" action="singlepost&id=<?= $post[0]->idPost() ?>&status=comment" method="post">
+    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
     <h4>Express yourself</h4>
     <div class="form-group">
         <label for="contentComment">Your comment :</label>

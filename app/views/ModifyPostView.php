@@ -14,6 +14,7 @@ if ($post[0] ?? []) {
         }
         ?>
         <form action="singlepost&id=<?= htmlspecialchars($post[0]->idPost()) ?>&status=update" method="post">
+            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" class="form-control" id="username" name="username" required

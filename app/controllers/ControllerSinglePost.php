@@ -49,7 +49,7 @@ class ControllerSinglePost
 
     private function updatePost()
     {
-        if (isset($_GET['id'])) {
+        if (isset($_GET['id']) && $_POST['csrf_token'] == $_SESSION['csrf_token']) {
             $this->_PostRepository = new PostRepository();
             $this->_CommentRepository = new CommentRepository();
             $postUpdate = $this->_PostRepository->updatePost($_GET['id']);
@@ -76,7 +76,7 @@ class ControllerSinglePost
 
     private function comments()
     {
-        if (isset($_GET['id'])) {
+        if (isset($_GET['id']) && $_POST['csrf_token'] == $_SESSION['csrf_token']) {
             $this->_PostRepository = new PostRepository();
             $this->_CommentRepository = new CommentRepository();
             $this->_CommentRepository->createComment($_GET['id'], $_SESSION['id']);
@@ -90,12 +90,12 @@ class ControllerSinglePost
             ));
             ?>
             <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                var commentsSection = document.getElementById("comments");
-                if (commentsSection) {
-                    commentsSection.scrollIntoView({ behavior: 'smooth' });
-            }
-            });
+                document.addEventListener("DOMContentLoaded", function() {
+                    var commentsSection = document.getElementById("comments");
+                    if (commentsSection) {
+                        commentsSection.scrollIntoView({ behavior: 'smooth' });
+                }
+                });
             </script>
             <?php
         }

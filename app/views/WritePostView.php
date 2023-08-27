@@ -1,6 +1,7 @@
 <div class="container mt-4">
     <h1>Write your post</h1>
     <form action="post&status=new" method="post">
+        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
         <div class="form-group">
             <label for="title">Title :</label>
             <input type="text" class="form-control" id="title" name="title" maxlength="150" required>

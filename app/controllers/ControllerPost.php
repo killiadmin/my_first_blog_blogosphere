@@ -43,7 +43,7 @@ class ControllerPost
 
     private function create()
     {
-        if (isset($_GET['create']) && isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
+        if (isset($_GET['create']) && isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
             $this->_view = new View('WritePost');
             $this->_view->generate(null);
         } else {
@@ -65,19 +65,23 @@ class ControllerPost
 
     private function store()
     {
-        $this->_postRepository = new PostRepository();
-        $post = $this->_postRepository->createPost();
-        $posts = $this->_postRepository->getPosts();
-        $this->_view = new View('Post');
-        $this->_view->generate(array('posts' => $posts));
+        if ($_POST['csrf_token'] == $_SESSION['csrf_token']){
+            $this->_postRepository = new PostRepository();
+            $post = $this->_postRepository->createPost();
+            $posts = $this->_postRepository->getPosts();
+            $this->_view = new View('Post');
+            $this->_view->generate(array('posts' => $posts));
+        }
     }
 
     private function delete()
     {
-        $this->_postRepository = new PostRepository();
-        $this->_postRepository->deletePost($_GET['postToDelete']);
-        $posts = $this->_postRepository->getPosts();
-        $this->_view = new View('Post');
-        $this->_view->generate(array('posts' => $posts));
+        if ($_POST['csrf_token'] == $_SESSION['csrf_token']){
+            $this->_postRepository = new PostRepository();
+            $this->_postRepository->deletePost($_GET['postToDelete']);
+            $posts = $this->_postRepository->getPosts();
+            $this->_view = new View('Post');
+            $this->_view->generate(array('posts' => $posts));
+        }
     }
 }

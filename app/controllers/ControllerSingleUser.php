@@ -68,6 +68,10 @@ class ControllerSingleUser
                         session_start();
                     }
 
+                    if (!isset($_SESSION['csrf_token'])) {
+                        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+                    }
+
                     $_SESSION['auth'] = true;
                     $_SESSION['role'] = $userInfos[0]->status();
                     $_SESSION['id'] = $userInfos[0]->idUser();
@@ -119,6 +123,10 @@ class ControllerSingleUser
                         session_start();
                     }
 
+                    if (!isset($_SESSION['csrf_token'])) {
+                        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+                    }
+
                     $_SESSION['auth'] = true;
                     $_SESSION['role'] = $userInfos[0]->status();
                     $_SESSION['id'] = $userInfos[0]->idUser();
@@ -146,7 +154,7 @@ class ControllerSingleUser
      */
     private function sendEmail()
 {
-        if (isset($_GET['id'])) {
+        if (isset($_GET['id']) && $_POST['csrf_token'] == $_SESSION['csrf_token']) {
 
             require_once '../vendor/mailjet/mailjet-apiv3-php/src/Mailjet/Resources.php';
 
