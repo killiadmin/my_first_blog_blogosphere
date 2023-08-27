@@ -1,4 +1,6 @@
 <?php
+include '../app/config/config.php';
+
 session_start();
 
 require_once '../app/views/View.php';
@@ -12,13 +14,24 @@ class ControllerHomeAdministrator
 
     public function __construct($url)
     {
-        if (isset($_SESSION['auth']) && $_SESSION['role'] === 'admin') {
+        if (isset($_SESSION['auth'], $_SESSION['user_ip'], $_SESSION['user_agent']) && $_SESSION['role'] === 'admin') {
+            if ($_SESSION['user_ip'] !== $_SERVER['REMOTE_ADDR'] || $_SESSION['user_agent'] !== $_SERVER['HTTP_USER_AGENT']) {
+                session_destroy();
+                $msg = 'You are not authorized to access this content';
+                $this->_view = new View('Login');
+                $this->_view->generate(array(
+                    'msg' => $msg
+                ));
+            }
+
             if (isset($url) && count($url) > 1) {
                 throw new \Exception('Notfound Page', 1);
             } else {
                 $this->contentsAdmin();
             }
+
         } else {
+            session_destroy();
             $msg = 'You are not authorized to access this content';
             $this->_view = new View('Login');
             $this->_view->generate(array(

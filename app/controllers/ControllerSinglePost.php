@@ -1,4 +1,6 @@
 <?php
+include '../app/config/config.php';
+
 session_start();
 require_once '../app/views/View.php';
 
@@ -11,7 +13,16 @@ class ControllerSinglePost
 
     public function __construct($url)
     {
-        if (isset($_SESSION['auth'])) {
+        if (isset($_SESSION['auth'], $_SESSION['user_ip'], $_SESSION['user_agent'])) {
+            if ($_SESSION['user_ip'] !== $_SERVER['REMOTE_ADDR'] || $_SESSION['user_agent'] !== $_SERVER['HTTP_USER_AGENT']) {
+                session_destroy();
+                $msg = 'You are not authorized to access this content';
+                $this->_view = new View('Login');
+                $this->_view->generate(array(
+                    'msg' => $msg
+                ));
+            }
+
             if (isset($url) && count($url) < 1) {
                 throw new \Exception('The page you want is not available.');
             }
@@ -24,6 +35,7 @@ class ControllerSinglePost
                 $this->singlePost();
             }
         } else {
+            session_destroy();
             $msg = 'You are not authorized to access this content';
             $this->_view = new View('Login');
             $this->_view->generate(array(

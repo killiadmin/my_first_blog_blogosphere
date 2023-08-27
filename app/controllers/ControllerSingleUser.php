@@ -1,5 +1,10 @@
 <?php
+include '../app/config/config.php';
+
 session_start();
+
+$_SESSION['user_ip'] = $_SERVER['REMOTE_ADDR'];
+$_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
 
 use Mailjet\Resources;
 require_once '../app/views/View.php';
@@ -64,9 +69,19 @@ class ControllerSingleUser
 
                 if (!empty($userInfos)) {
 
+                    // Vérification d'IP et d'agent utilisateur
+                    if ($_SESSION['user_ip'] !== $_SERVER['REMOTE_ADDR'] || $_SESSION['user_agent'] !== $_SERVER['HTTP_USER_AGENT']) {
+                        session_destroy();
+                    }
+
                     if (session_status() !== PHP_SESSION_ACTIVE) {
                         session_start();
+                        $_SESSION['user_ip'] = $_SERVER['REMOTE_ADDR'];
+                        $_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
                     }
+
+                    // Génération aléatoire d'identifiants de session
+                    session_regenerate_id(true);
 
                     if (!isset($_SESSION['csrf_token'])) {
                         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
@@ -79,21 +94,29 @@ class ControllerSingleUser
                     $_SESSION['name'] = $userInfos[0]->name();
                     $_SESSION['quote'] = $userInfos[0]->quote();
 
-                    $user = $this->_userRepository->getUser($_GET['id']);
+                    if (isset($_SESSION['user_ip'], $_SESSION['user_agent']) &&
+                        $_SESSION['user_ip'] == $_SERVER['REMOTE_ADDR'] &&
+                        $_SESSION['user_agent'] == $_SERVER['HTTP_USER_AGENT']) {
 
-                    $this->_view = new View('SingleUser');
-                    $this->_view->generate(array('user' => $user));
+                        $user = $this->_userRepository->getUser($_GET['id']);
+
+                        $this->_view = new View('SingleUser');
+                        $this->_view->generate(array('user' => $user));
+                    } else {
+                        $msg = 'A problem occurred during your connection.';
+                        $this->_view = new View('Login');
+                        $this->_view->generate(array('msg' => $msg));
+                    }
                 } else {
-                    $msg = 'Vos identifiants sont incorrects.';
+                    $msg = 'Your logins are incorrect.';
                     $this->_view = new View('Login');
                     $this->_view->generate(array('msg' => $msg));
                 }
             }
-
         }
     }
 
-    private function signUpUser ()
+    private function signUpUser()
     {
         if (isset($_GET['id'])) {
             if (!empty($_POST['name']) && !empty($_POST['username']) && !empty($_POST['mail']) && !empty($_POST['password'])) {
@@ -106,7 +129,7 @@ class ControllerSingleUser
                 $this->_userRepository = new UserRepository();
 
                 if ($this->_userRepository->isEmailTaken($user_mail)) {
-                    $msg =  'Cette adresse e-mail est déjà associé à un compte !';
+                    $msg = 'This email address is already associated with an account !';
                     $this->_view = new View('SignUp');
                     $this->_view->generate(array('msg' => $msg));
 
@@ -121,7 +144,17 @@ class ControllerSingleUser
 
                     if (session_status() !== PHP_SESSION_ACTIVE) {
                         session_start();
+                        $_SESSION['user_ip'] = $_SERVER['REMOTE_ADDR'];
+                        $_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
                     }
+
+                    // Vérification d'IP et d'agent utilisateur
+                    if ($_SESSION['user_ip'] !== $_SERVER['REMOTE_ADDR'] || $_SESSION['user_agent'] !== $_SERVER['HTTP_USER_AGENT']) {
+                        session_destroy();
+                    }
+
+                    // Génération aléatoire d'identifiants de session
+                    session_regenerate_id(true);
 
                     if (!isset($_SESSION['csrf_token'])) {
                         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
@@ -133,12 +166,22 @@ class ControllerSingleUser
                     $_SESSION['username'] = $userInfos[0]->username();
                     $_SESSION['name'] = $userInfos[0]->name();
 
-                    $user = $this->_userRepository->getUser($_GET['id']);
+                    if (isset($_SESSION['user_ip'], $_SESSION['user_agent']) &&
+                        $_SESSION['user_ip'] == $_SERVER['REMOTE_ADDR'] &&
+                        $_SESSION['user_agent'] == $_SERVER['HTTP_USER_AGENT']) {
 
-                    $this->_view = new View('SingleUser');
-                    $this->_view->generate(array('user' => $user));
+                        $user = $this->_userRepository->getUser($_GET['id']);
+
+                        $this->_view = new View('SingleUser');
+                        $this->_view->generate(array('user' => $user));
+
+                    } else {
+                        $msg = 'A problem occurred during your connection.';
+                        $this->_view = new View('Login');
+                        $this->_view->generate(array('msg' => $msg));
+                    }
                 } else {
-                    $msg = 'Vos identifiants sont incorrects.';
+                    $msg = 'Your logins for signup are incorrect.';
                     $this->_view = new View('Login');
                     $this->_view->generate(array('msg' => $msg));
                 }
