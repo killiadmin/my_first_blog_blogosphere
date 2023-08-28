@@ -21,13 +21,9 @@ class ControllerSinglePost
                 $this->_view->generate(array(
                     'msg' => $msg
                 ));
-            }
-
-            if (isset($url) && count($url) < 1) {
+            } elseif (isset($url) && count($url) < 1){
                 throw new \Exception('The page you want is not available.');
-            }
-
-            if (isset($_GET['status']) && $_GET['status'] === 'comment') {
+            } elseif (isset($_GET['status']) && $_GET['status'] === 'comment') {
                 $this->comments();
             } elseif (isset($_GET['status']) && $_GET['status'] === 'update') {
                 $this->updatePost();

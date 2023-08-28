@@ -23,11 +23,21 @@ class ControllerSingleUser
             $this->connectionUser();
         } elseif (isset($_GET['status']) && $_GET['status'] === 'signup') {
             $this->signUpUser();
-        } elseif (isset($_GET['status'], $_SESSION['auth']) && $_GET['status'] === 'sendemail') {
-            $this->sendEmail();
-        } elseif (isset($_SESSION['auth'])) {
-            $this->user();
+        } elseif (isset($_SESSION['auth'], $_SESSION['user_ip'], $_SESSION['user_agent'])){
+            if ($_SESSION['user_ip'] !== $_SERVER['REMOTE_ADDR'] || $_SESSION['user_agent'] !== $_SERVER['HTTP_USER_AGENT'] || $_SESSION['auth'] !== true) {
+                session_destroy();
+                $msg = 'You are not authorized to access this content';
+                $this->_view = new View('Login');
+                $this->_view->generate(array(
+                    'msg' => $msg
+                ));
+            } elseif (isset($_GET['status'], $_SESSION['auth']) && $_GET['status'] === 'sendemail') {
+                $this->sendEmail();
+            } else {
+                $this->user();
+            }
         } else {
+            session_destroy();
             $msg = 'You are not authorized to access this content';
             $this->_view = new View('Login');
             $this->_view->generate(array(

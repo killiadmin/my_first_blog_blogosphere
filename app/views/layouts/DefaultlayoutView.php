@@ -14,35 +14,32 @@
 <header>
     <nav class="navbar navbar-expand-lg" style="background-color: #3C4245">
         <div class="container-fluid p-3">
-            <div class="collapse navbar-collapse justify-content-center fs-2 ">
-                <?php if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) { ?>
-                <ul class="navbar-nav gap-4 testBorder">
+            <?php if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) { ?>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center fs-2" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto gap-4">
                     <li class="nav-item">
-                        <a class="nav-link active text-light" href="/singleuser&id=1">My home</a>
+                        <a class="nav-link text-monospace text-light" href="/singleuser&id=1">My home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="text-monospace nav-link text-light" href="/post">Blogo-space</a>
+                        <a class="nav-link text-monospace text-light" href="/post">Blogo-space</a>
                     </li>
-                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin' ) { ?>
+                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') { ?>
+                        <li class="nav-item">
+                            <a class="nav-link text-monospace text-light" href="/post&create">Write an article</a>
+                        </li>
+                    <?php } ?>
                     <li class="nav-item">
-                        <a class="text-monospace nav-link text-light" href="/post&create">Write an article</a>
-                    </li>
-                    <?php
-                        }
-                    ?>
-                    <li class="nav-item">
-                        <a class="text-monospace nav-link text-light" href="/login">Logout</a>
+                        <a class="nav-link text-monospace text-light" href="/login">Logout</a>
                     </li>
                 </ul>
-                    <div class="bg-success rounded ms-5">
-                        <div class="text-light fs-4 ">
-                            Hello <?= $_SESSION['name'] ?>&nbsp;<?= $_SESSION['username'] ?>
-                        </div>
-                    </div>
-                <?php
-                    }
-                ?>
             </div>
+                <?php
+            }
+            ?>
         </div>
     </nav>
 </header>

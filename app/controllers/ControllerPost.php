@@ -12,7 +12,6 @@ class ControllerPost
     public function __construct($url)
     {
         if (isset($_SESSION['auth'], $_SESSION['user_ip'], $_SESSION['user_agent'])) {
-
             if ($_SESSION['user_ip'] !== $_SERVER['REMOTE_ADDR'] || $_SESSION['user_agent'] !== $_SERVER['HTTP_USER_AGENT']) {
                 session_destroy();
                 $msg = 'You are not authorized to access this content';
@@ -20,9 +19,7 @@ class ControllerPost
                 $this->_view->generate(array(
                     'msg' => $msg
                 ));
-            }
-
-            if (isset($url) && count($url) > 1) {
+            } elseif (isset($url) && count($url) > 1){
                 throw new \Exception('Notfound Page', 1);
             } elseif (isset($_GET['create'])) {
                 $this->create();

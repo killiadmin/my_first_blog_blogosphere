@@ -12,7 +12,7 @@
     <?php
 }  ?>
 
-<form class="container mb-5 mt-5" method="POST" action="singleuser&id=1&status=signup" style="width: 600px;">
+<form class="container mb-5 mt-5 sm" method="POST" action="singleuser&id=1&status=signup">
 
     <div class="mb-3">
         <label class="form-label" for="name">Name :</label>

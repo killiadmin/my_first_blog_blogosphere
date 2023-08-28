@@ -22,14 +22,11 @@ class ControllerHomeAdministrator
                 $this->_view->generate(array(
                     'msg' => $msg
                 ));
-            }
-
-            if (isset($url) && count($url) > 1) {
+            } elseif (isset($url) && count($url) > 1) {
                 throw new \Exception('Notfound Page', 1);
-            } else {
+            }else {
                 $this->contentsAdmin();
             }
-
         } else {
             session_destroy();
             $msg = 'You are not authorized to access this content';

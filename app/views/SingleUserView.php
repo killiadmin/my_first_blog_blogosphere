@@ -27,7 +27,7 @@
 
             </ul>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 mt-2">
             <!-- Formulaire de contact -->
             <h4>Contact Me</h4>
             <form method="POST" action="singleuser&id=1&status=sendemail">
