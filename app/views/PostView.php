@@ -1,3 +1,7 @@
+<?php
+$postCounter = 0;
+?>
+
 <?php foreach ($posts ?? [] as $post):
 
     $dateFormat = "d/m/Y H:i:s";
@@ -8,16 +12,16 @@
     }
 
     ?>
-    <div class="card m-3 p-3">
+    <div class="card m-3 p-3" <?= $postCounter % 2 === 0 ? 'style="background-color: #dbdbdb"' : '' ?>>
         <div class="card-body">
             <div class="d-flex justify-content-between">
                 <h3 class="card-title"><?= htmlspecialchars($post->title()) ?></h3>
             </div>
-            <div class="d-flex justify-content-between">
-                <p class="card-text maxWidth w-50"><?= htmlspecialchars($post->chapo()) ?></p>
+            <div class="d-flex justify-content-between flex-column">
+                <p class="card-text"><?= htmlspecialchars($post->chapo()) ?></p>
                 <div class="d-flex flex-column">
-                    <p>&nbsp;<strong>Modified the : <?= htmlspecialchars($formatDateFr) ?></strong></p>
-                    <p><strong>Author : <?= htmlspecialchars($post->name()) ?> <?= htmlspecialchars($post->username()) ?></strong>&nbsp;</p>
+                    <p>&nbsp;Modified the : <strong><?= htmlspecialchars($formatDateFr) ?></strong></p>
+                    <p>Author : <strong><?= htmlspecialchars($post->name()) ?> <?= htmlspecialchars($post->username()) ?></strong>&nbsp;</p>
                 </div>
             </div>
             <div class="d-flex flex-row-reverse">
@@ -25,4 +29,6 @@
             </div>
         </div>
     </div>
-<?php endforeach; ?>
+    <?php
+    $postCounter++;
+endforeach; ?>
