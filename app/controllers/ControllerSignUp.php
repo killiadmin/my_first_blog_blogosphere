@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once '../app/views/View.php';
-class ControllerSignUp
+require_once './app/views/View.php';
+class ControllerSignup
 {
     private $_view;
 
@@ -29,7 +29,7 @@ class ControllerSignUp
             session_destroy();
         }
 
-        $this->_view = new View('SignUp');
+        $this->_view = new View('Signup');
         $this->_view->generate(null);
     }
 }

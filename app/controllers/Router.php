@@ -1,5 +1,5 @@
 <?php
-require_once '../app/views/View.php';
+require_once './app/views/View.php';
 class Router
 {
     private $controller;
@@ -11,7 +11,7 @@ class Router
             //Enregistre automatiquement une fonction d'autoload (les classes du dossier models)
             spl_autoload_register(function ($class){
                 if ($class !== 'Resources'){
-                    require_once('../app/models/'.$class.'.php');
+                    require_once('./app/models/'.$class.'.php');
                 }
             });
 
@@ -21,7 +21,7 @@ class Router
             //On affecte la valuer du controleur suivant la variable qu'on lui donne
             if (isset($_GET['url'])) {
                 //Décomposition de l'url avec un filtre pour supprimer tous les caractères
-                $url = explode('/', filter_var($_GET['url'], FILTER_SANITIZE_URL));
+                $url = explode('/', filter_var($_GET['url'], FILTER_UNSAFE_RAW));
 
                 //On récupère le premier param de l'url et l'applique en minuscule et la première lettre en majuscule
                 $ctrl = ucfirst(strtolower($url[0]));
@@ -29,12 +29,15 @@ class Router
                 $ctrlClass = "Controller".$ctrl;
 
                 //On cible le fichier controller voulu
-                $ctrlFile = "../app/controllers/".$ctrlClass.".php";
+                $ctrlFile = "./app/controllers/".$ctrlClass.".php";
+                
+               
 
                 if (file_exists($ctrlFile)) {
                     //On applique notre class avec les params voulu
                     //On utilise require_once, s'il ne le trouve pas l'application retournera une erreur
                     require_once($ctrlFile);
+                    
                     $this->controller = new $ctrlClass($url);
                 } else {
                     throw new \Exception('La page n\'existe pas', 1);

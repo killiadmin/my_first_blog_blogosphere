@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../app/views/View.php';
+require_once './app/views/View.php';
 class ControllerLogin
 {
     private $_view;

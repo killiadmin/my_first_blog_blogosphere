@@ -2,3 +2,4 @@
 .idea/
 composer.json
 composer.lock
+error_log.txt

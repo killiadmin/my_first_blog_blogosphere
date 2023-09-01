@@ -1,11 +1,11 @@
 <?php
-include '../app/config/config.php';
+include './app/config/config.php';
 
 session_start();
 
-require_once '../app/views/View.php';
+require_once './app/views/View.php';
 
-class ControllerHomeAdministrator
+class ControllerHomeadministrator
 {
     private  $_commentRepository;
     private $_postRepository;
@@ -49,7 +49,7 @@ class ControllerHomeAdministrator
             $this->_commentRepository = new CommentRepository();
             $comments = $this->_commentRepository->getComments();
 
-            $this->_view = new View('HomeAdministrator');
+            $this->_view = new View('Homeadministrator');
             $this->_view->generate(array(
                 'users' => $users,
                 'posts' => $posts,

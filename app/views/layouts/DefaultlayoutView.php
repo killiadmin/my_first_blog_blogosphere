@@ -7,7 +7,7 @@
     <title><?= $_title ?? "Blogosphere" ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link rel="stylesheet"  href="/css/style.css">
+    <link rel="stylesheet"  href="./public/css/style.css">
 </head>
 <body>
 <!-- Bloc Header-->
@@ -34,6 +34,9 @@
                     <?php } ?>
                     <li class="nav-item">
                         <a class="nav-link text-monospace text-light" href="/login">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="nav-link bg-success text-monospace text-light rounded">Hello <?= $_SESSION['username'] ?></div>
                     </li>
                 </ul>
             </div>

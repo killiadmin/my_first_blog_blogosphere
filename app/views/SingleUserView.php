@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 p-3 mt-3 d-flex flex-column align-items-center justify-content-center">
-            <img src="./assets/photo_profil.png" alt="Photo de profil" class="img-fluid rounded-circle" style="width: 290px;">
+            <img src="./public/assets/photo_profil.png" alt="Photo de profil" class="img-fluid rounded-circle" style="width: 290px;">
         </div>
         <div class="col-md-6 mt-3 d-flex flex-column justify-content-center">
             <h2><?= htmlspecialchars($user[0]->name()) ?> <?= htmlspecialchars($user[0]->username()) ?></h2>
@@ -11,7 +11,7 @@
 
             <h4>My CV : </h4>
             <div class="p-3">
-                <a href="/assets/CV_Developpeur.pdf" class="btn btn-secondary">See my CV</a></li>
+                <a href="./public/assets/CV_Developpeur.pdf" target="_blank" class="btn btn-secondary">See my CV</a></li>
             </div>
             <hr>
         </div>

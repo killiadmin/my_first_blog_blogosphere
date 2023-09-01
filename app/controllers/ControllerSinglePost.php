@@ -1,10 +1,10 @@
 <?php
-include '../app/config/config.php';
+include './app/config/config.php';
 
 session_start();
-require_once '../app/views/View.php';
+require_once './app/views/View.php';
 
-class ControllerSinglePost
+class ControllerSinglepost
 {
     private $_PostRepository;
     private $_CommentRepository;
@@ -47,7 +47,7 @@ class ControllerSinglePost
             $this->_CommentRepository = new CommentRepository();
             $post = $this->_PostRepository->getPost($_GET['id']);
             $comment = $this->_CommentRepository->getComment($_GET['id']);
-            $this->_view = new View('SinglePost');
+            $this->_view = new View('Singlepost');
             $this->_view->generate(array(
                 'post' => $post,
                 'comment' => $comment
@@ -74,7 +74,7 @@ class ControllerSinglePost
             }
 
             $comment = $this->_CommentRepository->getComment($_GET['id']);
-            $this->_view = new View('SinglePost');
+            $this->_view = new View('Singlepost');
             $this->_view->generate(array(
                 'post' => $post,
                 'comment' => $comment
@@ -91,7 +91,7 @@ class ControllerSinglePost
             $comment = $this->_CommentRepository->getComment($_GET['id']);
 
             $post = $this->_PostRepository->getPost($_GET['id']);
-            $this->_view = new View('SinglePost');
+            $this->_view = new View('Singlepost');
             $this->_view->generate(array(
                 'post' => $post,
                 'comment' => $comment
