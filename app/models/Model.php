@@ -23,34 +23,46 @@ abstract class Model
         }
     }
 
-    //Method to select all data in a table
+    /**
+     * Method to select all data in a table
+     * @param $table
+     * @param $obj
+     * @return array
+     * @throws Exception
+     */
 
     protected function getAll($table, $obj)
     {
         $this->getConnectionDataBase();
         $datas = [];
-        if($table === 'posts'){
-            $sql = "SELECT *
-                    FROM " . $table . "
-                    JOIN users
-                    ON users.idUser =" . $table . ".idUserAssociated
-                    ORDER BY " . $table . ".dateCreate DESC";
-        } else {
-            $sql = "SELECT * 
-                    FROM " . $table . " 
-                    ORDER BY dateCreate DESC";
-        }
-        $query = self::$_db->prepare($sql);
-        $query->execute();
 
-        while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
-            $datas[] = new $obj($data);
+        if ($table === 'posts') {
+            $sql = "SELECT idPost, ${table}.idUserAssociated, title, chapo, ${table}.content, ${table}.dateCreate, ${table}.dateUpdate
+                    FROM $table
+                    JOIN users
+                    ON users.idUser = ${table}.idUserAssociated
+                    ORDER BY ${table}.dateCreate DESC";
+        } elseif ($table === 'comments') {
+            $sql = "SELECT idComment, ${table}.idUserAssociated, idPostAssociated, ${table}.content, ${table}.dateCreate, ${table}.dateUpdate 
+                    FROM $table
+                    ORDER BY ${table}.dateCreate DESC";
+        } else {
+            $sql = "SELECT idUser, name, username, picture, quote, mail, password, status, activated, ${table}.dateCreate
+                    FROM $table
+                    ORDER BY ${table}.dateCreate DESC";
+        }
+
+        $query = self::$_db->prepare($sql);
+
+        if ($query->execute()) {
+            while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
+                $datas[] = new $obj($data);
+            }
+        } else {
+            throw new Exception("Error executing SQL query");
         }
 
         return $datas;
-
-        // Close cursor after query execution
-        $query->closeCursor();
     }
 
     protected function getOne($table, $tableJoin, $obj, $id)
