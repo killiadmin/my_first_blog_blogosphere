@@ -60,7 +60,7 @@ if ($post[0] ?? []) {
                 $formatDateFrComment = date($dateFormat, $timeStampComment);
             }
             ?>
-            <div class="comment" style="width: 500px;">
+            <div class="comment p-3">
                 <div class="bg-light bg-gradient rounded p-3">
                     <div class="comment-info d-flex gap-2">
                         <p class="comment-author"><strong>Author: </strong><?= htmlspecialchars($deployComment->name()) ?> <?= htmlspecialchars($deployComment->username()) ?></p>

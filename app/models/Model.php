@@ -37,7 +37,7 @@ abstract class Model
         $datas = [];
 
         if ($table === 'posts') {
-            $sql = "SELECT idPost, ${table}.idUserAssociated, title, chapo, ${table}.content, ${table}.dateCreate, ${table}.dateUpdate
+            $sql = "SELECT idPost, ${table}.idUserAssociated, title, chapo, ${table}.content, ${table}.dateCreate, ${table}.dateUpdate, name, username
                     FROM $table
                     JOIN users
                     ON users.idUser = ${table}.idUserAssociated
