@@ -59,11 +59,20 @@ abstract class Model
                 $datas[] = new $obj($data);
             }
         } else {
-            throw new Exception("Error executing SQL query");
+            throw new Exception("Error, data is unavailable");
         }
 
         return $datas;
     }
+
+    /**
+     * Method to select data with his id
+     * @param $table
+     * @param $tableJoin
+     * @param $obj
+     * @param $id
+     * @return array
+     */
 
     protected function getOne($table, $tableJoin, $obj, $id)
     {
@@ -74,29 +83,31 @@ abstract class Model
             $idReference = 'idPostAssociated';
             $orderByCustom = 'idComment';
         } elseif ($table === 'posts') {
-            $idReference = $table . '.idPost';
+            $idReference = 'idPost';
             $orderByCustom = 'idPost';
         }
 
         $sql = "SELECT * 
-            FROM " . $table . "
-            JOIN " . $tableJoin . "
-            ON " . $table . ".idUserAssociated=" . $tableJoin . ".idUser
-            WHERE " . $idReference . "=" . $id. "
-            ORDER BY " . $table . "." . $orderByCustom . " DESC";
+            FROM $table
+            JOIN $tableJoin
+            ON $table.idUserAssociated = $tableJoin.idUser
+            WHERE $table.$idReference = :id
+            ORDER BY $table.$orderByCustom DESC";
 
         $query = self::$_db->prepare($sql);
-        $query->execute();
+        $query->bindParam(':id', $id, PDO::PARAM_INT);
 
-        while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
-            $datas[] = new $obj($data);
+        if ($query->execute()) {
+            while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
+                $datas[] = new $obj($data);
+            }
+        } else {
+            throw new Exception("Error, data is unavailable");
         }
-
-        // Close cursor before returning the data
-        $query->closeCursor();
 
         return $datas;
     }
+
 
     protected function getOneUser($table, $obj, $id)
     {
