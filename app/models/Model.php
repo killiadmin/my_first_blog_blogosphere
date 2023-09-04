@@ -31,7 +31,7 @@ abstract class Model
      * @throws Exception
      */
 
-    protected function getAll($table, $obj)
+    protected function getAll(string $table, string $obj)
     {
         $this->getConnectionDataBase();
         $datas = [];
@@ -74,7 +74,7 @@ abstract class Model
      * @return array
      */
 
-    protected function getOne($table, $tableJoin, $obj, $id)
+    protected function getOne(string $table, string $tableJoin, string $obj, int $id)
     {
         $this->getConnectionDataBase();
         $datas = [];
@@ -109,7 +109,7 @@ abstract class Model
     }
 
 
-    protected function getOneUser($table, $obj, $id)
+    protected function getOneUser(string $table, string $obj, int $id)
     {
         $this->getConnectionDataBase();
         $datas = [];
@@ -132,7 +132,7 @@ abstract class Model
         $query->closeCursor();
     }
 
-    protected function connectionUser($table, $obj, $mail, $password)
+    protected function connectionUser(string $table, string $obj, string $mail, string $password)
     {
         // Établissement de la connexion à la base de données
         $this->getConnectionDataBase();
@@ -166,7 +166,7 @@ abstract class Model
         return $datas;
     }
 
-    protected function checkIfEmailTaken($table, $mail)
+    protected function checkIfEmailTaken(string $table, string $mail)
     {
         $this->getConnectionDataBase();
 
@@ -181,7 +181,7 @@ abstract class Model
         $query->closeCursor();
     }
 
-    protected function methodForCreateUser ($table, $name, $username, $mail, $password)
+    protected function methodForCreateUser (string $table, string $name, string $username, string $mail, string $password)
     {
         $this->getConnectionDataBase();
 
@@ -207,34 +207,7 @@ abstract class Model
         $query->closeCursor();
     }
 
-    /*protected function methodForGetInfosregister ($table, $obj, $name, $username, $mail)
-    {
-        $this->getConnectionDataBase();
-        $datas = [];
-
-        $sqlCheckInfosRegister = "SELECT name, username, mail
-                                  FROM " . $table . " 
-                                  WHERE name = ".$name."
-                                  AND username = ".$username."
-                                  AND mail = ".$mail;
-
-        $checkinfosRegister = self::$_db->prepare($sqlCheckInfosRegister);
-        $checkinfosRegister->execute([$name, $username, $mail]);
-
-        if ($checkinfosRegister->rowCount() > 0) {
-            while ($data = $checkinfosRegister->fetch(PDO::FETCH_ASSOC)) {
-                $datas[] = new $obj($data);
-            }
-
-            return $datas;
-        } else {
-            return 'Il y a eu problème lors de l\'inscription de l\'utilisateur';
-        }
-
-        $query->closeCursor();
-    }*/
-
-    protected function methodForGetInfosregister($table, $obj, $name, $username, $mail)
+    protected function methodForGetInfosregister(string $table, string $obj, string $name, string $username, string $mail)
     {
         $this->getConnectionDataBase();
         $datas = [];
@@ -269,7 +242,7 @@ abstract class Model
      * @return string
      */
 
-    protected function createOne($table)
+    protected function createOne(string $table)
     {
         $this->getConnectionDataBase();
 
@@ -317,7 +290,7 @@ abstract class Model
      * @param $idUser
      * @return void
      */
-    protected function createOneComment($table, $tableCheck, $id, $idUser)
+    protected function createOneComment(string $table, string $tableCheck, int $id, int $idUser)
     {
         $this->getConnectionDataBase();
         $sqlCheckPost = "SELECT * 
@@ -348,7 +321,7 @@ abstract class Model
         }
     }
 
-    protected function deleteOne ($table, $tableCheck, $id)
+    protected function deleteOne (string $table, string $tableCheck, int $id)
     {
         $this->getConnectionDataBase();
         $sqlComment = "SELECT * 
@@ -386,7 +359,7 @@ abstract class Model
      * @return false
      */
 
-    protected function updateOne($table, $tableJoin, $setTitle, $setChapo, $setContent, $id)
+    protected function updateOne(string $table, string $tableJoin, string $setTitle, string $setChapo, string $setContent, int $id)
     {
         $this->getConnectionDataBase();
 
