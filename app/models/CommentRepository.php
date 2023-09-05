@@ -8,13 +8,13 @@ class CommentRepository extends Model
         return $this->getAll('comments', 'Comment');
     }
 
-    public function getComment($id)
+    public function getComment(int $id)
     {
         return $this->getOne('comments','users','Comment', $id);
     }
 
-    public function createComment($id, $idUser)
+    public function createComment(int $id, int $idUser)
     {
-        return$this->createOneComment('comments', 'posts', $id, $idUser);
+        return $this->createOneComment('comments', 'posts', $id, $idUser);
     }
 }

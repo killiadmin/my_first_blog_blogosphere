@@ -12,7 +12,7 @@ class ControllerHomeadministrator
     private $_userRepository;
     private $_view;
 
-    public function __construct($url)
+    public function __construct(array $url)
     {
         if (isset($_SESSION['auth'], $_SESSION['user_ip'], $_SESSION['user_agent']) && $_SESSION['role'] === 'admin') {
             if ($_SESSION['user_ip'] !== $_SERVER['REMOTE_ADDR'] || $_SESSION['user_agent'] !== $_SERVER['HTTP_USER_AGENT']) {

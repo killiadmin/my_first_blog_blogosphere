@@ -13,7 +13,7 @@ class ControllerSingleuser
     private $_userRepository;
     private $_view;
 
-    public function __construct($url)
+    public function __construct(array $url)
     {
         if (isset($url) && count($url) < 1) {
             throw new \Exception('The page you want is not available.');

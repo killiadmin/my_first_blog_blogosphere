@@ -8,21 +8,21 @@ class UserRepository extends Model
         return $this->getAll('users', 'User');
     }
 
-    public function getUser($id)
+    public function getUser()
     {
         return $this->getOneUser('users', 'User', 1);
     }
 
-    public function connection($mail, $password)
+    public function connection(string $mail, string $password)
     {
-        return $this->connectionUser('users', 'User' ,$mail, $password);
+        return $this->connectionUser('users', 'User' , $mail, $password);
     }
 
-    public function isEmailTaken($mail){
+    public function isEmailTaken(string $mail){
         return $this->checkIfEmailTaken('users', $mail);
     }
 
-    public function createUser($name, $username, $mail, $password)
+    public function createUser(string $name, string $username, string $mail, string $password)
     {
         return $this->methodForCreateUser('users', $name, $username, $mail, $password);
     }

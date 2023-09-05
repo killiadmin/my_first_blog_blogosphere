@@ -28,7 +28,7 @@ class Comment
     }
 
     //setters
-    public function setIdComment($idComment)
+    public function setIdComment(int $idComment)
     {
         $idComment = (int) $idComment;
         if ($idComment > 0) {
@@ -36,45 +36,45 @@ class Comment
         }
     }
 
-    public function setIdUserAssociated($idUserAssociated)
+    public function setIdUserAssociated(int $idUserAssociated)
     {
         if ((int) ($idUserAssociated)) {
             $this->_idUserAssociated = $idUserAssociated;
         }
     }
 
-    public function setIdPostAssociated($idPostAssociated)
+    public function setIdPostAssociated(int $idPostAssociated)
     {
         if ((int) ($idPostAssociated)) {
             $this->_idPostAssociated = $idPostAssociated;
         }
     }
 
-    public function setContent($content)
+    public function setContent(string $content)
     {
         if (is_string($content)) {
             $this->_content = $content;
         }
     }
 
-    public function setDateCreate($dateCreate)
+    public function setDateCreate(string $dateCreate)
     {
         $this->_dateCreate = $dateCreate;
     }
 
-    public function setDateUpdate($dateUpdate)
+    public function setDateUpdate(string $dateUpdate)
     {
         $this->_dateUpdate = $dateUpdate;
     }
 
-    public function setName($name)
+    public function setName(string $name)
     {
         if (is_string($name)) {
             $this->_name = $name;
         }
     }
 
-    public function setUserName($userName)
+    public function setUserName(string $userName)
     {
         if (is_string($userName)) {
             $this->_userName = $userName;

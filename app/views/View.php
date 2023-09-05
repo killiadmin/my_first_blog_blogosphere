@@ -8,12 +8,12 @@ class View
     //title of the page
     private $_title;
 
-    function __construct($action)
+    function __construct(string $action)
     {
         $this->_file = "./app/views/".$action."View.php";
     }
 
-    private function generateFile($file, $data)
+    private function generateFile(string $file, array $data)
     {
         if (file_exists($file)) {
 
@@ -30,7 +30,7 @@ class View
     }
 
     //Générer la vue à afficher
-    public function generate($data)
+    public function generate(array $data)
     {
         //Contenue de la page à générer
         $pageContent = $this->generateFile($this->_file, $data);

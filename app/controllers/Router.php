@@ -45,7 +45,7 @@ class Router
             } else {
                 //Si aucune route ne match l'utilisateur sera redirigé vers le menu connection
                 $this->_view = new View('Login');
-                $this->_view->generate(null);
+                $this->_view->generate((array)null);
             }
         } catch (\Exception $e) {
             $php_errormsg = $e->getMessage();

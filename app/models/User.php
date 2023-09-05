@@ -29,7 +29,7 @@ class User
     }
 
     //setters
-    public function setIdUser($idUser)
+    public function setIdUser(int $idUser)
     {
         $idUser = (int) $idUser;
         if ($idUser > 0) {
@@ -37,55 +37,55 @@ class User
         }
     }
 
-    public function setName($name)
+    public function setName(string $name)
     {
         if (is_string($name)) {
             $this->_name = $name;
         }
     }
 
-    public function setUserName($username)
+    public function setUserName(string $username)
     {
         if (is_string($username)) {
             $this->_username = $username;
         }
     }
 
-    public function setPicture($picture)
+    public function setPicture(string $picture)
     {
         if (is_string($picture)) {
             $this->_picture = $picture;
         }
     }
 
-    public function setQuote($quote)
+    public function setQuote(string $quote)
     {
         if (is_string($quote)){
             $this->_quote = $quote;
         }
     }
-    public function setMail($mail)
+    public function setMail(string $mail)
     {
         if (is_string($mail)) {
             $this->_mail = $mail;
         }
     }
 
-    public function setPassword($password)
+    public function setPassword(string $password)
     {
         if (is_string($password)) {
             $this->_password = $password;
         }
     }
 
-    public function setStatus($status)
+    public function setStatus(string $status)
     {
         if (is_string($status)) {
             $this->_status = $status;
         }
     }
 
-    public function setActivated($activated)
+    public function setActivated(int $activated)
     {
         if ((int) $activated) {
             $this->_activated = $activated;
@@ -93,7 +93,7 @@ class User
 
     }
 
-    public function setDateCreate($dateCreate)
+    public function setDateCreate(string $dateCreate)
     {
         $this->_dateCreate = $dateCreate;
     }

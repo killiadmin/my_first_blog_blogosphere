@@ -9,7 +9,7 @@ class ControllerPost
     private $_postRepository;
     private $_view;
 
-    public function __construct($url)
+    public function __construct(array $url)
     {
         if (isset($_SESSION['auth'], $_SESSION['user_ip'], $_SESSION['user_agent'])) {
             if ($_SESSION['user_ip'] !== $_SERVER['REMOTE_ADDR'] || $_SESSION['user_agent'] !== $_SERVER['HTTP_USER_AGENT']) {
@@ -55,7 +55,7 @@ class ControllerPost
     {
         if (isset($_GET['create']) && isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
             $this->_view = new View('WritePost');
-            $this->_view->generate(null);
+            $this->_view->generate((array)null);
         } else {
             $msg = 'You are not allowed to write an article !';
             $this->_view = new View('Login');
