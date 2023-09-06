@@ -27,7 +27,7 @@ class UserRepository extends Model
         return $this->methodForCreateUser('users', $name, $username, $mail, $password);
     }
 
-    public function checkInfosRegister($name, $username, $mail)
+    public function checkInfosRegister(string $name, string $username, string $mail)
     {
         return $this->methodForGetInfosregister('users', 'User' , $name, $username, $mail);
     }
