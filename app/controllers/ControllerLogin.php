@@ -7,7 +7,7 @@ class ControllerLogin
 
     private $_title;
 
-    public function __construct()
+    public function __construct($url)
     {
         if (isset($url) && count($url) < 1) {
             throw new \Exception('The page you want is not available.');

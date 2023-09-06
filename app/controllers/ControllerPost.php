@@ -19,7 +19,7 @@ class ControllerPost
                 $this->_view->generate(array(
                     'msg' => $msg
                 ));
-            } elseif (isset($url) && count($url) > 1){
+            } elseif (count($url) > 1){
                 throw new \Exception('Notfound Page', 1);
             } elseif (isset($_GET['create'])) {
                 $this->create();
