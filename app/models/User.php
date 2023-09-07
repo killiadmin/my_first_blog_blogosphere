@@ -18,7 +18,7 @@ class User
         $this->hydrate($data);
     }
 
-    public function hydrate (array $data)
+    public function hydrate (array $data): void
     {
         foreach ($data as $key => $value) {
             $method = 'set'.ucfirst($key);
@@ -29,7 +29,7 @@ class User
     }
 
     //setters
-    public function setIdUser(int $idUser)
+    public function setIdUser(int $idUser): void
     {
         $idUser = (int) $idUser;
         if ($idUser > 0) {
@@ -37,55 +37,55 @@ class User
         }
     }
 
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         if (is_string($name)) {
             $this->_name = $name;
         }
     }
 
-    public function setUserName(string $username)
+    public function setUserName(string $username): void
     {
         if (is_string($username)) {
             $this->_username = $username;
         }
     }
 
-    public function setPicture(string $picture)
+    public function setPicture(string $picture): void
     {
         if (is_string($picture)) {
             $this->_picture = $picture;
         }
     }
 
-    public function setQuote(string $quote)
+    public function setQuote(string $quote): void
     {
         if (is_string($quote)){
             $this->_quote = $quote;
         }
     }
-    public function setMail(string $mail)
+    public function setMail(string $mail): void
     {
         if (is_string($mail)) {
             $this->_mail = $mail;
         }
     }
 
-    public function setPassword(string $password)
+    public function setPassword(string $password): void
     {
         if (is_string($password)) {
             $this->_password = $password;
         }
     }
 
-    public function setStatus(string $status)
+    public function setStatus(string $status): void
     {
         if (is_string($status)) {
             $this->_status = $status;
         }
     }
 
-    public function setActivated(int $activated)
+    public function setActivated(int $activated): void
     {
         if ((int) $activated) {
             $this->_activated = $activated;
@@ -93,60 +93,64 @@ class User
 
     }
 
-    public function setDateCreate(string $dateCreate)
+    public function setDateCreate(string $dateCreate): void
     {
         $this->_dateCreate = $dateCreate;
     }
 
     //getters
 
-    public function idUser()
+    public function idUser(): int
     {
         return $this->_idUser;
     }
 
-    public function name()
+    public function name(): string
     {
         return $this->_name;
     }
 
-    public function username()
+    public function username(): string
     {
         return $this->_username;
     }
 
-    public function picture()
+    public function picture(): string
     {
         return $this->_picture;
     }
 
-    public function quote()
+    public function quote(): string
     {
         return $this->_quote;
     }
 
-    public function mail()
+    public function mail(): string
     {
         return $this->_mail;
     }
 
-    public function password()
+    public function password(): string
     {
         return $this->_password;
     }
 
-    public function status()
+    public function status(): string
     {
         return $this->_status;
     }
 
-    public function activated()
+    public function activated(): int
     {
         return $this->_activated;
     }
 
-    public function dateCreate()
+    public function dateCreate(): string
     {
-        return $this->_dateCreate;
+        $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $this->_dateUpdate);
+        if ($dateTime instanceof DateTime) {
+            return $dateTime->format('Y-m-d H:i:s');
+        }
+        return '';
     }
 }

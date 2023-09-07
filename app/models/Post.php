@@ -17,7 +17,7 @@ class Post
         $this->hydrate($data);
     }
 
-    public function hydrate (array $data)
+    public function hydrate (array $data): void
     {
         foreach ($data as $key => $value) {
             $method = 'set'.ucfirst($key);
@@ -114,7 +114,7 @@ class Post
         return $this->_content;
     }
 
-    public function dateCreate()
+    public function dateCreate(): string
     {
         $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $this->_dateCreate);
         if ($dateTime instanceof DateTime) {
@@ -123,7 +123,7 @@ class Post
         return '';
     }
 
-    public function dateUpdate()
+    public function dateUpdate(): string
     {
         $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $this->_dateUpdate);
         if ($dateTime instanceof DateTime) {
