@@ -108,61 +108,68 @@ abstract class Model
         return $datas;
     }
 
+    /**
+     * Method to select User with his id
+     * @param string $table
+     * @param string $obj
+     * @param int $id
+     * @return array
+     */
 
     protected function getOneUser(string $table, string $obj, int $id)
     {
         $this->getConnectionDataBase();
         $datas = [];
 
-
-        $sql = "SELECT * 
-                FROM " . $table . "
-                WHERE idUser=" . $id;
+        $sql = "SELECT idUser, name, username, picture, quote, status, activated 
+                FROM $table
+                WHERE idUser = :id";
 
         $query = self::$_db->prepare($sql);
-        $query->execute();
+        $query->bindParam(':id', $id, PDO::PARAM_INT);
 
-        while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
-            $datas[] = new $obj($data);
+        if ($query->execute()) {
+            while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
+                $datas[] = new $obj($data);
+            }
+        } else {
+            throw new Exception("Error, data is unavailable");
         }
 
+        //Return datas to users
         return $datas;
-
-        // Close cursor after query execution
-        $query->closeCursor();
     }
+
+    /**
+     * Method to connection for users
+     * @param string $table
+     * @param string $obj
+     * @param string $mail
+     * @param string $password
+     * @return array
+     */
 
     protected function connectionUser(string $table, string $obj, string $mail, string $password)
     {
-        // Établissement de la connexion à la base de données
         $this->getConnectionDataBase();
         $datas = [];
 
-        // Requête SQL pour vérifier l'existence de l'utilisateur par email
         $sqlCheckUser = "SELECT *
-                     FROM " . $table . "
-                     WHERE mail = :mail";
+                         FROM $table
+                         WHERE mail = :mail";
 
-        // Préparation de la requête avec liaison de paramètres
         $checkIfUserExist = self::$_db->prepare($sqlCheckUser);
         $checkIfUserExist->bindValue(':mail', $mail, PDO::PARAM_STR);
-        $checkIfUserExist->execute();
 
-        // Vérification du nombre de lignes retournées par la requête
-        if ($checkIfUserExist->rowCount() > 0) {
-            // Récupération des données de l'utilisateur
+        if ($checkIfUserExist->execute() && $checkIfUserExist->rowCount() > 0) {
             $data = $checkIfUserExist->fetch(PDO::FETCH_ASSOC);
-            // Vérification du mot de passe à l'aide de password_verify
+            //Verifying password using password_verify
             if (password_verify($password, $data['password'])) {
-                // Création d'une instance de l'objet utilisateur
                 $datas[] = new $obj($data);
             }
         }
 
-        // Fermeture du curseur avant de retourner les données
-        $checkIfUserExist->closeCursor();
-
-        // Retour des données de l'utilisateur
+        //Return datas to users
         return $datas;
     }
 
