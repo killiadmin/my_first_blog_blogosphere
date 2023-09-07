@@ -136,14 +136,6 @@ class ControllerSingleuser
                 $user_mail = filter_var($_POST["mail"], FILTER_VALIDATE_EMAIL);
                 $user_password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
-                /*echo '<pre>';
-                var_dump($user_name);
-                var_dump($user_username);
-                var_dump($user_mail);
-                var_dump($user_password);
-                echo '</pre>';
-                die();*/
-
                 $this->_userRepository = new UserRepository();
 
                 if ($this->_userRepository->isEmailTaken($user_mail)) {

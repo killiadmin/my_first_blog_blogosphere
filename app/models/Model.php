@@ -14,8 +14,6 @@ abstract class Model
         self::$_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     }
 
-    //Check if the db is not already connected
-
     /**
      * @return PDO|null Instance PDO on successful connection, otherwise null.
      */
@@ -404,7 +402,7 @@ abstract class Model
      * @param $setChapo
      * @param $setContent
      * @param $id
-     * @return false
+     * @return array|void
      */
 
     protected function updateOne(string $table, string $tableJoin, string $setTitle, string $setChapo, string $setContent, int $id)
@@ -466,5 +464,4 @@ abstract class Model
             }
         }
     }
-
 }
