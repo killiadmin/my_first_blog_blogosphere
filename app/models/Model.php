@@ -435,16 +435,15 @@ abstract class Model
 
                     $currentDate = date('Y-m-d H:i:s');
 
-                    $sqlUpdatePost = "UPDATE " . $table . " 
-                                  JOIN " . $tableJoin . "
-                                  ON " . $table . ".idUserAssociated = " . $tableJoin . ".idUser
-                                  SET 
-                                  " . $setTitle . "=?,
+                    $sqlUpdatePost = "UPDATE $table 
+                                  JOIN $tableJoin
+                                  ON $table.idUserAssociated = $tableJoin.idUser
+                                  SET $setTitle=?,
                                   idUserAssociated=?,
-                                  " . $setChapo . "=?,
-                                  " . $setContent . "=?,
+                                  $setChapo=?,
+                                  $setContent=?,
                                   dateUpdate = ?
-                                  WHERE " . $table . ".idPost=?";
+                                  WHERE $table.idPost=?";
 
                     $sqlExecUpdatePost = self::$_db->prepare($sqlUpdatePost);
                     $sqlExecUpdatePost->execute([$title, $userId, $chapo, $content, $currentDate, $id]);
