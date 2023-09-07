@@ -6,7 +6,7 @@ abstract class Model
 
     //We connect to the database
 
-    private static function setConnectionDataBase()
+    private static function setConnectionDataBase(): void
     {
         self::$_db = new PDO ('mysql:host=127.0.0.1;port=8889;dbname=u746425507_blogorama;charset=utf8', 'root', 'azerty');
 
@@ -15,6 +15,10 @@ abstract class Model
     }
 
     //Check if the db is not already connected
+
+    /**
+     * @return PDO|null Instance PDO on successful connection, otherwise null.
+     */
     protected function getConnectionDataBase ()
     {
         if (self::$_db === null) {
@@ -303,9 +307,7 @@ abstract class Model
 
         // Check for empty fields
         if (empty($title) || empty($chapo) || empty($content)) {
-            $error = "Tous les champs doivent être remplis.";
-            // You can redirect or handle the error as needed
-            return $error;
+            return "Tous les champs doivent être remplis.";
         }
 
         $currentDate = date('Y-m-d H:i:s');

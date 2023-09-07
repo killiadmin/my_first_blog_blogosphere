@@ -3,12 +3,12 @@
 class PostRepository extends Model
 {
     //Function that will retrieve post from the post table
-    public function getPosts()
+    public function getPosts(): array
     {
         return $this->getAll('posts', 'Post');
     }
 
-    public function getPost(int $id)
+    public function getPost(int $id): array
     {
         return $this->getOne(
             'posts',
@@ -17,7 +17,7 @@ class PostRepository extends Model
             $id);
     }
 
-    public function updatePost(int $id)
+    public function updatePost(int $id): ?array
     {
         return $this->updateOne(
             'posts' ,
@@ -28,13 +28,13 @@ class PostRepository extends Model
             $id);
     }
 
-    public function createPost()
+    public function createPost(): ?string
     {
         return $this->createOne('posts', 'Post');
     }
 
-    public function deletePost(int $id)
+    public function deletePost(int $id): void
     {
-        return $this->deleteOne('posts','comments', $id);
+        $this->deleteOne('posts','comments', $id);
     }
 }
