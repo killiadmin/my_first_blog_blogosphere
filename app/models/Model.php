@@ -173,46 +173,84 @@ abstract class Model
         return $datas;
     }
 
+    /**
+     * Method to verifying if mail is taken for new users
+     * @param string $table
+     * @param string $mail
+     * @return bool
+     * @throws Exception
+     */
+
     protected function checkIfEmailTaken(string $table, string $mail)
     {
         $this->getConnectionDataBase();
 
         $sqlCheckIsEmailTaken = "SELECT mail 
-                                 FROM " . $table . "
-                                 WHERE mail = ? ";
+                                 FROM $table
+                                 WHERE mail = :mail";
 
         $checkMail = self::$_db->prepare($sqlCheckIsEmailTaken);
-        $checkMail->execute([$mail]);
-        return $checkMail->fetch();
+        $checkMail->bindValue(':mail', $mail, PDO::PARAM_STR);
 
-        $query->closeCursor();
+        if ($checkMail->execute()) {
+            $result = $checkMail->fetch();
+            // Verifying e-mail is taken
+            if ($result) {
+                return true;
+            }
+        } else {
+            throw new Exception("Error, data is unavailable");
+        }
+
+        $checkMail->closeCursor();
+
+        return false;
     }
+
+    /**
+     * Method for create new user in the database
+     * @param string $table
+     * @param string $name
+     * @param string $username
+     * @param string $mail
+     * @param string $password
+     * @return string
+     */
 
     protected function methodForCreateUser (string $table, string $name, string $username, string $mail, string $password)
     {
         $this->getConnectionDataBase();
 
-        $sqlCreateUser = "INSERT INTO " . $table . " (name, username, mail, password, status ,dateCreate) VALUES (?, ?, ?, ?, ?, ?)";
+        $sqlCreateUser = "INSERT INTO " . $table . " (name, username, picture, quote, mail, password, status ,dateCreate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $execCreateUser = self::$_db->prepare($sqlCreateUser);
 
         if (empty($name) || empty($username) || empty($mail) || empty($password)) {
-            $error = "Tous les champs doivent être remplis.";
-            return $error;
+            return "All fields must be completed.";
         }
 
         $date = date("Y-m-d H:i:s");
         $status = 'reader';
+        $picture = 'photo_default.jpeg';
+        $quote = "I'm a new reader";
 
-        if ($execCreateUser->execute([ $name, $username, $mail, $password, $status, $date])) {
-            $successMessage = "L'article a été ajouté avec succès.";
-            return $successMessage;
+        if ($execCreateUser->execute([ $name, $username, $picture, $quote, $mail, $password, $status, $date])) {
+            return "The user is registered.";
         } else {
-            $errorMessage = "Une erreur est survenue lors de l'ajout de l'article.";
-            return $errorMessage;
+            return "An error occurred during user registration.";
         }
 
         $query->closeCursor();
     }
+
+    /**
+     * Method to verifying if user exist
+     * @param string $table
+     * @param string $obj
+     * @param string $name
+     * @param string $username
+     * @param string $mail
+     * @return array|string
+     */
 
     protected function methodForGetInfosregister(string $table, string $obj, string $name, string $username, string $mail)
     {
@@ -220,26 +258,29 @@ abstract class Model
         $datas = [];
 
         $sqlCheckInfosRegister = "SELECT idUser, name, username, mail, status
-                              FROM " . $table . " 
-                              WHERE name = :name
-                              AND username = :username
-                              AND mail = :mail";
+                                  FROM $table
+                                  WHERE name = :name
+                                  AND username = :username
+                                  AND mail = :mail";
 
         $checkinfosRegister = self::$_db->prepare($sqlCheckInfosRegister);
-        $checkinfosRegister->execute([
-            'name' => $name,
-            'username' => $username,
-            'mail' => $mail
-        ]);
+        $checkinfosRegister->bindParam(':name', $name, PDO::PARAM_STR);
+        $checkinfosRegister->bindParam(':username', $username, PDO::PARAM_STR);
+        $checkinfosRegister->bindParam(':mail', $mail, PDO::PARAM_STR);
 
-        if ($checkinfosRegister->rowCount() > 0) {
-            while ($data = $checkinfosRegister->fetch(PDO::FETCH_ASSOC)) {
-                $datas[] = new $obj($data);
+        if ($checkinfosRegister->execute()) {
+            if ($checkinfosRegister->rowCount() > 0) {
+                while ($data = $checkinfosRegister->fetch(PDO::FETCH_ASSOC)) {
+                    $datas[] = new $obj($data);
+                }
+
+                //Return datas to user register
+                return $datas;
+            } else {
+                return 'There was a problem registering the user';
             }
-
-            return $datas;
         } else {
-            return 'Il y a eu un problème lors de l\'inscription de l\'utilisateur';
+            throw new Exception("Error, data is unavailable");
         }
     }
 
