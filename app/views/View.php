@@ -13,7 +13,7 @@ class View
         $this->_file = "./app/views/".$action."View.php";
     }
 
-    private function generateFile(string $file, array $data)
+    private function generateFile(string $file, array $data): string
     {
         if (file_exists($file)) {
 
@@ -30,7 +30,7 @@ class View
     }
 
     //Générer la vue à afficher
-    public function generate(array $data)
+    public function generate(array $data): void
     {
         //Contenue de la page à générer
         $pageContent = $this->generateFile($this->_file, $data);
