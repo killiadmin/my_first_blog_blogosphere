@@ -40,7 +40,7 @@ class ControllerSinglepost
         }
     }
 
-    private function singlePost()
+    private function singlePost(): void
     {
         if (isset($_GET['id'])) {
             $this->_PostRepository = new PostRepository();
@@ -55,7 +55,7 @@ class ControllerSinglepost
         }
     }
 
-    private function updatePost()
+    private function updatePost(): void
     {
         if (isset($_GET['id']) && $_POST['csrf_token'] == $_SESSION['csrf_token']) {
             $this->_PostRepository = new PostRepository();
@@ -82,7 +82,7 @@ class ControllerSinglepost
         }
     }
 
-    private function comments()
+    private function comments(): void
     {
         if (isset($_GET['id']) && $_POST['csrf_token'] == $_SESSION['csrf_token']) {
             $this->_PostRepository = new PostRepository();

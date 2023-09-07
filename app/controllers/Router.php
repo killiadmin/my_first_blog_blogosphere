@@ -5,7 +5,7 @@ class Router
     private $controller;
     private $view;
 
-    public function route ()
+    public function route (): void
     {
         try {
             //Enregistre automatiquement une fonction d'autoload (les classes du dossier models)

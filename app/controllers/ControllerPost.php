@@ -43,7 +43,7 @@ class ControllerPost
     }
 
     //Function which allows to display the posts of the db
-    private function posts()
+    private function posts(): void
     {
         $this->_postRepository = new PostRepository();
         $posts = $this->_postRepository->getPosts();
@@ -51,7 +51,7 @@ class ControllerPost
         $this->_view->generate(array('posts' => $posts));
     }
 
-    private function create()
+    private function create(): void
     {
         if (isset($_GET['create']) && isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
             $this->_view = new View('WritePost');
@@ -63,7 +63,7 @@ class ControllerPost
         }
     }
 
-    private function modify()
+    private function modify(): void
     {
         if (isset($_GET['modify'], $_GET['id'])) {
             $this->_postRepository = new PostRepository();
@@ -73,7 +73,7 @@ class ControllerPost
         }
     }
 
-    private function store()
+    private function store(): void
     {
         if ($_POST['csrf_token'] == $_SESSION['csrf_token']){
             $this->_postRepository = new PostRepository();
@@ -84,7 +84,7 @@ class ControllerPost
         }
     }
 
-    private function delete()
+    private function delete(): void
     {
         if ($_POST['csrf_token'] == $_SESSION['csrf_token']){
             $this->_postRepository = new PostRepository();

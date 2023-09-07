@@ -14,7 +14,7 @@ class ControllerSignup
         $this->signup();
     }
 
-    private function signup()
+    private function signup(): void
     {
         if (isset($_SESSION) && $_SESSION) {
             $_SESSION = [];

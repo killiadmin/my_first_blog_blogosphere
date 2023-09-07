@@ -37,7 +37,7 @@ class ControllerHomeadministrator
         }
     }
 
-    private function contentsAdmin()
+    private function contentsAdmin(): void
     {
         if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'){
             $this->_postRepository = new PostRepository();

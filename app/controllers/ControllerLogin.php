@@ -16,7 +16,7 @@ class ControllerLogin
         $this->login();
     }
 
-    private function login()
+    private function login(): void
     {
         if (isset($_SESSION) && $_SESSION) {
             $_SESSION = [];
@@ -34,6 +34,5 @@ class ControllerLogin
         $this->_title = 'Login';
         $this->_view = new View('Login');
         $this->_view->generate((array)null);
-
     }
 }

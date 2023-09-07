@@ -65,7 +65,7 @@ class ControllerSingleuser
      * by the user and which feeds the user's session
      * @return void
      */
-    private function connectionUser()
+    private function connectionUser(): void
     {
         if (isset($_GET['id'])) {
             if (!empty($_POST['mail']) && !empty($_POST['password'])) {
@@ -126,7 +126,7 @@ class ControllerSingleuser
         }
     }
 
-    private function signUpUser()
+    private function signUpUser(): void
     {
         if (isset($_GET['id'])) {
             if (!empty($_POST['name']) && !empty($_POST['username']) && !empty($_POST['mail']) && !empty($_POST['password'])) {
@@ -205,8 +205,8 @@ class ControllerSingleuser
      * that will generate the view of the homepage after sending it.
      * @return void
      */
-    private function sendEmail()
-{
+    private function sendEmail(): void
+    {
         if (isset($_GET['id']) && $_POST['csrf_token'] == $_SESSION['csrf_token']) {
 
             require_once './vendor/mailjet/mailjet-apiv3-php/src/Mailjet/Resources.php';
