@@ -294,11 +294,9 @@ abstract class Model
     {
         $this->getConnectionDataBase();
 
-        // Prepare the SQL query
         $sql = "INSERT INTO $table (idUserAssociated, title, chapo, content, dateCreate, dateUpdate) VALUES (?, ?, ?, ?, ?, ?)";
         $query = self::$_db->prepare($sql);
 
-        // Validate and sanitize user input
         $title = isset($_POST['title']) ? trim($_POST['title']) : '';
         $chapo = isset($_POST['chapo']) ? trim($_POST['chapo']) : '';
         $content = isset($_POST['content']) ? trim($_POST['content']) : '';
@@ -316,16 +314,11 @@ abstract class Model
 
         // Bind the values and run the query
         if ($query->execute([$idUserAssociated, $title, $chapo, $content, $currentDate, $currentDate])) {
-            $successMessage = "L'article a été ajouté avec succès.";
-            // You can redirect or handle the success as needed
-            return $successMessage;
+            return "The article was added successfully.";
         } else {
-            $errorMessage = "Une erreur est survenue lors de l'ajout de l'article.";
-            // You can redirect or handle the error as needed
-            return $errorMessage;
+            return "An error occurred while adding the article.";
         }
 
-        // Close cursor after query execution
         $query->closeCursor();
     }
 
@@ -342,7 +335,7 @@ abstract class Model
     {
         $this->getConnectionDataBase();
         $sqlCheckPost = "SELECT * 
-                         FROM " . $tableCheck . "
+                         FROM $tableCheck
                          WHERE idPost=" . $id;
         $checkPostExist = self::$_db->prepare($sqlCheckPost);
         $checkPostExist->execute();
@@ -354,7 +347,7 @@ abstract class Model
             // Check if the values exist before using them
             $contentComment = isset($_POST['contentComment']) ? $_POST['contentComment'] : '';
 
-            $idUserAssociated = (int)$idUser;
+            $idUserAssociated = $idUser;
             $idPostAssociated = $id;
 
             // Use the date function to get the current date in the correct format
@@ -364,35 +357,40 @@ abstract class Model
             // Bind the values and run the query
             $sqlPrepareComment->execute([$idUserAssociated, $idPostAssociated ,$contentComment , $currentDate, $dateUpdate]);
 
-            // Close cursor after query execution
             $sqlPrepareComment->closeCursor();
         }
     }
 
+    /**
+     * Method for Delete posts and if comments is associated so delete then
+     * @param string $table
+     * @param string $tableCheck
+     * @param int $id
+     * @return void
+     */
     protected function deleteOne (string $table, string $tableCheck, int $id)
     {
         $this->getConnectionDataBase();
         $sqlComment = "SELECT * 
-                       FROM " . $tableCheck . "
+                       FROM $tableCheck
                        WHERE idPostAssociated=" . $id;
         $checkCommentsExists = self::$_db->prepare($sqlComment);
         $checkCommentsExists->execute();
 
         if ($checkCommentsExists->rowCount() > 0) {
             $sqlDeleteComment = "DELETE 
-                                 FROM " . $tableCheck . "
+                                 FROM $tableCheck
                                  WHERE idPostAssociated=" . $id;
             $sqlDeleteComment = self::$_db->prepare($sqlDeleteComment);
             $sqlDeleteComment->execute();
         }
 
         $sql = "DELETE 
-                FROM " . $table . "
+                FROM $table
                 WHERE idPost=" . $id;
         $query = self::$_db->prepare($sql);
         $query->execute();
 
-        // Close cursor after query execution
         $query->closeCursor();
     }
 
@@ -412,7 +410,7 @@ abstract class Model
         $this->getConnectionDataBase();
 
         $sqlPost = "SELECT * 
-                FROM " . $table . "
+                FROM $table
                 WHERE idPost=?";
         $checkPostExists = self::$_db->prepare($sqlPost);
         $checkPostExists->execute([$id]);
@@ -427,7 +425,7 @@ abstract class Model
                 $content = isset($_POST['content']) ? trim($_POST['content']) : '';
 
                 // Check if user exists in database
-                $sqlCheckUser = "SELECT * FROM " . $tableJoin . " WHERE name=? AND username=?";
+                $sqlCheckUser = "SELECT * FROM $tableJoin WHERE name=? AND username=?";
                 $checkUserExists = self::$_db->prepare($sqlCheckUser);
                 $checkUserExists->execute([$name, $username]);
 
