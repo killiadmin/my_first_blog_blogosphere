@@ -28,7 +28,7 @@ class Post
     }
 
     //setters
-    public function setIdPost(int $idPost)
+    public function setIdPost(int $idPost): void
     {
         $idPost = (int) $idPost;
         if ($idPost > 0) {
@@ -36,51 +36,51 @@ class Post
         }
     }
 
-    public function setIdUserAssociated(int $idUserAssociated)
+    public function setIdUserAssociated(int $idUserAssociated): void
     {
         if ((int) ($idUserAssociated)) {
             $this->_idUserAssociated = $idUserAssociated;
         }
     }
 
-    public function setTitle(string $title)
+    public function setTitle(string $title): void
     {
         if (is_string($title)) {
             $this->_title = $title;
         }
     }
 
-    public function setChapo(string $chapo)
+    public function setChapo(string $chapo): void
     {
         if (is_string($chapo)) {
             $this->_chapo = $chapo;
         }
     }
 
-    public function setContent(string $content)
+    public function setContent(string $content): void
     {
         if (is_string($content)) {
             $this->_content = $content;
         }
     }
 
-    public function setDateCreate(string $dateCreate)
+    public function setDateCreate(string $dateCreate): void
     {
         $this->_dateCreate = $dateCreate;
     }
 
-    public function setDateUpdate(string $dateUpdate)
+    public function setDateUpdate(string $dateUpdate): void
     {
         $this->_dateUpdate = $dateUpdate;
     }
 
-    public function setName(string $name)
+    public function setName(string $name): void
     {
         if (is_string($name)) {
             $this->_name = $name;
         }
     }
-    public function setUserName(string $userName)
+    public function setUserName(string $userName): void
     {
         if (is_string($userName)) {
             $this->_userName = $userName;
@@ -89,47 +89,55 @@ class Post
 
     //getters
 
-    public function idPost()
+    public function idPost(): int
     {
         return $this->_idPost;
     }
 
-    public function idUserAssociated()
+    public function idUserAssociated(): int
     {
         return $this->_idUserAssociated;
     }
 
-    public function title()
+    public function title(): string
     {
         return $this->_title;
     }
 
-    public function chapo()
+    public function chapo(): string
     {
         return $this->_chapo;
     }
 
-    public function content()
+    public function content(): string
     {
         return $this->_content;
     }
 
     public function dateCreate()
     {
-        return $this->_dateCreate;
+        $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $this->_dateCreate);
+        if ($dateTime instanceof DateTime) {
+            return $dateTime->format('Y-m-d H:i:s');
+        }
+        return '';
     }
 
     public function dateUpdate()
     {
-        return $this->_dateUpdate;
+        $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $this->_dateUpdate);
+        if ($dateTime instanceof DateTime) {
+            return $dateTime->format('Y-m-d H:i:s');
+        }
+        return '';
     }
 
-    public function name()
+    public function name(): string
     {
         return$this->_name;
     }
 
-    public function userName()
+    public function userName(): string
     {
         return$this->_userName;
     }
