@@ -30,6 +30,6 @@ class ControllerSignup
         }
 
         $this->_view = new View('Signup');
-        $this->_view->generate(null);
+        $this->_view->generate((array)null);
     }
 }

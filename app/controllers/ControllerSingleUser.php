@@ -71,7 +71,7 @@ class ControllerSingleuser
             if (!empty($_POST['mail']) && !empty($_POST['password'])) {
 
                 $user_mail = htmlspecialchars($_POST["mail"]);
-                $user_password = htmlspecialchars($_POST["password"]);
+                $user_password = $_POST["password"];
 
                 $this->_userRepository = new UserRepository();
 
@@ -135,6 +135,14 @@ class ControllerSingleuser
                 $user_username = htmlspecialchars($_POST["username"]);
                 $user_mail = filter_var($_POST["mail"], FILTER_VALIDATE_EMAIL);
                 $user_password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+
+                /*echo '<pre>';
+                var_dump($user_name);
+                var_dump($user_username);
+                var_dump($user_mail);
+                var_dump($user_password);
+                echo '</pre>';
+                die();*/
 
                 $this->_userRepository = new UserRepository();
 

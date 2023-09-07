@@ -33,7 +33,7 @@ class ControllerLogin
 
         $this->_title = 'Login';
         $this->_view = new View('Login');
-        $this->_view->generate(null);
+        $this->_view->generate((array)null);
 
     }
 }
