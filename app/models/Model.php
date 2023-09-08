@@ -231,11 +231,14 @@ abstract class Model
         }
 
         $date = date("Y-m-d H:i:s");
+        $hoursAdd = 2;
+
+        $dateModify = date("Y-m-d H:i:s", strtotime($date . " +{$hoursAdd} hours"));
         $status = 'reader';
         $picture = 'photo_default.jpeg';
         $quote = "I'm a new reader";
 
-        if ($execCreateUser->execute([ $name, $username, $picture, $quote, $mail, $password, $status, $date])) {
+        if ($execCreateUser->execute([ $name, $username, $picture, $quote, $mail, $password, $status, $dateModify])) {
             return "The user is registered.";
         } else {
             return "An error occurred during user registration.";
@@ -308,12 +311,15 @@ abstract class Model
             return "Tous les champs doivent être remplis.";
         }
 
-        $currentDate = date('Y-m-d H:i:s');
+        $date = date("Y-m-d H:i:s");
+        $hoursAdd = 2;
+
+        $dateModify = date("Y-m-d H:i:s", strtotime($date . " +{$hoursAdd} hours"));
 
         $idUserAssociated = '1';
 
         // Bind the values and run the query
-        if ($query->execute([$idUserAssociated, $title, $chapo, $content, $currentDate, $currentDate])) {
+        if ($query->execute([$idUserAssociated, $title, $chapo, $content, $dateModify, $dateModify])) {
             return "The article was added successfully.";
         } else {
             return "An error occurred while adding the article.";
@@ -351,11 +357,13 @@ abstract class Model
             $idPostAssociated = $id;
 
             // Use the date function to get the current date in the correct format
-            $currentDate = date('Y-m-d H:i:s');
-            $dateUpdate = $currentDate;
+            $date = date("Y-m-d H:i:s");
+            $hoursAdd = 2;
+
+            $dateModify = date("Y-m-d H:i:s", strtotime($date . " +{$hoursAdd} hours"));
 
             // Bind the values and run the query
-            $sqlPrepareComment->execute([$idUserAssociated, $idPostAssociated ,$contentComment , $currentDate, $dateUpdate]);
+            $sqlPrepareComment->execute([$idUserAssociated, $idPostAssociated ,$contentComment , $dateModify, $dateModify]);
 
             $sqlPrepareComment->closeCursor();
         }
@@ -433,7 +441,10 @@ abstract class Model
                     $userData = $checkUserExists->fetch(PDO::FETCH_ASSOC);
                     $userId = $userData['idUser'];
 
-                    $currentDate = date('Y-m-d H:i:s');
+                    $date = date("Y-m-d H:i:s");
+                    $hoursAdd = 2;
+
+                    $dateModify = date("Y-m-d H:i:s", strtotime($date . " +{$hoursAdd} hours"));
 
                     $sqlUpdatePost = "UPDATE $table 
                                   JOIN $tableJoin
@@ -446,7 +457,7 @@ abstract class Model
                                   WHERE $table.idPost=?";
 
                     $sqlExecUpdatePost = self::$_db->prepare($sqlUpdatePost);
-                    $sqlExecUpdatePost->execute([$title, $userId, $chapo, $content, $currentDate, $id]);
+                    $sqlExecUpdatePost->execute([$title, $userId, $chapo, $content, $dateModify, $id]);
                 } else {
                     $datas = [];
                     while ($data = $checkUserExists->fetch(PDO::FETCH_ASSOC)) {
