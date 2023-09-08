@@ -1,18 +1,20 @@
 <?php
-
+/*require_once('./app/config/DatabaseConnection.php')*/;
 abstract class Model
 {
     private static $_db;
 
     //We connect to the database
 
-    private static function setConnectionDataBase(): void
+    /*private static function setConnectionDataBase(): void
     {
-        self::$_db = new PDO ('mysql:host=127.0.0.1;port=8889;dbname=u746425507_blogorama;charset=utf8', 'root', 'azerty');
+        require('./app/config/database.php');
+        $dsn = "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
+        self::$_db = new PDO($dsn, DB_USER, DB_PASSWORD);
 
         //Error handling PDO
         self::$_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-    }
+    }*/
 
     /**
      * @return PDO|null Instance PDO on successful connection, otherwise null.
@@ -20,9 +22,9 @@ abstract class Model
     protected function getConnectionDataBase ()
     {
         if (self::$_db === null) {
-            self::setConnectionDataBase();
-            return self::$_db;
+            self::$_db = DatabaseConnection::setConnection();
         }
+        return self::$_db;
     }
 
     /**
