@@ -142,7 +142,7 @@ class User
 
     public function activated(): int
     {
-        return $this->_activated;
+        return $this->_activated ?? 0;
     }
 
     public function dateCreate(): string

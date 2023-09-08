@@ -149,11 +149,9 @@ foreach ($users ?? [] as $user){
                     <td><?= htmlspecialchars($user->mail()) ?></td>
                     <td class="d-flex justify-content-between">
                         <?php if ($user->activated() == 1): ?>
-                            <button class="btn btn-success" style="width: 105px;"><i class="fa-solid fa-check"></i>
-                            </button>
-                        <?php else: ?>
-                            <button class="btn btn-danger" style="width: 105px;"><i class="fa-solid fa-x"></i>
-                            </button>
+                            <button class="btn btn-success common-button">Activate</button>
+                        <?php elseif ($user->activated() == 0): ?>
+                            <button class="btn btn-danger common-button">Desactivate</button>
                         <?php endif; ?>
                     </td>
                 </tr>
