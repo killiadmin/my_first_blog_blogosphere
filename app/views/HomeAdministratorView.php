@@ -1,5 +1,6 @@
 <?php
 $usersDesactivated = 0;
+$mailReader = 'Mail reader';
 
 foreach ($users ?? [] as $user){
     if ($user->activated() == 0) {
@@ -128,11 +129,67 @@ foreach ($users ?? [] as $user){
                 <?php endforeach; ?>
                 </tbody>
             </table>
+
+            <hr>
+
+            <h2 class="mb-5 mt-5">List of unvalidated comments</h2>
+            <table id="validateComments" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th class="w-25">Reader's email</th>
+                    <th class="w-25">Content</th>
+                    <th>Date Create</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($comments as $comment):
+                    if ($comment->validate() === 0) {
+                        foreach ($users as $user) {
+                            if ($user->idUser() === $comment->idUserAssociated()) {
+                                $mailReader = $user->mail();
+                            }
+                        }
+
+                    $dateFormat = "d/m/Y H:i:s";
+                    $timeStamp = strtotime($comment->dateUpdate());
+
+                    if ($timeStamp !== false) {
+                        $formatDateFr = date($dateFormat, $timeStamp);
+                    }
+                    ?>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td><?= htmlspecialchars($mailReader) ?></td>
+                        <td><?= htmlspecialchars($comment->content()) ?></td>
+                        <td><?= htmlspecialchars($formatDateFr) ?></td>
+                        <td>
+                            <a href="singlepost&validateComment&id=<?= htmlspecialchars($comment->idComment()) ?>">
+                                <div class="form-group">
+                                    <input type="submit" name="validate" class="btn btn-success common-button"
+                                           value="Validate">
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="singlepost&id=<?= htmlspecialchars($comment->idPostAssociated()) ?>">
+                                <div class="form-group">
+                                    <input type="submit" name="See Article" class="btn btn-secondary common-button"
+                                           value="See Article">
+                                </div>
+                            </a>
+                        </td
+                    </tr>
+                <?php } endforeach; ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
 
-<!-- Version Mobile -->
+<!------------------------------------ Version Mobile -------------------------------------->
 
 <div class="d-block d-md-none">
     <div class="container">
@@ -149,9 +206,9 @@ foreach ($users ?? [] as $user){
                     <td><?= htmlspecialchars($user->mail()) ?></td>
                     <td class="d-flex justify-content-between">
                         <?php if ($user->activated() == 1): ?>
-                            <button class="btn btn-success common-button">Activate</button>
+                            <button class="btn btn-success common-button"><i class="fa-solid fa-check"></i></button>
                         <?php elseif ($user->activated() == 0): ?>
-                            <button class="btn btn-danger common-button">Desactivate</button>
+                            <button class="btn btn-danger common-button"><i class="fa-solid fa-x"></i></button>
                         <?php endif; ?>
                     </td>
                 </tr>
@@ -207,6 +264,57 @@ foreach ($users ?? [] as $user){
                     </td>
                 </tr>
             <?php endforeach; ?>
+            </tbody>
+        </table>
+        <hr>
+
+        <h2 class="mb-5 mt-5">List of unvalidated comments</h2>
+        <table id="validateComments" class="table table-striped">
+            <thead>
+            <tr>
+                <th class="w-25">Reader's email</th>
+                <th class="w-25">Content</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($comments as $comment):
+                if ($comment->validate() === 0) {
+                    foreach ($users as $user) {
+                        if ($user->idUser() === $comment->idUserAssociated()) {
+                            $mailReader = $user->mail();
+                        }
+                    }
+
+                    $dateFormat = "d/m/Y H:i:s";
+                    $timeStamp = strtotime($comment->dateUpdate());
+
+                    if ($timeStamp !== false) {
+                        $formatDateFr = date($dateFormat, $timeStamp);
+                    }
+                    ?>
+                    <tr>
+                        <td><?= htmlspecialchars('mail reader') ?></td>
+                        <td><?= htmlspecialchars($comment->content()) ?></td>
+                        <td>
+                            <a href="singlepost&validateComment&id=<?= htmlspecialchars($comment->idComment()) ?>">
+                                <div class="form-group">
+                                    <button class="btn btn-success"><i class="fa-solid fa-check"></i>
+                                    </button>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="singlepost&id=<?= htmlspecialchars($comment->idPostAssociated()) ?>">
+                                <div class="form-group">
+                                    <button class="btn btn-secondary"><i class="fa-solid fa-magnifying-glass"></i>
+                                    </button>
+                                </div>
+                            </a>
+                        </td
+                    </tr>
+                <?php } endforeach; ?>
             </tbody>
         </table>
     </div>

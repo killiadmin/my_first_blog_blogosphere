@@ -4,18 +4,6 @@ abstract class Model
 {
     private static $_db;
 
-    //We connect to the database
-
-    /*private static function setConnectionDataBase(): void
-    {
-        require('./app/config/database.php');
-        $dsn = "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
-        self::$_db = new PDO($dsn, DB_USER, DB_PASSWORD);
-
-        //Error handling PDO
-        self::$_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-    }*/
-
     /**
      * @return PDO|null Instance PDO on successful connection, otherwise null.
      */
@@ -47,7 +35,7 @@ abstract class Model
                     ON users.idUser = ${table}.idUserAssociated
                     ORDER BY ${table}.dateCreate DESC";
         } elseif ($table === 'comments') {
-            $sql = "SELECT idComment, ${table}.idUserAssociated, idPostAssociated, ${table}.content, ${table}.dateCreate, ${table}.dateUpdate 
+            $sql = "SELECT idComment, ${table}.idUserAssociated, idPostAssociated, ${table}.content, ${table}.validate ,${table}.dateCreate, ${table}.dateUpdate 
                     FROM $table
                     ORDER BY ${table}.dateCreate DESC";
         } else {
@@ -368,6 +356,40 @@ abstract class Model
             $sqlPrepareComment->execute([$idUserAssociated, $idPostAssociated ,$contentComment , $dateModify, $dateModify]);
 
             $sqlPrepareComment->closeCursor();
+        }
+    }
+
+    /**
+     * Method for validating and updateting a user's comment in the database
+     * @param string $table
+     * @param int $id
+     * @return void
+     */
+    protected function updateOneComment (string $table, int $id)
+    {
+        $this->getConnectionDataBase();
+
+        $sqlComment = "SELECT * 
+                    FROM $table
+                    WHERE idComment=?";
+        $checkCommentExists = self::$_db->prepare($sqlComment);
+        $checkCommentExists->execute([$id]);
+
+        if ($checkCommentExists->rowCount() > 0) {
+            try {
+                $commentData = $checkCommentExists->fetch(PDO::FETCH_ASSOC);
+                $commentId = $commentData['idComment'];
+
+                $sqlUpdateComment = "UPDATE $table
+                                     SET validate = 1
+                                     WHERE $table.idComment=?";
+
+                $sqlExecUpdateComment = self::$_db->prepare($sqlUpdateComment);
+                $sqlExecUpdateComment->execute([$commentId]);
+
+            } catch (PDOException $e) {
+                echo "Erreur : " . $e->getMessage();
+            }
         }
     }
 

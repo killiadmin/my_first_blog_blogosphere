@@ -48,36 +48,50 @@ if ($post[0] ?? []) {
 
 <!-- Bloc comment begin -->
 
-
 <section id="comments">
     <div class="d-flex flex-column align-items-center mb-5 mt-5">
         <h3 class="mb-5">Comments</h3>
         <?php
-        foreach ($comment ?? [] as $deployComment):
-            $timeStampComment = strtotime($deployComment->dateUpdate());
-
-            if ($timeStampComment !== false) {
-                $formatDateFrComment = date($dateFormat, $timeStampComment);
-            }
+        if (isset($msg)) {
             ?>
-            <div class="comment p-3">
-                <div class="bg-light bg-gradient rounded p-3">
-                    <div class="comment-info d-flex gap-2">
-                        <p class="comment-author"><strong>Author: </strong><?= htmlspecialchars($deployComment->name()) ?> <?= htmlspecialchars($deployComment->username()) ?></p>
-                        <p class="comment-date"><strong>Publié le: </strong><?= htmlspecialchars($formatDateFrComment) ?></p>
-                    </div>
-                    <div class="comment-content d-flex align-center ">
-                        <p class="text-light mt-3 bg-success bg-gradient rounded p-3"><?= htmlspecialchars($deployComment->content()) ?></p>
-                    </div>
-                </div>
-                <div class="m-3"></div>
+            <div class="container mt-1 mb-1 w-50">
+                <span class="form-control bg-success rounded text-light text-center">
+                    <?= $msg ?>
+                </span>
             </div>
-        <?php endforeach; ?>
+            <?php
+        }
+        foreach ($comment ?? [] as $deployComment):
+            if ($deployComment->validate() === 1) {
+                $timeStampComment = strtotime($deployComment->dateUpdate());
+
+                if ($timeStampComment !== false) {
+                    $formatDateFrComment = date($dateFormat, $timeStampComment);
+                }
+                ?>
+                <div class="comment p-3">
+                    <div class="bg-light bg-gradient rounded p-3">
+                        <div class="comment-info d-flex gap-2">
+                            <p class="comment-author">
+                                <strong>Author: </strong><?= htmlspecialchars($deployComment->name()) ?> <?= htmlspecialchars($deployComment->username()) ?>
+                            </p>
+                            <p class="comment-date"><strong>Publié
+                                    le: </strong><?= htmlspecialchars($formatDateFrComment) ?></p>
+                        </div>
+                        <div class="comment-content d-flex align-center ">
+                            <p class="text-light mt-3 bg-success bg-gradient rounded p-3"><?= htmlspecialchars($deployComment->content()) ?></p>
+                        </div>
+                    </div>
+                    <div class="m-3"></div>
+                </div>
+                <?php
+            }
+        endforeach;
+        ?>
     </div>
 </section>
 
-
-<form id="commentForm" class="p-3" action="singlepost&id=<?= $post[0]->idPost() ?>&status=comment" method="post">
+<form id="commentForm" class="p-3 mx-auto" action="singlepost&id=<?= $post[0]->idPost() ?>&status=comment" method="post" style="max-width: 1000px">
     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
     <h4>Express yourself</h4>
     <div class="form-group">
@@ -90,8 +104,3 @@ if ($post[0] ?? []) {
 </form>
 
 <!-- Bloc comment end -->
-
-
-
-
-

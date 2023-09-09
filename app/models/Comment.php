@@ -6,6 +6,7 @@ class Comment
     private $_idUserAssociated;
     private $_idPostAssociated;
     private $_content;
+    private $_validate;
     private $_dateCreate;
     private $_dateUpdate;
     private $_name;
@@ -57,6 +58,11 @@ class Comment
         }
     }
 
+    public function setValidate(int $validate): void
+    {
+        $this->_validate = $validate;
+    }
+
     public function setDateCreate(string $dateCreate): void
     {
         $this->_dateCreate = $dateCreate;
@@ -101,6 +107,11 @@ class Comment
     public function content(): string
     {
         return $this->_content;
+    }
+
+    public function validate(): int
+    {
+        return $this->_validate;
     }
 
     public function dateCreate(): string

@@ -17,4 +17,9 @@ class CommentRepository extends Model
     {
         $this->createOneComment('comments', 'posts', $id, $idUser);
     }
+
+    public function validateComment (int $id): void
+    {
+        $this->updateOneComment('comments', $id);
+    }
 }
