@@ -25,6 +25,8 @@ class ControllerSinglepost
                 throw new \Exception('The page you want is not available.');
             } elseif (isset($_GET['status']) && $_GET['status'] === 'comment') {
                 $this->comments();
+            } elseif (isset($_GET['validateComment'])) {
+                $this->validateComment();
             } elseif (isset($_GET['status']) && $_GET['status'] === 'update') {
                 $this->updatePost();
             } else {
@@ -82,6 +84,50 @@ class ControllerSinglepost
         }
     }
 
+    /**
+     * Method for validating a user's comment
+     * @return void
+     * @throws Exception
+     */
+    private function validateComment(): void
+    {
+        if (isset($_GET['id']) && $_SESSION['role'] === 'admin') {
+            $this->_commentRepository = new CommentRepository();
+            $this->_commentRepository->validateComment($_GET['id']);
+
+            $this->_postRepository = new PostRepository();
+            $posts = $this->_postRepository->getPosts();
+
+            $this->_userRepository = new UserRepository();
+            $users = $this->_userRepository->getUsers();
+
+            $comments = $this->_commentRepository->getComments();
+
+            $this->_view = new View('Homeadministrator');
+            $this->_view->generate(array(
+                'users' => $users,
+                'posts' => $posts,
+                'comments' => $comments
+            ));
+            ?>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    var commentsSection = document.getElementById("validateComments");
+                    if (commentsSection) {
+                        commentsSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            </script>
+            <?php
+        } else {
+            $msg = 'You are not authorized to access this page !';
+            $this->_view = new View('Login');
+            $this->_view->generate(array(
+                'msg' => $msg
+            ));
+        }
+}
+
     private function comments(): void
     {
         if (isset($_GET['id']) && $_POST['csrf_token'] == $_SESSION['csrf_token']) {
@@ -90,11 +136,13 @@ class ControllerSinglepost
             $this->_CommentRepository->createComment($_GET['id'], $_SESSION['id']);
             $comment = $this->_CommentRepository->getComment($_GET['id']);
 
+            $msg = 'Your comment has been sent, it will be validated soon.';
             $post = $this->_PostRepository->getPost($_GET['id']);
             $this->_view = new View('Singlepost');
             $this->_view->generate(array(
                 'post' => $post,
-                'comment' => $comment
+                'comment' => $comment,
+                'msg' => $msg
             ));
             ?>
             <script>
