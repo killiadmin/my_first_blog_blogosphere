@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'b73e625e9fcd800704641220dd6f5b2b3c32d2da',
+        'reference' => '96eef57f4054631607b417b97edd344604903523',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'b73e625e9fcd800704641220dd6f5b2b3c32d2da',
+            'reference' => '96eef57f4054631607b417b97edd344604903523',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -108,17 +108,6 @@
             'install_path' => __DIR__ . '/../ralouphie/getallheaders',
             'aliases' => array(),
             'dev_requirement' => false,
-        ),
-        'roave/security-advisories' => array(
-            'pretty_version' => 'dev-latest',
-            'version' => 'dev-latest',
-            'reference' => '00de3fc12503b72bbd1dd43ee273213c811b184c',
-            'type' => 'metapackage',
-            'install_path' => NULL,
-            'aliases' => array(
-                0 => '9999999-dev',
-            ),
-            'dev_requirement' => true,
         ),
         'symfony/deprecation-contracts' => array(
             'pretty_version' => 'v2.5.2',
