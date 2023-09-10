@@ -77,7 +77,7 @@ class ControllerSingleuser
 
                 $userInfos = $this->_userRepository->connection($user_mail, $user_password);
 
-                if($userInfos[0] == 'erreurStatus'){
+                if(isset($userInfos[0]) && $userInfos[0] == 'erreurStatus'){
                     $msg = 'Your account has been desactivated.';
                     $this->_view = new View('Login');
                     $this->_view->generate(array(
