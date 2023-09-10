@@ -16,7 +16,12 @@
 
 ## Import du fichier sql
 
-- Importer le fichier import.sql dans le dossier config/import.sql afin que le site web fonctionne correctement.
+- Importer le fichier oc_blogosphere.sql dans le dossier app/config/oc_blogosphere.sql afin que le site web fonctionne correctement.
+
+Compte admin:
+
+- idt : admin@blogosphere.fr
+- mdp : adminblog
 
 ## Lien du site
 
