@@ -5,6 +5,11 @@ class ControllerSignup
 {
     private $_view;
 
+    /**
+     * Initialization of the signup part
+     * @param array $url
+     * @throws Exception
+     */
     public function __construct(array $url)
     {
         if (count($url) < 1) {
@@ -13,6 +18,11 @@ class ControllerSignup
 
         $this->signup();
     }
+
+    /**
+     * If the conditions are all check we generate the signup content
+     * @return void
+     */
 
     private function signup(): void
     {

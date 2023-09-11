@@ -12,6 +12,12 @@ class ControllerHomeadministrator
     private $_userRepository;
     private $_view;
 
+    /**
+     * Initialization of the administrator part
+     * @param array $url
+     * @throws Exception
+     */
+
     public function __construct(array $url)
     {
         if (isset($_SESSION['auth'], $_SESSION['user_ip'], $_SESSION['user_agent']) && $_SESSION['role'] === 'admin') {
@@ -36,6 +42,12 @@ class ControllerHomeadministrator
             ));
         }
     }
+
+    /**
+     * If the conditions are all check we generate the administrator content
+     * @return void
+     * @throws Exception
+     */
 
     private function contentsAdmin(): void
     {

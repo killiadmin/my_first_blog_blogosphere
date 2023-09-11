@@ -13,6 +13,11 @@ class ControllerSingleuser
     private $_userRepository;
     private $_view;
 
+    /**
+     * Initialization of the single user part
+     * @param array $url
+     * @throws Exception
+     */
     public function __construct(array $url)
     {
         if (count($url) < 1) {
@@ -64,7 +69,9 @@ class ControllerSingleuser
      * Method to connect to the application which checks the entry of the email and the password entered
      * by the user and which feeds the user's session
      * @return void
+     * @throws Exception
      */
+
     private function connectionUser(): void
     {
         if (isset($_GET['id'])) {
@@ -88,7 +95,7 @@ class ControllerSingleuser
 
                 if (!empty($userInfos)) {
 
-                    // Vérification d'IP et d'agent utilisateur
+                    // IP and user agent check
                     if ($_SESSION['user_ip'] !== $_SERVER['REMOTE_ADDR'] || $_SESSION['user_agent'] !== $_SERVER['HTTP_USER_AGENT']) {
                         session_destroy();
                     }
@@ -99,7 +106,7 @@ class ControllerSingleuser
                         $_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
                     }
 
-                    // Génération aléatoire d'identifiants de session
+                    // Random generation of session IDs
                     session_regenerate_id(true);
 
                     if (!isset($_SESSION['csrf_token'])) {
@@ -135,6 +142,13 @@ class ControllerSingleuser
         }
     }
 
+    /**
+     * Application registration method that verifies the entry of the email, name, first name and password entered
+     * by the user and which powers the user's session
+     * @return void
+     * @throws Exception
+     */
+
     private function signUpUser(): void
     {
         if (isset($_GET['id'])) {
@@ -167,12 +181,12 @@ class ControllerSingleuser
                         $_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
                     }
 
-                    // Vérification d'IP et d'agent utilisateur
+                    // IP and user agent check
                     if ($_SESSION['user_ip'] !== $_SERVER['REMOTE_ADDR'] || $_SESSION['user_agent'] !== $_SERVER['HTTP_USER_AGENT']) {
                         session_destroy();
                     }
 
-                    // Génération aléatoire d'identifiants de session
+                    // Random generation of session IDs
                     session_regenerate_id(true);
 
                     if (!isset($_SESSION['csrf_token'])) {
@@ -214,6 +228,7 @@ class ControllerSingleuser
      * that will generate the view of the homepage after sending it.
      * @return void
      */
+
     private function sendEmail(): void
     {
         if (isset($_GET['id']) && $_POST['csrf_token'] == $_SESSION['csrf_token']) {

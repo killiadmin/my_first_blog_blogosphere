@@ -7,6 +7,12 @@ class ControllerLogin
 
     private $_title;
 
+    /**
+     * Initialization of the login part
+     * @param array $url
+     * @throws Exception
+     */
+
     public function __construct(array $url)
     {
         if (count($url) < 1) {
@@ -15,6 +21,11 @@ class ControllerLogin
 
         $this->login();
     }
+
+    /**
+     * If the conditions are all check we generate the login content
+     * @return void
+     */
 
     private function login(): void
     {
@@ -31,7 +42,6 @@ class ControllerLogin
             session_destroy();
         }
 
-        $this->_title = 'Login';
         $this->_view = new View('Login');
         $this->_view->generate((array)null);
     }

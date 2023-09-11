@@ -9,6 +9,12 @@ class ControllerPost
     private $_postRepository;
     private $_view;
 
+    /**
+     * Initialization of the posts part
+     * @param array $url
+     * @throws Exception
+     */
+
     public function __construct(array $url)
     {
         if (isset($_SESSION['auth'], $_SESSION['user_ip'], $_SESSION['user_agent'])) {
@@ -42,7 +48,11 @@ class ControllerPost
         }
     }
 
-    //Function which allows to display the posts of the db
+    /**
+     * Function which allows to display the posts of the db
+     * @return void
+     */
+
     private function posts(): void
     {
         $this->_postRepository = new PostRepository();
@@ -50,6 +60,11 @@ class ControllerPost
         $this->_view = new View('Post');
         $this->_view->generate(array('posts' => $posts));
     }
+
+    /**
+     * Function which allows to display the post form for create a post
+     * @return void
+     */
 
     private function create(): void
     {
@@ -63,6 +78,11 @@ class ControllerPost
         }
     }
 
+    /**
+     * Function which allows to display the page update post to edit the content
+     * @return void
+     */
+
     private function modify(): void
     {
         if (isset($_GET['modify'], $_GET['id'])) {
@@ -72,6 +92,11 @@ class ControllerPost
             $this->_view->generate(array('post' => $post));
         }
     }
+
+    /**
+     * Function which allows to create the post to insert the content
+     * @return void
+     */
 
     private function store(): void
     {
@@ -83,6 +108,11 @@ class ControllerPost
             $this->_view->generate(array('posts' => $posts));
         }
     }
+
+    /**
+     * Function which allows to delete the post
+     * @return void
+     */
 
     private function delete(): void
     {

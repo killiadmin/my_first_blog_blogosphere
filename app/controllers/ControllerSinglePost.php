@@ -8,8 +8,13 @@ class ControllerSinglepost
 {
     private $_PostRepository;
     private $_CommentRepository;
-
     private $_view;
+
+    /**
+     * Initialization of the single post part
+     * @param array $url
+     * @throws Exception
+     */
 
     public function __construct(array $url)
     {
@@ -42,6 +47,11 @@ class ControllerSinglepost
         }
     }
 
+    /**
+     * Function which allows to display the single post
+     * @return void
+     */
+
     private function singlePost(): void
     {
         if (isset($_GET['id'])) {
@@ -56,6 +66,11 @@ class ControllerSinglepost
             ));
         }
     }
+
+    /**
+     * Function which allows to update the single post
+     * @return void
+     */
 
     private function updatePost(): void
     {
@@ -89,6 +104,7 @@ class ControllerSinglepost
      * @return void
      * @throws Exception
      */
+
     private function validateComment(): void
     {
         if (isset($_GET['id']) && $_SESSION['role'] === 'admin') {
@@ -126,7 +142,12 @@ class ControllerSinglepost
                 'msg' => $msg
             ));
         }
-}
+    }
+
+    /**
+     * Function which allows to create the comment associated at the post
+     * @return void
+     */
 
     private function comments(): void
     {
