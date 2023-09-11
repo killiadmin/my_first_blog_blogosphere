@@ -5,37 +5,41 @@ class Router
     private $controller;
     private $view;
 
+    /**
+     * Router of the application which loads the models and controllers according to the url provided
+     * @return void
+     */
     public function route (): void
     {
         try {
-            //Enregistre automatiquement une fonction d'autoload (les classes du dossier models)
+            //Automatically registers an autoload function (the classes in the models folder)
             spl_autoload_register(function ($class){
                 if ($class !== 'Resources'){
                     require_once('./app/models/'.$class.'.php');
                 }
             });
 
-            //Création de l'url
+            //Creation of the Url
             $url = '';
 
-            //On affecte la valuer du controleur suivant la variable qu'on lui donne
+            //We assign the value of the controller according to the variable we give it
             if (isset($_GET['url'])) {
-                //Décomposition de l'url avec un filtre pour supprimer tous les caractères
+                //URL decomposition with a filter to remove all characters
                 $url = explode('/', filter_var($_GET['url'], FILTER_UNSAFE_RAW));
 
-                //On récupère le premier param de l'url et l'applique en minuscule et la première lettre en majuscule
+                //We retrieve the first param of the url and apply it in lowercase and the first letter in uppercase
                 $ctrl = ucfirst(strtolower($url[0]));
 
                 $ctrlClass = "Controller".$ctrl;
 
-                //On cible le fichier controller voulu
+                //We target the desired controller file
                 $ctrlFile = "./app/controllers/".$ctrlClass.".php";
                 
                
 
                 if (file_exists($ctrlFile)) {
-                    //On applique notre class avec les params voulu
-                    //On utilise require_once, s'il ne le trouve pas l'application retournera une erreur
+                    //We apply our class with the desired params We use require_once,
+                    // if it does not find it the application will return an error
                     require_once($ctrlFile);
                     
                     $this->controller = new $ctrlClass($url);
@@ -43,7 +47,7 @@ class Router
                     throw new \Exception('La page n\'existe pas', 1);
                 }
             } else {
-                //Si aucune route ne match l'utilisateur sera redirigé vers le menu connection
+                //If no route matches the user will be redirected to the connection menu
                 $this->_view = new View('Login');
                 $this->_view->generate((array)null);
             }
