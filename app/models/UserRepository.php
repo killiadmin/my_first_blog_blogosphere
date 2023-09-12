@@ -28,6 +28,7 @@ class UserRepository extends Model
      * @param string $password
      * @return array
      */
+
     public function connection(string $mail, string $password): array
     {
         return $this->connectionUser('users', 'User' , $mail, $password);
@@ -63,6 +64,7 @@ class UserRepository extends Model
      * Function for check user exist in th database
      * @throws Exception
      */
+
     public function checkInfosRegister(string $name, string $username, string $mail): array
     {
         return $this->methodForGetInfosregister('users', 'User' , $name, $username, $mail);

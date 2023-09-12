@@ -1,5 +1,4 @@
 <?php
-/*require_once('./app/config/DatabaseConnection.php')*/;
 abstract class Model
 {
     private static $_db;
@@ -7,6 +6,7 @@ abstract class Model
     /**
      * @return PDO|null Instance PDO on successful connection, otherwise null.
      */
+
     protected function getConnectionDataBase ()
     {
         if (self::$_db === null) {
@@ -329,6 +329,7 @@ abstract class Model
      * @param $idUser
      * @return void
      */
+
     protected function createOneComment(string $table, string $tableCheck, int $id, int $idUser)
     {
         $this->getConnectionDataBase();
@@ -367,6 +368,7 @@ abstract class Model
      * @param int $id
      * @return void
      */
+
     protected function updateOneComment (string $table, int $id)
     {
         $this->getConnectionDataBase();
@@ -402,6 +404,7 @@ abstract class Model
      * @param int $id
      * @return void
      */
+
     protected function deleteOne (string $table, string $tableCheck, int $id)
     {
         $this->getConnectionDataBase();

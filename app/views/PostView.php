@@ -37,8 +37,7 @@ $postCounter = 0;
                     </div>
                 </div>
                 <div class="d-flex flex-row-reverse">
-                    <a href="/singlepost&id=<?= htmlspecialchars($post->idPost()) ?>" class="btn btn-secondary">Go
-                        somewhere</a>
+                    <a href="/singlepost&id=<?= htmlspecialchars($post->idPost()) ?>" class="btn btn-secondary">Read more</a>
                 </div>
             </div>
         </div>
