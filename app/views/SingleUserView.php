@@ -1,15 +1,17 @@
 <div class="container">
     <div class="row">
+        <!-- Profil picture -->
         <div class="col-md-6 p-3 mt-3 d-flex flex-column align-items-center justify-content-center">
-            <img src="./public/assets/photo_profil.png" alt="Photo de profil" class="img-fluid rounded-circle" style="width: 290px;">
+            <img src="./public/assets/<?= htmlspecialchars($user[0]->picture()) ?>" alt="Photo de profil" class="img-fluid rounded-circle" style="width: 290px;">
         </div>
+        <!-- Name/username -->
         <div class="col-md-6 mt-3 d-flex flex-column justify-content-center">
             <h2><?= htmlspecialchars($user[0]->name()) ?> <?= htmlspecialchars($user[0]->username()) ?></h2>
             <p><?= htmlspecialchars($user[0]->quote()) ?></p>
 
             <hr>
 
-            <h4>My CV : </h4>
+            <!--CV doc -->
             <div class="p-3">
                 <a href="./public/assets/CV_Developpeur.pdf" target="_blank" class="btn btn-secondary">See my CV</a></li>
             </div>
@@ -18,7 +20,7 @@
     </div>
     <div class="row mt-4">
         <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
-            <!-- Lien réseaux sociaux -->
+            <!-- Social media links -->
             <h4>My Socials Networks</h4>
             <ul class="list-unstyled fs-3" style="color: #3C4245;">
                 <li><a id="github" href="https://github.com/killiadmin" style="color: #3C4245;"><i class="fab fa-github"></i> Github&nbsp;</a></li>
@@ -28,7 +30,7 @@
             </ul>
         </div>
         <div class="col-md-6 mt-2">
-            <!-- Formulaire de contact -->
+            <!-- Contact form -->
             <h4>Contact Me</h4>
             <form method="POST" action="singleuser&id=1&status=sendemail">
                 <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
