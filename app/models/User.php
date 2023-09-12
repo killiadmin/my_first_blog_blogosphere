@@ -99,7 +99,6 @@ class User
     }
 
     //getters
-
     public function idUser(): int
     {
         return $this->_idUser;
