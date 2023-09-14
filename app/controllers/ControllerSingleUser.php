@@ -24,42 +24,29 @@ class ControllerSingleuser
             throw new \Exception('The page you want is not available.');
         }
 
+        if (isset($_GET['id']) && !isset($_GET['status'])) {
+            $this->user();
+        } elseif (isset($_GET['status']) && $_GET['status'] === 'sendemail') {
+            $this->sendEmail();
+        }
+
         if (isset($_GET['status']) && $_GET['status'] === 'login') {
             $this->connectionUser();
         } elseif (isset($_GET['status']) && $_GET['status'] === 'signup') {
             $this->signUpUser();
-        } elseif (isset($_SESSION['auth'], $_SESSION['user_ip'], $_SESSION['user_agent'])){
-            if ($_SESSION['user_ip'] !== $_SERVER['REMOTE_ADDR'] || $_SESSION['user_agent'] !== $_SERVER['HTTP_USER_AGENT'] || $_SESSION['auth'] !== true) {
-                session_destroy();
-                $msg = 'You are not authorized to access this content';
-                $this->_view = new View('Login');
-                $this->_view->generate(array(
-                    'msg' => $msg
-                ));
-            } elseif (isset($_GET['status'], $_SESSION['auth']) && $_GET['status'] === 'sendemail') {
-                $this->sendEmail();
-            } else {
-                $this->user();
-            }
-        } else {
-            session_destroy();
-            $msg = 'You are not authorized to access this content';
-            $this->_view = new View('Login');
-            $this->_view->generate(array(
-                'msg' => $msg
-            ));
         }
     }
 
     /**
      * Method to generate the view of a user if it exists with its data assigned to it
      * @return void
+     * @throws Exception
      */
-    private function user()
+    private function user(): void
     {
         if (isset($_GET['id'])) {
             $this->_userRepository = new UserRepository();
-            $user = $this->_userRepository->getUser($_GET['id']);
+            $user = $this->_userRepository->getUser();
             $this->_view = new View('Singleuser');
             $this->_view->generate(array('user' => $user));
         }
@@ -231,7 +218,7 @@ class ControllerSingleuser
 
     private function sendEmail(): void
     {
-        if (isset($_GET['id']) && $_POST['csrf_token'] == $_SESSION['csrf_token']) {
+        if (isset($_GET['id'])) {
 
             require_once './vendor/mailjet/mailjet-apiv3-php/src/Mailjet/Resources.php';
 

@@ -156,10 +156,12 @@ abstract class Model
         if ($checkIfUserExist->execute() && $checkIfUserExist->rowCount() > 0) {
             $data = $checkIfUserExist->fetch(PDO::FETCH_ASSOC);
 
-            if ($data['activated'] == 1 && password_verify($password, $data['password'])){
-                $datas[] = new $obj($data);
-            } else {
+            if ($data['activated'] == 0) {
                 $datas[] = 'erreurStatus';
+            }
+
+            if (password_verify($password, $data['password'])) {
+                $datas[] = new $obj($data);
             }
         }
 
