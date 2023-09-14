@@ -19,35 +19,70 @@
     <nav class="navbar navbar-expand-lg" style="background-color: #3C4245">
         <div class="container-fluid p-3">
             <?php if (isset($_SESSION['auth']) && $_SESSION['auth'] === true) { ?>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center fs-2" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto gap-4">
+                        <li class="nav-item">
+                            <a class="nav-link text-monospace text-light" href="/singleuser&id=1">My home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-monospace text-light" href="/post">Blogo-space</a>
+                        </li>
+                        <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') { ?>
+                            <li class="nav-item">
+                                <a class="nav-link text-monospace text-light" href="/post&create">Write an article</a>
+                            </li>
+                        <?php } ?>
+                        <li class="nav-item">
+                            <a class="nav-link text-monospace text-light" href="/login">Logout</a>
+                        </li>
+                        <li class="nav-item">
+                            <div class="nav-link bg-success text-monospace text-light rounded">
+                                Hello <?= $_SESSION['username'] ?></div>
+                        </li>
+                    </ul>
+                </div>
+                <?php
+            } elseif (false === strpos($_SERVER['REQUEST_URI'], "login")) {
+            ?>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarConnect"
+                    aria-controls="navbarConnect" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse justify-content-center fs-2" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse justify-content-center fs-2" id="navbarConnect">
                 <ul class="navbar-nav ml-auto gap-4">
-                    <li class="nav-item">
-                        <a class="nav-link text-monospace text-light" href="/singleuser&id=1">My home</a>
+                    <li class="nav-item"></li>
+                    <li class="nav-item bg-success rounded">
+                        <a class="nav-link text-monospace text-light mx-3" href="/login">Sign in</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-monospace text-light" href="/post">Blogo-space</a>
-                    </li>
-                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') { ?>
-                        <li class="nav-item">
-                            <a class="nav-link text-monospace text-light" href="/post&create">Write an article</a>
-                        </li>
-                    <?php } ?>
-                    <li class="nav-item">
-                        <a class="nav-link text-monospace text-light" href="/login">Logout</a>
-                    </li>
-                    <li class="nav-item">
-                        <div class="nav-link bg-success text-monospace text-light rounded">Hello <?= $_SESSION['username'] ?></div>
+                    <li class="nav-item bg-secondary rounded">
+                        <a class="nav-link text-monospace text-light mx-3" href="/signup">Sign up</a>
                     </li>
                 </ul>
-            </div>
                 <?php
-            }
-            ?>
-        </div>
+                } elseif (false !== strpos($_SERVER['REQUEST_URI'], "login")){
+                ?>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarConnect"
+                        aria-controls="navbarConnect" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center fs-2" id="navbarConnect">
+                    <ul class="navbar-nav ml-auto gap-4">
+                        <li class="nav-item"></li>
+                        <li class="nav-item bg-secondary rounded">
+                            <a class="nav-link text-monospace text-light mx-3"
+                               href="/singleuser&id=1">Return to my page</a>
+                        </li>
+                    </ul>
+                    <?php
+                    }
+                    ?>
+                </div>
     </nav>
 </header>
 

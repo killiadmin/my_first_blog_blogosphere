@@ -4,6 +4,14 @@ class Router
 {
     private $controller;
     private $view;
+    /**
+     * @var UserRepository
+     */
+    private $_userRepository;
+    /**
+     * @var View
+     */
+    private $_view;
 
     /**
      * Router of the application which loads the models and controllers according to the url provided
@@ -47,9 +55,11 @@ class Router
                     throw new \Exception('La page n\'existe pas', 1);
                 }
             } else {
-                //If no route matches the user will be redirected to the connection menu
-                $this->_view = new View('Login');
-                $this->_view->generate((array)null);
+                //If no route matches the user will be redirected to the singleUser
+                $this->_userRepository = new UserRepository();
+                $user = $this->_userRepository->getUser();
+                $this->_view = new View('Singleuser');
+                $this->_view->generate(array('user' => $user));
             }
         } catch (\Exception $e) {
             $php_errormsg = $e->getMessage();
